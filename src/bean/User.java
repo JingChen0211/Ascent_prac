@@ -1,5 +1,9 @@
 package bean;
-
+/**
+ * User类
+ * @author cjc
+ * @version 1.0
+ */
 public class User {
     private String username;
     private String password;
@@ -15,6 +19,12 @@ public class User {
                 ;
     }
 
+    /**
+     * 有参构造
+     * @param username
+     * @param password
+     * @param authority
+     */
     public User(String username, String password, int authority) {
         this.username = username;
         this.password = password;
