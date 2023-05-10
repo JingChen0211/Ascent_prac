@@ -1,5 +1,12 @@
 package util;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+
+
 /**
  * 这个类连接数据服务器来获得数据
  * <p>
@@ -21,4 +28,46 @@ package util;
  * @version 1.0
  */
 public class ProductDataClient implements ProtocolPort {
+    //socket引用
+    protected Socket hostSocket;
+    //输出流引用
+    protected ObjectOutputStream outputToServer;
+    //输入流引用
+    protected ObjectInputStream inputFromServer;
+
+    //日志方法
+    protected void log(Object msg){
+        System.out.println("ProductDataClient类：" + msg);
+    }
+
+    public ProductDataClient() throws IOException {
+        this(ProtocolPort.DEFAULT_HOST, ProtocolPort.DEFAULT_PORT);
+    }
+    //接受主机名和端口号的构造方法
+    public ProductDataClient(String hostName, int port) throws IOException {
+        log("连接数据服务器..."+hostName+":"+port);
+
+        hostSocket = new Socket(hostName,port);
+        outputToServer = new ObjectOutputStream(hostSocket.getOutputStream());
+        inputFromServer = new ObjectInputStream(hostSocket.getInputStream());
+
+        log("连接成功");
+    }
+    //返回类别集合
+    public ArrayList<String> getCategories() throws IOException {
+        ArrayList<String> categoryList = null;
+
+        log("发送请求：OP_GET_PRODUCT_CATEGORIES");
+        outputToServer.writeInt(ProtocolPort.OP_GET_PRODUCT_CATEGORIES);
+        outputToServer.flush();
+
+        log("接收数据...");
+        try {
+            categoryList = (ArrayList<String>) inputFromServer.readObject();
+        } catch (ClassNotFoundException e) {
+            log("=========>>   异常：" + e);
+            throw new IOException("找不到相关类");
+        }
+        return categoryList;
+    }
 }

@@ -1,6 +1,15 @@
 package ui;
 
+import bean.User;
+import util.UserDataClient;
+
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * 用户登陆窗体
@@ -18,5 +27,138 @@ import javax.swing.*;
  * @author cjc
  * @version 1.0
  */
+
 public class LoginFrame extends JFrame {
+
+    private JPanel contentPane;
+    private JTextField userField;
+    private JPasswordField keyField;//密码用JPasswordField
+
+    protected UserDataClient userDataClient;//端口
+
+    /**
+     * Launch the application.与Ascentsys类的功能相同
+     */
+//    public static void main(String[] args) {
+//        EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                try {
+//                    LoginFrame frame = new LoginFrame();
+//                    frame.setVisible(true);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//    }
+
+    /**
+     * Create the frame.
+     */
+    public LoginFrame() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 450, 300);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+        //账号
+        userField = new JTextField();
+        userField.setBounds(137, 65, 183, 28);
+        contentPane.add(userField);
+        userField.setColumns(10);
+        //密码
+        keyField = new JPasswordField();
+        keyField.setColumns(10);
+        keyField.setBounds(137, 134, 183, 28);
+        contentPane.add(keyField);
+
+        JLabel lblNewLabel = new JLabel("\u8D26\u53F7\uFF1A");
+        lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 16));
+        lblNewLabel.setBounds(61, 67, 54, 21);
+        contentPane.add(lblNewLabel);
+
+        JLabel lblNewLabel_1 = new JLabel("\u5BC6\u7801\uFF1A");
+        lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 16));
+        lblNewLabel_1.setBounds(61, 141, 54, 21);
+        contentPane.add(lblNewLabel_1);
+
+        JLabel tip = new JLabel();
+        tip.setBounds(138, 170, 150, 15);
+        contentPane.add(tip);
+
+        JButton btnNewButton = new JButton("\u767B\u5F55");
+        //登录功能的事件监听
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                boolean flag = false;
+                HashMap<String, User> users = userDataClient.getUsers();
+                if(users != null){
+                    if(users.containsKey(userField.getText())){
+                        User user = users.get(userField.getText());//get(Object o) 返回与指定 key 所关联的 value。
+                        char[] password = keyField.getPassword();
+                        String pwd = new String(password);
+                        if(user.getPassword().equals(pwd)){
+                            flag = true;
+                        }
+                    }
+                    if(flag){
+                        //密码正确
+                        //关闭用户数据客户端
+                        userDataClient.closeSocket();
+                        //将登录界面设置为不可见
+                        setVisible(false);
+                        dispose();
+                        //进入主界面
+                        MainFrame mainFrame = new MainFrame();
+                        mainFrame.setVisible(true);
+                    }else{
+                        tip.setText("账号不存在，或密码错误。");
+                    }
+                }else{
+                    tip.setText("服务器连接失败...");
+                }
+            }
+        });
+        btnNewButton.setBounds(29, 195, 93, 34);
+        contentPane.add(btnNewButton);
+
+        JLabel lblNewLabel_2 = new JLabel("\u767B\u5F55\u754C\u9762");
+        lblNewLabel_2.setFont(new Font("宋体", Font.BOLD, 20));
+        lblNewLabel_2.setBounds(175, 22, 93, 28);
+        contentPane.add(lblNewLabel_2);
+
+        JButton btnNewButton_1 = new JButton("\u6CE8\u518C");
+        //注册功能
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RegistFrame registFrame = null;
+                try {
+                    registFrame = new RegistFrame();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                registFrame.setVisible(true);
+            }
+        });
+        btnNewButton_1.setBounds(179, 195, 93, 34);
+        contentPane.add(btnNewButton_1);
+
+        JButton btnNewButton_1_1 = new JButton("\u9000\u51FA");
+        //退出功能
+        btnNewButton_1_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                dispose();
+                // 1.使用dispose()方法关闭窗体会释放该窗体的占用的部分资源，不过呢不是全部的，只是屏幕资源。
+                // 2.使用dispose()方法关闭的窗体可以使用pack 或 show 方法恢复，并且可以恢复到dispose前的状态
+                userDataClient.closeSocket();//关闭线程，需要补充UserDataClient的closeSocket()方法
+            }
+        });
+        btnNewButton_1_1.setBounds(317, 195, 93, 34);
+        contentPane.add(btnNewButton_1_1);
+
+        setResizable(false); //设置窗口大小不能改变
+    }
 }

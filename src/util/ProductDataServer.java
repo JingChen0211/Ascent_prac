@@ -14,6 +14,7 @@ import java.net.Socket;
  * ProductDataServer(int thePort): 带一个参数构造方法，启动服务器端口为 thePort。
  * listenForConnections(): 监听客户端发送请求连接。
  * log(Object msg): 日志方法，打印日志的消息。
+ * <p>
  * ProductDataClient 类：
  * <p>
  * ProductDataClient(): 默认构造方法，连接服务器默认主机和端口。

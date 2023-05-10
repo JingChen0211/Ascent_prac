@@ -12,6 +12,6 @@ public class Ascentsys {
     public static void main(String[] args) {
         LoginFrame loginFrame = new LoginFrame();
         //将其设置为可见的
-
+        loginFrame.setVisible(true);
     }
 }

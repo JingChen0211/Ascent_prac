@@ -3,9 +3,9 @@ package bean;
 /**
  * 实体类Product，用来描述商品的信息类
  * bean中这些代码是用于一个药品库存管理系统的Java实现。其中包括两个实体类，一个描述商品信息的类Product和一个描述用户信息的类User。
- *
+ * <p>
  * Product类包含以下字段：
- *
+ * <p>
  * productname：药品名称
  * cas：化学文摘登记号
  * structure：结构图名称
@@ -14,7 +14,7 @@ package bean;
  * realstock：数量
  * category：类别
  * 此外，Product类还包含以下方法：
- *
+ * <p>
  * 默认构造方法
  * 带参数的构造方法
  * 获取/设置Cas、Category、Formula、Price、ProductName、Realstock、Structure字段的方法
@@ -123,10 +123,27 @@ public class Product implements java.lang.Comparable, java.io.Serializable {
         this.category = category;
     }
 
+    /**
+     *
+     * @param o the object to be compared.
+     * @return
+     */
     @Override
     public int compareTo(Object o) {
-        return 0;
+        Product product = (Product) o;
+        return this.getProductname().compareTo(product.getProductname());
     }
+    /*
+        public int compareTo(String anotherString) {
+        byte v1[] = value;
+        byte v2[] = anotherString.value;
+        if (coder() == anotherString.coder()) {
+            return isLatin1() ? StringLatin1.compareTo(v1, v2)
+                              : StringUTF16.compareTo(v1, v2);
+        }
+        return isLatin1() ? StringLatin1.compareToUTF16(v1, v2)
+                          : StringUTF16.compareToLatin1(v1, v2);
+     }
+     */
 }
 
-	

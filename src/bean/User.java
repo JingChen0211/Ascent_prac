@@ -1,14 +1,15 @@
 package bean;
+
 /**
  * 实体类User，用来描述用户的信息类
- *
+ * <p>
  * User类包含以下字段：
- *
+ * <p>
  * username：用户名
  * password：密码
  * authority：用户权限
  * 此外，User类还包含以下方法：
- *
+ * <p>
  * 默认构造方法
  * 带参数的构造方法
  * 带所有参数的构造方法
@@ -28,7 +29,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "用户名：" + username+
+        return "用户名：" + username +
                 " 密码：" + password
                 ;
     }

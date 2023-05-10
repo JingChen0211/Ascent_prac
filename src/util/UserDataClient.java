@@ -134,4 +134,12 @@ public class UserDataClient implements ProtocolPort {
         }
         return userTable;
     }
+    //补充closeSocket，关闭连接
+    public void closeSocket() {
+        try {
+            this.hostSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
