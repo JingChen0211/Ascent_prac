@@ -1,11 +1,27 @@
 package util;
 
-import ui.ProductDataAccessor;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
+ * 数据服务器类
+ * <p>
+ * 这是一个 Java 代码文件，定义了 ProductDataServer 和 ProductDataClient 两个类。它们被用来实现一个数据服务器和客户端，用于提供产品信息和类别。以下是每个类的主要方法：
+ * <p>
+ * ProductDataServer 类：
+ * <p>
+ * ProductDataServer(): 默认构造方法，启动服务器端口为 ProtocolPort.DEFAULT_PORT。
+ * ProductDataServer(int thePort): 带一个参数构造方法，启动服务器端口为 thePort。
+ * listenForConnections(): 监听客户端发送请求连接。
+ * log(Object msg): 日志方法，打印日志的消息。
+ * ProductDataClient 类：
+ * <p>
+ * ProductDataClient(): 默认构造方法，连接服务器默认主机和端口。
+ * ProductDataClient(String hostName, int port): 接受主机名和端口号的构造方法。
+ * getCategories(): 返回类别集合。
+ * getProducts(String category): 返回产品集合。
+ * log(Object msg): 日志方法，打印日志的消息。
+ *
  * @author cjc
  * @version 1.0
  */

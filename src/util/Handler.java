@@ -1,7 +1,6 @@
 package util;
 
 import bean.User;
-import ui.ProductDataAccessor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,7 +8,29 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- * 用来对客户端的请求进行处理的，客户端可以有不同的请求类型，这时候需要在这个类中进行判断，判断在这个支持多线程类的run()方法里面写出。
+ * 这个类是socket连接的处理器 例如：
+ * <pre>
+ * Handler aHandler = new Handler(clientSocket, myProductDataAccessor);
+ * aHandler.start();
+ * </pre>
+ * <p>
+ * 这段代码是一个Java类，用于处理Socket连接。它包括以下功能：
+ * <p>
+ * 从客户端接收命令并响应
+ * 获取商品类别、商品信息和用户信息
+ * 添加新用户
+ * 输出日志
+ * <p>
+ * 该类继承了Thread类，因此可以在多线程环境下运行。
+ * 在构造函数中，传入了客户端Socket对象和处理商品数据的对象，然后初始化了输出和输入流。
+ * 在run()方法中，使用while循环来不断等待命令，然后根据不同的命令进行相应的操作。
+ * <p>
+ * 其中，
+ * opGetUsers()方法返回用户信息，
+ * opGetProductCategories()方法返回商品类别，
+ * opGetProducts()方法返回某个商品类别的所有商品信息，
+ * opAddUser()方法处理添加新用户的请求。
+ * 最后，使用log()方法输出日志信息。
  *
  * @author cjc
  * @version 1.0

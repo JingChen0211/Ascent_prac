@@ -1,10 +1,5 @@
 package util;
 
-/**
- * @author cjc
- * @version 1.0
- */
-
 import bean.User;
 
 import java.io.IOException;
@@ -15,6 +10,18 @@ import java.util.HashMap;
 
 /**
  * 这个类连接数据服务器来获得数据
+ * <p>
+ * 这段代码实现了一个连接到数据服务器的客户端，通过该客户端可以获得用户信息，以及进行用户注册操作。
+ * <p>
+ * 客户端通过Socket连接到数据服务器，并可以发送请求来获取用户信息或进行用户注册。
+ * 其中，客户端定义了一个log方法用于打印日志信息，输出流outputToServer用于向服务器发送请求数据，输入流inputFromServer用于从服务器获取响应数据。
+ * <p>
+ * 该客户端实现了两个方法，分别是getUsers和addUser。
+ * getUsers方法发送请求获取用户信息，然后从输入流中读取HashMap<String,User>类型的数据返回。
+ * addUser方法先通过getUsers方法获取当前所有的用户信息，再根据传入的用户名和密码创建一个新的用户对象，向服务器发送添加用户的请求并将新用户对象写入输出流，最后根据服务器响应返回注册结果。
+ *
+ * @author ascent
+ * @version 1.0
  */
 public class UserDataClient implements ProtocolPort {
     /**

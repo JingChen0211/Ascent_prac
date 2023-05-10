@@ -2,6 +2,25 @@ package bean;
 
 /**
  * 实体类Product，用来描述商品的信息类
+ * bean中这些代码是用于一个药品库存管理系统的Java实现。其中包括两个实体类，一个描述商品信息的类Product和一个描述用户信息的类User。
+ *
+ * Product类包含以下字段：
+ *
+ * productname：药品名称
+ * cas：化学文摘登记号
+ * structure：结构图名称
+ * formula：公式
+ * price：价格
+ * realstock：数量
+ * category：类别
+ * 此外，Product类还包含以下方法：
+ *
+ * 默认构造方法
+ * 带参数的构造方法
+ * 获取/设置Cas、Category、Formula、Price、ProductName、Realstock、Structure字段的方法
+ * toString方法用于返回药品名称和化学文摘登记号
+ * 实现Comparable接口的compareTo方法，用于按照药品名称排序
+ *
  * @author cjc
  * @version 1.0
  */

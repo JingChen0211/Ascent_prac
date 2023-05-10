@@ -1,4 +1,4 @@
-package ui;
+package util;
 
 import bean.User;
 
@@ -6,6 +6,20 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
+
+/**
+ * 产品数据读取的实现类
+ * <p>
+ * 该代码实现了一个商品数据读取的类ProductDataAccessor，该类可以从文件中读取商品数据和用户数据，并将其保存在内存中的数据表中。
+ * 其中，商品数据和用户数据分别存储在不同的文件中，数据的分割符为逗号，每个记录都以分隔符"----------"结束。
+ * 通过load方法，该类可以读取文件并将数据存储在内存中的HashMap数据结构中，其中商品数据按照类别进行分类存储。
+ * 通过getProductObject方法，可以生成新的商品对象并返回。
+ * 该类还提供了保存用户数据的方法save和一个日志方法log。
+ * 最后，getUsers方法用于获取用户表中的数据。
+ *
+ * @author cjc
+ * @version 1.0
+ */
 
 public class ProductDataAccessor {
     // ////////////////////////////////////////////////////
