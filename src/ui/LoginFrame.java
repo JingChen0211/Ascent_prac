@@ -38,6 +38,7 @@ public class LoginFrame extends JFrame {
 
     /**
      * Launch the application.与Ascentsys类的功能相同
+     * 可以解开注释，尝试运行
      */
 //    public static void main(String[] args) {
 //        EventQueue.invokeLater(new Runnable() {
@@ -74,23 +75,23 @@ public class LoginFrame extends JFrame {
         keyField.setBounds(137, 134, 183, 28);
         contentPane.add(keyField);
 
-        JLabel lblNewLabel = new JLabel("\u8D26\u53F7\uFF1A");
-        lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 16));
-        lblNewLabel.setBounds(61, 67, 54, 21);
-        contentPane.add(lblNewLabel);
+        JLabel userLabel = new JLabel("账号：");
+        userLabel.setFont(new Font("宋体", Font.PLAIN, 16));
+        userLabel.setBounds(61, 67, 54, 21);
+        contentPane.add(userLabel);
 
-        JLabel lblNewLabel_1 = new JLabel("\u5BC6\u7801\uFF1A");
-        lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 16));
-        lblNewLabel_1.setBounds(61, 141, 54, 21);
-        contentPane.add(lblNewLabel_1);
+        JLabel passwordLabel = new JLabel("密码：");
+        passwordLabel.setFont(new Font("宋体", Font.PLAIN, 16));
+        passwordLabel.setBounds(61, 141, 54, 21);
+        contentPane.add(passwordLabel);
 
         JLabel tip = new JLabel();
         tip.setBounds(138, 170, 150, 15);
         contentPane.add(tip);
 
-        JButton btnNewButton = new JButton("\u767B\u5F55");
+        JButton loginButton = new JButton("登录");
         //登录功能的事件监听
-        btnNewButton.addActionListener(new ActionListener() {
+        loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 boolean flag = false;
                 HashMap<String, User> users = userDataClient.getUsers();
@@ -121,15 +122,15 @@ public class LoginFrame extends JFrame {
                 }
             }
         });
-        btnNewButton.setBounds(29, 195, 93, 34);
-        contentPane.add(btnNewButton);
+        loginButton.setBounds(29, 195, 93, 34);
+        contentPane.add(loginButton);
 
-        JLabel lblNewLabel_2 = new JLabel("\u767B\u5F55\u754C\u9762");
-        lblNewLabel_2.setFont(new Font("宋体", Font.BOLD, 20));
-        lblNewLabel_2.setBounds(175, 22, 93, 28);
-        contentPane.add(lblNewLabel_2);
+        JLabel headingLabel = new JLabel("登录界面");
+        headingLabel.setFont(new Font("宋体", Font.BOLD, 20));
+        headingLabel.setBounds(175, 22, 93, 28);
+        contentPane.add(headingLabel);
 
-        JButton btnNewButton_1 = new JButton("\u6CE8\u518C");
+        JButton btnNewButton_1 = new JButton("注册");
         //注册功能
         btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -145,9 +146,9 @@ public class LoginFrame extends JFrame {
         btnNewButton_1.setBounds(179, 195, 93, 34);
         contentPane.add(btnNewButton_1);
 
-        JButton btnNewButton_1_1 = new JButton("\u9000\u51FA");
+        JButton exitButton = new JButton("退出");
         //退出功能
-        btnNewButton_1_1.addActionListener(new ActionListener() {
+        exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 dispose();
@@ -156,8 +157,8 @@ public class LoginFrame extends JFrame {
                 userDataClient.closeSocket();//关闭线程，需要补充UserDataClient的closeSocket()方法
             }
         });
-        btnNewButton_1_1.setBounds(317, 195, 93, 34);
-        contentPane.add(btnNewButton_1_1);
+        exitButton.setBounds(317, 195, 93, 34);
+        contentPane.add(exitButton);
 
         setResizable(false); //设置窗口大小不能改变
     }
