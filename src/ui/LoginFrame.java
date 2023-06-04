@@ -130,9 +130,9 @@ public class LoginFrame extends JFrame {
         headingLabel.setBounds(175, 22, 93, 28);
         contentPane.add(headingLabel);
 
-        JButton btnNewButton_1 = new JButton("注册");
+        JButton registerButton = new JButton("注册");
         //注册功能
-        btnNewButton_1.addActionListener(new ActionListener() {
+        registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 RegistFrame registFrame = null;
                 try {
@@ -143,8 +143,8 @@ public class LoginFrame extends JFrame {
                 registFrame.setVisible(true);
             }
         });
-        btnNewButton_1.setBounds(179, 195, 93, 34);
-        contentPane.add(btnNewButton_1);
+        registerButton.setBounds(179, 195, 93, 34);
+        contentPane.add(registerButton);
 
         JButton exitButton = new JButton("退出");
         //退出功能

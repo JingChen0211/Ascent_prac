@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 
 /**
  * 这个类是socket连接的处理器 例如：
@@ -112,7 +113,13 @@ public class Handler extends Thread {
     }
 
     private void opGetUsers() {
-        System.out.println("获得用户的信息…");
+        try {
+            HashMap userTable = myProductDataAccessor.getUsers();
+            outputToClient.writeObject(userTable);
+            outputToClient.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void opGetProductCategories() {
