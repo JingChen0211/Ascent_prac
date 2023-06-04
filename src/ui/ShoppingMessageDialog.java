@@ -104,7 +104,8 @@ public class ShoppingMessageDialog extends JDialog {
 	
 	/**
 	 * 新增结算功能
-	 * @param dak119
+	 * @param
+	 * @author dak119
 	 */
     public void checkout() {
         // 生成订单

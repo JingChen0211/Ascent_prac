@@ -1,12 +1,12 @@
-package com.ascent.ui;
+package ui;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import com.ascent.bean.Product;
-import com.ascent.util.ShoppingCart;
+import bean.Product;
+import util.ShoppingCart;
 
 /**
  * 这个类显示产品详细信息对话框
