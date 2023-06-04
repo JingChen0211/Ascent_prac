@@ -1,27 +1,312 @@
 package ui;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
+import ui.ShoppingCartDialog;
+import ui.ShoppingCartDialog.ClearButtonActionListener;
+import ui.ShoppingCartDialog.LoadFormButtonActionListener;
+import ui.ShoppingCartDialog.OkButtonActionListener;
+import ui.ShoppingCartDialog.ViewFormButtonActionListener;
+import ui.ShoppingCartDialog.checkoutButtonActionListener;
+
+import bean.Product;
+import util.ShoppingCart;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 /**
- * æ˜¾ç¤ºè´­ç‰©è½¦æ‰€è´­ä¹°å•†å“ä¿¡æ¯
+ * ÏÔÊ¾¹ºÎï³µËù¹ºÂòÉÌÆ·ĞÅÏ¢
  * <p>
- * è¿™æ˜¯ä¸€ä¸ªJava Swingå›¾å½¢ç•Œé¢ç¨‹åºï¼Œç”¨äºæ˜¾ç¤ºè´­ç‰©è½¦ä¸­çš„å•†å“ä¿¡æ¯ã€‚
- * ç¨‹åºåŒ…æ‹¬ä¸€ä¸ªåä¸ºShoppingCartDialogçš„ç±»ï¼Œå®ƒç»§æ‰¿äº†JDialogç±»ï¼Œç”¨äºåˆ›å»ºä¸€ä¸ªæ¨¡æ€å¯¹è¯æ¡†ï¼Œæ˜¾ç¤ºè´­ç‰©è½¦ä¸­çš„å•†å“ä¿¡æ¯ã€‚
- * ç¨‹åºä¸­è¿˜æœ‰ä¸€ä¸ªåä¸ºShoppingCartçš„ç±»ï¼Œç”¨äºç®¡ç†è´­ç‰©è½¦ä¸­çš„å•†å“ä¿¡æ¯ã€‚
+ * ÕâÊÇÒ»¸öJava SwingÍ¼ĞÎ½çÃæ³ÌĞò£¬ÓÃÓÚÏÔÊ¾¹ºÎï³µÖĞµÄÉÌÆ·ĞÅÏ¢¡£
+ * ³ÌĞò°üÀ¨Ò»¸öÃûÎªShoppingCartDialogµÄÀà£¬Ëü¼Ì³ĞÁËJDialogÀà£¬ÓÃÓÚ´´½¨Ò»¸öÄ£Ì¬¶Ô»°¿ò£¬ÏÔÊ¾¹ºÎï³µÖĞµÄÉÌÆ·ĞÅÏ¢¡£
+ * ³ÌĞòÖĞ»¹ÓĞÒ»¸öÃûÎªShoppingCartµÄÀà£¬ÓÃÓÚ¹ÜÀí¹ºÎï³µÖĞµÄÉÌÆ·ĞÅÏ¢¡£
+ * ½«Ìá½»µÄ¹ºÎï³µĞÅÏ¢±£³ÖÔÚÎÄ¼şsave.dbÖĞ
  * <p>
- * ç¨‹åºé¦–å…ˆåœ¨æ„é€ æ–¹æ³•ä¸­æ¥æ”¶ä¸€ä¸ªçˆ¶çª—ä½“å’Œä¸€ä¸ªæŸ¥çœ‹è´­ç‰©è½¦æŒ‰é’®ï¼Œç„¶åè°ƒç”¨lookShoppingCar()æ–¹æ³•åˆ›å»ºç•Œé¢ã€‚
- * ç•Œé¢åŒ…æ‹¬ä¸€ä¸ªæ˜¾ç¤ºè´­ç‰©è½¦é‡Œå•†å“ä¿¡æ¯çš„é¢æ¿å’Œä¸€ä¸ªåº•éƒ¨é¢æ¿ï¼Œåº•éƒ¨é¢æ¿åŒ…å«ä¸€ä¸ªæäº¤è¡¨å•æŒ‰é’®å’Œä¸€ä¸ªæ¸…ç©ºæŒ‰é’®ã€‚
+ * ³ÌĞòÊ×ÏÈÔÚ¹¹Ôì·½·¨ÖĞ½ÓÊÕÒ»¸ö¸¸´°ÌåºÍÒ»¸ö²é¿´¹ºÎï³µ°´Å¥£¬È»ºóµ÷ÓÃlookShoppingCar()·½·¨´´½¨½çÃæ
+ * ½çÃæ°üÀ¨Ò»¸öÏÔÊ¾¹ºÎï³µÀïÉÌÆ·ĞÅÏ¢µÄÃæ°åºÍÒ»¸öµ×²¿Ãæ°å£¬µ×²¿Ãæ°å°üº¬Ò»¸öÌá½»±íµ¥°´Å¥ºÍÒ»¸öÇå¿Õ°´Å¥¡£
  * <p>
- * æ˜¾ç¤ºè´­ç‰©è½¦é‡Œå•†å“ä¿¡æ¯çš„é¢æ¿ä½¿ç”¨GridBagLayoutå¸ƒå±€ç®¡ç†å™¨ï¼Œå°†è´­ç‰©è½¦ä¸­çš„å•†å“ä¿¡æ¯å’Œå¯¹åº”çš„æ•°é‡æ–‡æœ¬æ¡†ä»¥åŠè¾“å…¥æ•°é‡çš„æ ‡ç­¾éƒ½æ·»åŠ åˆ°é¢æ¿ä¸­ã€‚
- * åº•éƒ¨é¢æ¿ä¸­çš„æŒ‰é’®åˆ†åˆ«æ·»åŠ äº†OkButtonActionListenerå’ŒClearButtonActionListenerä¸¤ä¸ªå†…éƒ¨ç±»ç”¨äºç›‘å¬æŒ‰é’®çš„ç‚¹å‡»äº‹ä»¶ã€‚
+ * ÏÔÊ¾¹ºÎï³µÀïÉÌÆ·ĞÅÏ¢µÄÃæ°åÊ¹ÓÃGridBagLayout²¼¾Ö¹ÜÀíÆ÷£¬½«¹ºÎï³µÖĞµÄÉÌÆ·ĞÅÏ¢ºÍ¶ÔÓ¦µÄÊıÁ¿ÎÄ±¾¿òÒÔ¼°ÊäÈëÊıÁ¿µÄ±êÇ©¶¼Ìí¼Óµ½Ãæ°åÖĞ¡£
+ * µ×²¿Ãæ°åÖĞµÄ°´Å¥·Ö±ğÌí¼ÓÁËOkButtonActionListenerºÍClearButtonActionListener,checkoutButtonActionListener£¬ViewFormButtonActionListener£¬LoadFormButtonActionListenerÎå¸öÄÚ²¿ÀàÓÃÓÚ¼àÌı°´Å¥µÄµã»÷ÊÂ¼ş¡£
  * <p>
- * OkButtonActionListenerå†…éƒ¨ç±»å¤„ç†æäº¤è¡¨å•æŒ‰é’®çš„ç‚¹å‡»äº‹ä»¶ï¼Œå®ƒæ£€æŸ¥æ¯ä¸ªå•†å“çš„æ•°é‡æ–‡æœ¬æ¡†æ˜¯å¦ä¸ºç©ºï¼Œå¦‚æœä¸ºç©ºåˆ™æç¤ºç”¨æˆ·è¾“å…¥æ•°é‡ã€‚
- * å¦‚æœæ‰€æœ‰æ•°é‡éƒ½å·²è¾“å…¥ï¼Œåˆ™éšè—å¯¹è¯æ¡†å¹¶æ˜¾ç¤ºå¦ä¸€ä¸ªåä¸ºShoppingMessageDialogçš„å¯¹è¯æ¡†ï¼Œç”¨äºæ˜¾ç¤ºæäº¤æˆåŠŸçš„æ¶ˆæ¯ã€‚
+ *OkButtonActionListenerÄÚ²¿Àà´¦ÀíÌá½»±íµ¥°´Å¥µÄµã»÷ÊÂ¼ş£¬Ëü¼ì²éÃ¿¸öÉÌÆ·µÄÊıÁ¿ÎÄ±¾¿òÊÇ·ñÎª¿Õ£¬Èç¹ûÎª¿ÕÔòÌáÊ¾ÓÃ»§ÊäÈëÊıÁ¿¡£
+ * Èç¹ûËùÓĞÊıÁ¿¶¼ÒÑÊäÈë£¬ÔòÒş²Ø¶Ô»°¿ò²¢ÏÔÊ¾ÁíÒ»¸öÃûÎªShoppingMessageDialogµÄ¶Ô»°¿ò£¬ÓÃÓÚÏÔÊ¾Ìá½»³É¹¦µÄÏûÏ¢¡£
+ * Ìí¼Ó¶ÔÊıÁ¿ÊäÈëµÄÑéÖ¤Âß¼­£¬¼´¶ÔÊäÈëÊı×ÖÅĞ¶ÏÊÇ·ñÊÇÕıÕûÊı
  * <p>
- * ClearButtonActionListenerå†…éƒ¨ç±»å¤„ç†æ¸…ç©ºæŒ‰é’®çš„ç‚¹å‡»äº‹ä»¶ï¼Œå®ƒè°ƒç”¨ShoppingCartç±»ä¸­çš„clearProduct()æ–¹æ³•æ¸…ç©ºè´­ç‰©è½¦ï¼Œå¹¶ç¦ç”¨æŸ¥çœ‹è´­ç‰©è½¦æŒ‰é’®ã€‚
- *
- * @author cjc
- * @version 1.0
+ * ClearButtonActionListenerÄÚ²¿Àà´¦ÀíÇå¿Õ°´Å¥µÄµã»÷ÊÂ¼ş£¬Ëüµ÷ÓÃShoppingCartÀàÖĞµÄclearProduct()·½·¨Çå¿Õ¹ºÎï³µ£¬²¢½ûÓÃ²é¿´¹ºÎï³µ°´Å¥¡£
+ *Ôö¼ÓÈ·ÈÏÇå¿Õ¹¦ÄÜ
+ *Ôö¼ÓÖØÖÃ¸ºÖµ£¬Ä¬ÈÏÎª1
+ *<p>
+ *checkoutButtonActionListener"ÄÚ²¿Àà´¦Àí½áËã±íµ¥¹¦ÄÜ£¬´ıÍêÉÆ
+ *<p>
+ *ViewFormButtonActionListenerÄÚ²¿ÀàÊµÏÖ±íµ¥ÎÄ¼şÏÔÊ¾¹¦ÄÜ£¬¶ÁÈ¡±£´æµÄ±íµ¥Êı¾İ£¬²¢ÏÔÊ¾
+ *<p>
+ *LoadFormButtonActionListenerÄÚ²¿ÀàÊµÏÖ±íµ¥ÎÄ¼şµÄ¶ÁÈ¡¹¦ÄÜ£¬¼ÓÔØ±£´æµÄ±íµ¥Êı¾İ£¬²¢¶ÁÈ¡
+ *<p>
+ *ĞÂÔö¶ÁÈ¡±£´æµÄ±íµ¥Êı¾İµÄÁ½¸öÊµÏÖ·½·¨readFormDataºÍloadFormData
+ * @author dak119
+ * @version 2.0
  */
+@SuppressWarnings("serial")
 public class ShoppingCartDialog extends JDialog {
+
+	protected ShoppingCart shoppingCart;
+
+	protected Frame parentFrame;
+
+	private JButton shoppingButton;
+
+	private HashMap<String,JTextField> textMap;
+
+	private JLabel tipLabel;
+
+	/**
+	 * ´øÁ½¸ö²ÎÊıµÄ¹¹Ôì·½·¨
+	 * @param theParentFrame ¸¸´°Ìå
+	 * @param shoppingButton ²é¿´¹ºÎï³µ°´Å¥
+	 */
+	public ShoppingCartDialog(Frame theParentFrame, JButton shoppingButton) {
+		super(theParentFrame, "¹ºÎï³µ", true);
+		textMap = new HashMap<String,JTextField>();
+		parentFrame = theParentFrame;
+		this.shoppingButton = shoppingButton;
+
+		lookShoppingCar();
+	}
+
+	
+	/**
+	 * ¹¹½¨ÏÔÊ¾¹ºÎï³µÀïÉÌÆ·ĞÅÏ¢µÄ½çÃæ
+	 * Ìí¼Ó½áËã°´Å¥
+	 */
+	public void lookShoppingCar() {
+		Container container = this.getContentPane();
+		container.setLayout(new BorderLayout());
+
+		JPanel infoPanel = new JPanel();
+		tipLabel = new JLabel("");
+		infoPanel.add(tipLabel);
+		infoPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
+		infoPanel.setLayout(new GridBagLayout());
+
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 3;
+		c.weightx = 0.0;
+		c.weighty = 0.0;
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(10, 0, 2, 10);
+
+		shoppingCart = new ShoppingCart();
+		ArrayList<Product> shoppingList = shoppingCart.getShoppingList();
+
+		JLabel pruductLabel;
+		Product product = null;
+		for (int i = 0; i < shoppingList.size(); i++) {
+			c.gridy = c.gridy + 2;
+			String str = "";
+			product = shoppingList.get(i);
+			str = str + "²úÆ·Ãû£º" + product.getProductname() + "    ";
+			str = str + "CASºÅ£º" + product.getCas() + "    ";
+			str = str + "¹«Ê½£º" + product.getFormula() + "    ";
+			str = str + "Àà±ğ£º" + product.getCategory();
+			pruductLabel = new JLabel(str);
+			JPanel panel = new JPanel(new FlowLayout());
+			JLabel l = new JLabel("ÊıÁ¿£º");
+			JTextField jtf = new JTextField(7);
+			jtf.setText("1");
+			panel.add(pruductLabel);
+			panel.add(l);
+			panel.add(jtf);
+			textMap.put(product.getProductname(), jtf);
+			pruductLabel.setForeground(Color.black);
+			infoPanel.add(panel, c);
+		}
+
+		container.add(BorderLayout.NORTH, infoPanel);
+
+		JPanel bottomPanel = new JPanel();
+		JButton okButton = new JButton("Ìá½»±íµ¥");
+		bottomPanel.add(okButton);
+		JButton clearButton = new JButton("Çå¿Õ");
+		bottomPanel.add(clearButton);
+		JButton checkoutButton = new JButton("½áËã"); // Ìí¼Ó½áËã°´Å¥
+        bottomPanel.add(checkoutButton);
+        JButton ViewFormButton = new JButton("²é¿´±íµ¥"); // Ìí¼Ó²é¿´±íµ¥°´Å¥
+        bottomPanel.add(ViewFormButton);
+        JButton loadFormButton = new JButton("¶ÁÈ¡±íµ¥"); // Ìí¼Ó¶ÁÈ¡±íµ¥°´Å¥
+        bottomPanel.add(loadFormButton);
+        
+		container.add(BorderLayout.SOUTH, bottomPanel);
+
+		okButton.addActionListener(new OkButtonActionListener());
+		clearButton.addActionListener(new ClearButtonActionListener());
+		checkoutButton.addActionListener(new checkoutButtonActionListener()); // Ìí¼Ó½áËã°´Å¥µÄÊÂ¼ş¼àÌıÆ÷
+		ViewFormButton.addActionListener(new ViewFormButtonActionListener()); // Ìí¼Ó²é¿´±íµ¥µÄÊÂ¼ş¼àÌıÆ÷
+		loadFormButton.addActionListener(new LoadFormButtonActionListener()); // Ìí¼Ó¶ÁÈ¡±íµ¥µÄÊÂ¼ş¼àÌıÆ÷
+		
+		
+		setResizable(false);
+		this.pack();
+		Point parentLocation = parentFrame.getLocation();
+		this.setLocation(parentLocation.x + 50, parentLocation.y + 50);
+	}
+	
+
+	class OkButtonActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            // ´´½¨StringBuilderÓÃÓÚ±£´æ±íµ¥Êı¾İ
+            StringBuilder formText = new StringBuilder();
+
+            // ±éÀú¹ºÎï³µÖĞµÄÉÌÆ·ÁĞ±í
+            for (Product product : shoppingCart.getShoppingList()) {
+                // »ñÈ¡ÉÌÆ·¶ÔÓ¦µÄÊıÁ¿ÊäÈë¿ò
+                JTextField textField = textMap.get(product.getProductname());
+                if (textField != null) {
+                    String quantityText = textField.getText().trim();
+                    try {
+                        int quantity = Integer.parseInt(quantityText);
+                        if (quantity <= 0) {
+                            // ÊıÁ¿±ØĞëÊÇÕıÕûÊı
+                            throw new NumberFormatException();
+                        }
+                        // ½«ÉÌÆ·ºÍ¶ÔÓ¦µÄÊıÁ¿±£´æµ½StringBuilder
+                        formText.append(product.getProductname()).append(": ").append(quantity).append("\n");
+                    } catch (NumberFormatException e) {
+                        // ´¦ÀíÊıÁ¿ÊäÈë²»ÊÇÕıÕûÊıµÄÇé¿ö
+                        JOptionPane.showMessageDialog(ShoppingCartDialog.this, "ÊıÁ¿±ØĞëÊÇÕıÕûÊı", "´íÎó",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+            }
+
+            // ½«±íµ¥Êı¾İ±£´æµ½ÎÄ¼ş
+            try (FileWriter writer = new FileWriter("save.db")) {
+                writer.write(formText.toString());
+            } catch (IOException e) {
+                // ´¦ÀíÎÄ¼şĞ´Èë´íÎó
+                JOptionPane.showMessageDialog(ShoppingCartDialog.this, "±£´æ±íµ¥Êı¾İÊ§°Ü", "´íÎó", JOptionPane.ERROR_MESSAGE);
+            }
+
+            // Òş²Ø¹ºÎï³µ¶Ô»°¿ò
+            setVisible(false);
+            // ÆôÓÃ²é¿´¹ºÎï³µ°´Å¥
+            shoppingButton.setEnabled(true);
+        }
+    }
+
+    class ClearButtonActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+        	 int choice = JOptionPane.showConfirmDialog(ShoppingCartDialog.this,
+                     "È·¶¨ÒªÇå¿Õ¹ºÎï³µÂğ£¿", "È·ÈÏÇå¿Õ", JOptionPane.YES_NO_OPTION);
+        	 if (choice == JOptionPane.YES_OPTION) {
+                 for (Map.Entry<String, JTextField> entry : textMap.entrySet()) {
+                     String productName = entry.getKey();
+                     JTextField textField = entry.getValue();
+                     if (textField != null) {
+                         // ¼ì²éÄ¬ÈÏÖµÊÇ·ñÎªÕıÕûÊı£¬Èç¹û²»ÊÇ£¬ÔòÖØÖÃÎª"1"
+                         if (!textField.getText().matches("\\d+")) {
+                             textField.setText("1");
+                         } else {
+                             textField.setText("");
+                         }
+                     }
+                 }
+        	 }
+        }
+    }
+
+    class checkoutButtonActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            JOptionPane.showMessageDialog(ShoppingCartDialog.this, "½áËã³É¹¦", "ÌáÊ¾", JOptionPane.INFORMATION_MESSAGE);
+       
+        }
+    }
+
+    class ViewFormButtonActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            // ¶ÁÈ¡±£´æµÄ±íµ¥Êı¾İ
+            String formData = readFormData();
+
+            // ÏÔÊ¾±íµ¥Êı¾İ
+            JOptionPane.showMessageDialog(ShoppingCartDialog.this, formData, "±íµ¥Êı¾İ", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    class LoadFormButtonActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            // ¼ÓÔØ±£´æµÄ±íµ¥Êı¾İ
+            loadFormData();
+            // ÏÔÊ¾³É¹¦ÌáÊ¾
+            JOptionPane.showMessageDialog(ShoppingCartDialog.this, "¶ÁÈ¡±íµ¥Êı¾İ³É¹¦", "ÌáÊ¾", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    /**
+     * ¶ÁÈ¡±£´æµÄ±íµ¥Êı¾İ
+     * 
+     * @return ±£´æµÄ±íµ¥Êı¾İ
+     */
+    private String readFormData() {
+        StringBuilder formData = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader("save.db"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                formData.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            // ´¦ÀíÎÄ¼ş¶ÁÈ¡´íÎó
+            JOptionPane.showMessageDialog(ShoppingCartDialog.this, "¶ÁÈ¡±íµ¥Êı¾İÊ§°Ü", "´íÎó", JOptionPane.ERROR_MESSAGE);
+        }
+        return formData.toString();
+    }
+
+    /**
+     * ¼ÓÔØ±£´æµÄ±íµ¥Êı¾İ²¢¸üĞÂ½çÃæ
+     */
+    private void loadFormData() {
+        String formData = readFormData();
+        if (!formData.isEmpty()) {
+            // ½âÎö±íµ¥Êı¾İ
+            String[] lines = formData.split("\n");
+            for (String line : lines) {
+                String[] parts = line.split(":");
+                if (parts.length == 2) {
+                    String productName = parts[0].trim();
+                    String quantityText = parts[1].trim();
+                    // ¸üĞÂÊıÁ¿ÊäÈë¿òµÄÖµ
+                    JTextField textField = textMap.get(productName);
+                    if (textField != null) {
+                        textField.setText(quantityText);
+                    }
+                }
+            }
+        }
+    }
 }

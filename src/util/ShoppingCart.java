@@ -1,17 +1,66 @@
+/**
+ * Õâ¸öÀàÊµÏÖ¹ºÎï³µÄÚÈİÒ³ÃæµÄÏÔÊ¾
+ * <p>
+ * <p>
+ * 
+ * <p>
+ * getShoppingList()»ñÈ¡ËùÓĞ¹ºÂòÉÌÆ·ĞÅÏ¢
+ * addProduct()Ìí¼ÓÉÌÆ·µ½¹ºÎï³µ
+ * clearProduct()Çå¿Õ¹ºÎï³µËù¹ºÂòÉÌÆ·
+ *
+ * @author dak119
+ * @version 2.0
+ */
 package util;
 
+import java.util.ArrayList;
+import bean.Product;
+
 /**
- * è´­ç‰©è½¦
- * <p>
- * <p>
- * è¿™æ˜¯ä¸€ä¸ªJavaç±»ï¼Œåä¸ºShoppingCartï¼Œä»£è¡¨è´­ç‰©è½¦ã€‚è´­ç‰©è½¦åŒ…å«ä¸€ä¸ªArrayListå¯¹è±¡ï¼Œå…¶ä¸­å­˜å‚¨äº†è¦è´­ä¹°çš„å•†å“ä¿¡æ¯ã€‚è¿™ä¸ªç±»æœ‰ä»¥ä¸‹æ–¹æ³•ï¼š
- * <p>
- * getShoppingList()æ–¹æ³•ï¼šè¿”å›è´­ç‰©è½¦ä¸­å­˜å‚¨çš„æ‰€æœ‰å•†å“ä¿¡æ¯çš„ArrayListå¯¹è±¡ã€‚
- * addProduct()æ–¹æ³•ï¼šå°†å•†å“æ·»åŠ åˆ°è´­ç‰©è½¦ä¸­ã€‚
- * clearProduct()æ–¹æ³•ï¼šæ¸…ç©ºè´­ç‰©è½¦ä¸­å­˜å‚¨çš„æ‰€æœ‰å•†å“ä¿¡æ¯ã€‚
- *
- * @author cjc
+ * ¹ºÎï³µ
+ * @author ascent
  * @version 1.0
  */
 public class ShoppingCart {
+
+	/**
+	 * ´æ·Å¹ºÂòÉÌÆ·ĞÅÏ¢
+	 */
+	private static ArrayList<Product> shoppingList = new ArrayList<Product>();
+
+	/**
+	 * »ñÈ¡ËùÓĞ¹ºÂòÉÌÆ·ĞÅÏ¢
+	 * @return shoppingList
+	 */
+	public ArrayList<Product> getShoppingList() {
+		return ShoppingCart.shoppingList;
+	}
+
+	/**
+	 * Ìí¼ÓÉÌÆ·µ½¹ºÎï³µ
+	 * @param myProduct
+	 */
+	public void addProduct(Product myProduct) {
+		Product product;
+		boolean bo = false;
+		for (int i = 0; i < shoppingList.size(); i++) {
+			product = shoppingList.get(i);
+			if (myProduct.getProductname().trim().equals(product.getProductname().trim())) {
+				bo = true;
+				break;
+			}
+		}
+		if (!bo) {
+			shoppingList.add(myProduct);
+		}
+	}
+
+	/**
+	 * Çå¿Õ¹ºÎï³µËù¹ºÂòÉÌÆ·
+	 */
+	public void clearProduct() {
+		shoppingList.clear();
+	}
+
 }
+

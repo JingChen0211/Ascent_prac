@@ -1,18 +1,119 @@
 package ui;
 
 import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import ui.ShoppingMessageDialog.OkButtonActionListener;
 
 /**
- * ç¡®è®¤è´­ä¹°å•†å“æç¤ºçª—ä½“
+ * È·ÈÏ¹ºÂòÉÌÆ·ÌáÊ¾´°Ìå
  * <p>
- * è¿™æ®µä»£ç æ˜¯ä¸€ä¸ªåä¸ºShoppingMessageDialogçš„Javaç±»ï¼Œæ˜¯ä¸€ä¸ªç»§æ‰¿è‡ªJDialogç±»çš„ç¡®è®¤è´­ä¹°å•†å“æç¤ºçª—ä½“ã€‚
- * å®ƒåŒ…æ‹¬ä¸€ä¸ªå¸¦æœ‰ä¸€ä¸ªå‚æ•°çš„æ„é€ æ–¹æ³•å’Œä¸€ä¸ªshoppingMessage()æ–¹æ³•ã€‚
- * æ„é€ æ–¹æ³•åˆ›å»ºå¹¶åˆå§‹åŒ–è¯¥å¯¹è¯æ¡†ï¼Œå¹¶å°†çˆ¶çª—ä½“ä½œä¸ºå‚æ•°ä¼ é€’ã€‚
- * shoppingMessage()æ–¹æ³•å®šä¹‰äº†è¯¥å¯¹è¯æ¡†çš„å†…å®¹ï¼ŒåŒ…æ‹¬ä¸€ä¸ªä¿¡æ¯é¢æ¿å’Œä¸€ä¸ªåº•éƒ¨é¢æ¿ï¼Œä¿¡æ¯é¢æ¿åŒ…å«ä¸€ä¸ªæ ‡ç­¾ï¼Œæ˜¾ç¤ºä¸€æ¡ä¿¡æ¯ï¼Œå¹¶è®¾ç½®äº†ä¸€ä¸ªOKæŒ‰é’®ã€‚
- * ç‚¹å‡»OKæŒ‰é’®æ—¶ï¼Œè¯¥å¯¹è¯æ¡†å°†è¢«éšè—ã€‚
+ * Õâ¶Î´úÂëÊÇÒ»¸öÃûÎªShoppingMessageDialogµÄJavaÀà£¬ÊÇÒ»¸ö¼Ì³Ğ×ÔJDialogÀàµÄÈ·ÈÏ¹ºÂòÉÌÆ·ÌáÊ¾´°Ìå
+ * Ëü°üÀ¨Ò»¸ö´øÓĞÒ»¸ö²ÎÊıµÄ¹¹Ôì·½·¨ºÍÒ»¸öshoppingMessage()·½·¨¡£
+ * ¹¹Ôì·½·¨´´½¨²¢³õÊ¼»¯¸Ã¶Ô»°¿ò£¬²¢½«¸¸´°Ìå×÷Îª²ÎÊı´«µİ¡£
+ *shoppingMessage()·½·¨¶¨ÒåÁË¸Ã¶Ô»°¿òµÄÄÚÈİ£¬°üÀ¨Ò»¸öĞÅÏ¢Ãæ°åºÍÒ»¸öµ×²¿Ãæ°å£¬ĞÅÏ¢Ãæ°å°üº¬Ò»¸ö±êÇ©£¬ÏÔÊ¾Ò»ÌõĞÅÏ¢£¬²¢ÉèÖÃÁËÒ»¸öOK°´Å¥¡£
+ * µã»÷OK°´Å¥Ê±£¬¸Ã¶Ô»°¿ò½«±»Òş²Ø¡£
  *
- * @author cjc
- * @version 1.0
+ * @author dak119
+ * @version 2.0
  */
+
+@SuppressWarnings("serial")
 public class ShoppingMessageDialog extends JDialog {
+
+	protected Frame parentFrame;
+
+	/**
+	 * ´øÒ»¸ö²ÎÊıµÄ¹¹Ôì·½·¨
+	 * @param theParentFrame ¸¸´°Ìå
+	 */
+	public ShoppingMessageDialog(Frame theParentFrame) {
+		super(theParentFrame, "¹ºÎïĞÅÏ¢", true);
+		parentFrame = theParentFrame;
+		shoppingMessage();
+	}
+
+	/**
+	 * ¹¹½¨µ¯³öÈ·ÈÏĞÅÏ¢´°Ìå
+	 */
+	public void shoppingMessage() {
+		Container container = this.getContentPane();
+		container.setLayout(new BorderLayout());
+
+		JPanel infoPanel = new JPanel();
+		infoPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
+		infoPanel.setLayout(new GridBagLayout());
+
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 3;
+		c.weightx = 0.0;
+		c.weighty = 0.0;
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(10, 0, 2, 10);
+
+		String str = "Äú¹ºÎïĞÅÏ¢ÒÑ¾­±£´æ£¬Ğ»Ğ»¡£";
+		JLabel pruductLabel = new JLabel(str);
+		pruductLabel.setForeground(Color.black);
+		infoPanel.add(pruductLabel, c);
+
+		container.add(BorderLayout.NORTH, infoPanel);
+
+		JPanel bottomPanel = new JPanel();
+		JButton okButton = new JButton("OK");
+		bottomPanel.add(okButton);
+
+		container.add(BorderLayout.SOUTH, bottomPanel);
+
+		okButton.addActionListener(new OkButtonActionListener());
+
+		setResizable(false);
+		this.pack();
+
+		Point parentLocation = parentFrame.getLocation();
+		this.setLocation(parentLocation.x + 50, parentLocation.y + 50);
+	}
+
+	/**
+	 * ´¦Àí"OK"°´Å¥µÄÄÚ²¿Àà
+	 * @author ascent
+	 */
+	class OkButtonActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			setVisible(false);
+		}
+	}
+	
+	/**
+	 * ĞÂÔö½áËã¹¦ÄÜ
+	 * @param dak119
+	 */
+    public void checkout() {
+        // Éú³É¶©µ¥
+        // ¼ÆËãÖ§¸¶½ğ¶î
+        // Ñ¡ÔñÖ§¸¶·½Ê½
+        // Ö´ĞĞÖ§¸¶²Ù×÷
+        // ÏÔÊ¾Ö§¸¶½á¹û
+        // ´ıÍêÉÆ
+        System.out.println("½áËãÍê³É£¡");
+    }
 }
+
