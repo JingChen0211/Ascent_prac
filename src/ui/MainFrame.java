@@ -1,202 +1,156 @@
 package com.ascent.ui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
+import com.ascent.bean.User;
+import com.ascent.util.UserDataClient;
 
 /**
- * 艾斯医药主框架界面
+ * 用户登陆窗体
  * @author ascent
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame {
+public class AdminLogin extends JFrame {
+
+	protected JTextField userText;
+
+	protected JPasswordField password;
+
+	protected JLabel tip;
+
+	protected UserDataClient userDataClient;
 
 	/**
-	 * tabbed pane组件
+	 * 默认的构造方法，初始化登陆窗体
 	 */
-	protected JTabbedPane tabbedPane;
+	public AdminLogin() {
 
-	/**
-	 * 产品 panel
-	 */
-	protected ProductPanel productPanel;
-
-	/**
-	 * 默认构造方法
-	 */
-	public MainFrame() {
-
-		setTitle("欢迎使用AscentSys应用! ");
+		setTitle("用户登陆");
 
 		Container container = this.getContentPane();
 		container.setLayout(new BorderLayout());
 
-		tabbedPane = new JTabbedPane();
+		JPanel loginPanel = new JPanel();
 
-		productPanel = new ProductPanel(this);
-		tabbedPane.addTab("药品", productPanel);
+		JLabel userLabel = new JLabel("管理员帐号：");
+		JLabel passwordLabel = new JLabel("管理员密码：");
 
-		container.add(BorderLayout.CENTER, tabbedPane);
+		userText = new JTextField(15);
+		password = new JPasswordField(15);
 
-		JMenuBar myMenuBar = new JMenuBar();
-		
-		JMenu fileMenu = new JMenu("文件");
-		JMenu openMenu = new JMenu("打开");
-		
-		JMenuItem AddProducts = new JMenuItem("添加产品（管理员）");
-		openMenu.add(AddProducts);
-		
-		AddProducts.addActionListener(new AddProductsListener());
-		
-		
-		JMenuItem localMenuItem = new JMenuItem("本地硬盘...");
-		openMenu.add(localMenuItem);
+		JButton loginButton = new JButton("登陆");
+		//JButton regist = new JButton("注册");
+		JButton exitButton = new JButton("退出");
 
-		JMenuItem networkMenuItem = new JMenuItem("网络...");
-		openMenu.add(networkMenuItem);
+		loginPanel.add(userLabel);
+		loginPanel.add(new JScrollPane(userText));
+		loginPanel.add(passwordLabel);
+		loginPanel.add(new JScrollPane(password));
+		loginPanel.add(loginButton);
+		//loginPanel.add(regist);
+		loginPanel.add(exitButton);
 
-		JMenuItem webMenuItem = new JMenuItem("互联网...");
-		openMenu.add(webMenuItem);
-		fileMenu.add(openMenu);
+		setResizable(false);
+		setSize(260, 150);
+		setLocation(300, 100);
 
-		JMenuItem saveMenuItem = new JMenuItem("保存");
-		fileMenu.add(saveMenuItem);
+		JPanel tipPanel = new JPanel();
 
-		JMenuItem exitMenuItem = new JMenuItem("退出");
-		fileMenu.add(exitMenuItem);
+		tip = new JLabel();
 
-		myMenuBar.add(fileMenu);
+		tipPanel.add(tip);
 
-		exitMenuItem.addActionListener(new ExitActionListener());
+		container.add(BorderLayout.CENTER, loginPanel);
+		container.add(BorderLayout.NORTH, tip);
 
-		setupLookAndFeelMenu(myMenuBar);
-
-		JMenu helpMenu = new JMenu("帮助");
-		JMenuItem aboutMenuItem = new JMenuItem("关于");
-		JMenuItem teachMenuItem = new JMenuItem("使用方法");
-		helpMenu.add(aboutMenuItem);
-		helpMenu.add(teachMenuItem);
-
-		myMenuBar.add(helpMenu);
-
-		aboutMenuItem.addActionListener(new AboutActionListener());
-		
-		teachMenuItem.addActionListener(new TeachActionListener());
-
-		this.setJMenuBar(myMenuBar);
-
-		setSize(500, 400);
-		setLocation(100, 100);
-
+		exitButton.addActionListener(new ExitActionListener());
+		loginButton.addActionListener(new LoginActionListener());
+		//regist.addActionListener(new RegistActionListener());
 		this.addWindowListener(new WindowCloser());
-
-		fileMenu.setMnemonic('f');
-		exitMenuItem.setMnemonic('x');
-		helpMenu.setMnemonic('h');
-		aboutMenuItem.setMnemonic('a');
-
-		// 设定快捷键
-		exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
-				ActionEvent.CTRL_MASK));
-
-		saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-				ActionEvent.CTRL_MASK));
-
-		aboutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
-				ActionEvent.CTRL_MASK));
-	}
-
-	/**
-	 * 设定和选择外观
-	 */
-	protected void setupLookAndFeelMenu(JMenuBar theMenuBar) {
-
-		UIManager.LookAndFeelInfo[] lookAndFeelInfo = UIManager
-				.getInstalledLookAndFeels();
-		JMenu lookAndFeelMenu = new JMenu("选项");
-		JMenuItem anItem = null;
-		LookAndFeelListener myListener = new LookAndFeelListener();
-
 		try {
-			for (int i = 0; i < lookAndFeelInfo.length; i++) {
-				anItem = new JMenuItem(lookAndFeelInfo[i].getName() + " 外观");
-				anItem.setActionCommand(lookAndFeelInfo[i].getClassName());
-				anItem.addActionListener(myListener);
-
-				lookAndFeelMenu.add(anItem);
-			}
-		} catch (Exception e) {
+			userDataClient = new UserDataClient();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		theMenuBar.add(lookAndFeelMenu);
 	}
 
 	/**
-	 * 退出方法.
-	 */
-	public void exit() {
-		setVisible(false);
-		dispose();
-		System.exit(0);
-	}
-
-	/**
-	 * "退出"事件处理内部类.
+	 * 处理"退出"按钮事件监听的内部类
 	 */
 	class ExitActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			exit();
+			setVisible(false);
+			dispose();
+			//userDataClient.closeSocKet();
 		}
 	}
 
 	/**
-	 * 处理"关闭窗口"事件的内部类.
+	 * 处理"登陆"按钮事件监听的内部类
 	 */
-	class WindowCloser extends WindowAdapter {
+	class LoginActionListener implements ActionListener {
 
-		/**
-		 * let's call our exit() method defined above
-		 */
-		public void windowClosing(WindowEvent e) {
-			exit();
-		}
-	}
-
-	/**
-	 * 处理"外观"选择监听器的内部类
-	 */
-	class LookAndFeelListener implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			String className = event.getActionCommand();
-			try {
-				UIManager.setLookAndFeel(className);
-				SwingUtilities.updateComponentTreeUI(MainFrame.this);
-			} catch (Exception e) {
-				e.printStackTrace();
+		public void actionPerformed(ActionEvent e) {
+			boolean bo = false;
+			HashMap userTable = userDataClient.getUsers();
+			if (userTable != null) {
+				if (userTable.containsKey(userText.getText())) {
+					User userObject = (User) userTable.get(userText.getText());
+					char[] chr = password.getPassword();
+					String pwd = new String(chr);
+					String admin = "admin";
+					if (userObject.getPassword().equals(pwd)&&userObject.getUsername().equals(admin)) {
+						bo = true;
+					}
+				}
+				if (bo) {
+					userDataClient.closeSocKet();
+					Add addFrame = new Add();
+					addFrame.setVisible(true);
+				} else {
+					tip.setText(" 管理员密码错误.");
+				}
+			} else {
+				tip.setText("服务器连接失败,请稍候再试.");
 			}
 		}
 	}
 
 	/**
-	 * 处理"关于"菜单监听器的内部类
+	 * 处理"注册"按钮事件监听的内部类.
 	 */
-	class AboutActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			String msg = "超值享受!";
-			JOptionPane.showMessageDialog(MainFrame.this, msg);
-		}
-	}
-	class TeachActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			String msg = "根据选择类别选购药品，点击购买后，加入购物车再统一结算";
-			JOptionPane.showMessageDialog(MainFrame.this, msg);
-		}
-	}
-	class AddProductsListener implements ActionListener {
+	class RegistActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-			AdminLogin registFrame = new AdminLogin();
-			registFrame.setVisible(true);
+			// 打开注册用户的窗口
+			Add addFrame = new Add();
+			addFrame.setVisible(true);
+		}
+	}
+
+	/**
+	 * 处理"关闭窗口"事件监听的内部类.
+	 */
+	class WindowCloser extends WindowAdapter {
+		public void windowClosing(WindowEvent e) {
+			setVisible(false);
+			dispose();
+			userDataClient.closeSocKet();
 		}
 	}
 }
