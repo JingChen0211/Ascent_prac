@@ -67,11 +67,12 @@ public class UserDataClient implements ProtocolPort {
 
     /**
      * 返回用户
+     *
      * @return userTable
      */
     @SuppressWarnings("unchecked")
-    public HashMap<String,User> getUsers() {
-        HashMap<String,User> userTable = null;
+    public HashMap<String, User> getUsers() {
+        HashMap<String, User> userTable = null;
 
         try {
             log("发送请求: OP_GET_USERS  ");
@@ -80,7 +81,7 @@ public class UserDataClient implements ProtocolPort {
             outputToServer.flush();
 
             log("接收数据...");
-            userTable = (HashMap<String,User>) inputFromServer.readObject();
+            userTable = (HashMap<String, User>) inputFromServer.readObject();
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -105,6 +106,7 @@ public class UserDataClient implements ProtocolPort {
 
     /**
      * 日志方法.
+     *
      * @param msg 打印的日志信息
      */
     protected void log(Object msg) {
@@ -113,12 +115,13 @@ public class UserDataClient implements ProtocolPort {
 
     /**
      * 注册用户
+     *
      * @param username 用户名
      * @param password 密码
      * @return boolean true:注册成功，false:注册失败
      */
     public boolean addUser(String username, String password) {
-        HashMap<String,User> map = this.getUsers();
+        HashMap<String, User> map = this.getUsers();
         if (map.containsKey(username)) {
             return false;
         } else {
@@ -132,9 +135,25 @@ public class UserDataClient implements ProtocolPort {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
         return false;
     }
-
+    public boolean addPro(String a,String b,String c,String d,String kk,String f,String g) {
+		/*HashMap<String,ArrayList<Product>> map = this.getPros();
+		if (map.containsKey(name)) {
+			return false;
+		} else {*/
+        try {
+            log("发送请求: OP_ADD_PRODUCTS  ");
+            outputToServer.writeInt(ProtocolPort.OP_ADD_PRODUCTS);
+            outputToServer.writeObject(new Product(a,b,c,d,kk,f,g));
+            outputToServer.flush();
+            log("接收数据...");
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //}
+        return false;
+    }
 }

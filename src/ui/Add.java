@@ -1,4 +1,4 @@
-package com.ascent.ui;
+package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -19,7 +19,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import com.ascent.util.UserDataClient;
+import util.UserDataClient;
 
 /**
  * 用户注册窗体

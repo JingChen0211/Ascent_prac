@@ -26,7 +26,7 @@ import util.UserDataClient;
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class AdminLogin extends JFrame {
+public class MainFrame extends JFrame {
 
 	protected JTextField userText;
 
@@ -39,7 +39,7 @@ public class AdminLogin extends JFrame {
 	/**
 	 * 默认的构造方法，初始化登陆窗体
 	 */
-	public AdminLogin() {
+	public MainLogin() {
 
 		setTitle("用户登陆");
 
@@ -120,7 +120,7 @@ public class AdminLogin extends JFrame {
 					}
 				}
 				if (bo) {
-					userDataClient.closeSocKet();
+					userDataClient.closeSocket();
 					Add addFrame = new Add();
 					addFrame.setVisible(true);
 				} else {
@@ -150,7 +150,7 @@ public class AdminLogin extends JFrame {
 		public void windowClosing(WindowEvent e) {
 			setVisible(false);
 			dispose();
-			userDataClient.closeSocKet();
+			userDataClient.closeSocket();
 		}
 	}
 }

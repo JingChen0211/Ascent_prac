@@ -1,4 +1,4 @@
-package com.ascent.ui;
+package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -17,8 +17,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import com.ascent.bean.User;
-import com.ascent.util.UserDataClient;
+import bean.User;
+import util.UserDataClient;
+import ui.Add;
 
 /**
  * 用户登陆窗体
@@ -120,7 +121,7 @@ public class AdminLogin extends JFrame {
 					}
 				}
 				if (bo) {
-					userDataClient.closeSocKet();
+					userDataClient.closeSocket();
 					Add addFrame = new Add();
 					addFrame.setVisible(true);
 				} else {
@@ -150,7 +151,7 @@ public class AdminLogin extends JFrame {
 		public void windowClosing(WindowEvent e) {
 			setVisible(false);
 			dispose();
-			userDataClient.closeSocKet();
+			userDataClient.closeSocket();
 		}
 	}
 }
