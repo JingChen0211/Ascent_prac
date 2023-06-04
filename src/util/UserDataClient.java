@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.HashMap;
 
 import bean.User;
+import bean.Product;
 
 
 /**

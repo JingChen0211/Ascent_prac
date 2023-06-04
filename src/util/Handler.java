@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -103,6 +104,9 @@ public class Handler extends Thread {
                     case ProtocolPort.OP_ADD_USERS:
                         opAddUser();
                         break;
+                    case ProtocolPort.OP_ADD_PRODUCTS:
+                        opAddProducts();
+                        break;
                     default:
                         System.out.println("错误代码");
                 }
@@ -110,6 +114,9 @@ public class Handler extends Thread {
         } catch (Exception exc) {
             log(exc);
         }
+    }
+    //添加products
+    private void opAddProducts() {
     }
 
     private void opGetUsers() {
@@ -123,7 +130,14 @@ public class Handler extends Thread {
     }
 
     protected void opGetProductCategories() {
-        System.out.println("根据类别获得产品的信息…");
+        try {
+            ArrayList<String> categoryList = myProductDataAccessor.getCategories();
+            outputToClient.writeObject(categoryList);
+            outputToClient.flush();
+            log("���� " + categoryList.size() + " �����Ϣ���ͻ���");
+        } catch (IOException exc) {
+            log("�����쳣:  " + exc);
+        }
     }
 
     protected void opGetProducts() {

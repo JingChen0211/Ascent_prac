@@ -21,13 +21,13 @@ import javax.swing.JTextField;
 
 import util.UserDataClient;
 /**
- * ç”¨æˆ·æ³¨å†Œçª—ä½“
- * è¿™æ˜¯ä¸€ä¸ªJavaè¯­è¨€ç¼–å†™çš„ç”¨æˆ·æ³¨å†Œçª—ä½“ç±»ã€‚
- * çª—ä½“åŒ…å«è¾“å…¥ç”¨æˆ·å¸å·ã€å¯†ç å’Œé‡å¤å¯†ç çš„æ–‡æœ¬æ¡†ã€æ³¨å†Œå’Œé€€å‡ºæŒ‰é’®ï¼Œä»¥åŠä¸€ä¸ªæç¤ºæ ‡ç­¾ã€‚
+ * ÓÃ»§×¢²á´°Ìå
+ * ÕâÊÇÒ»¸öJavaÓïÑÔ±àĞ´µÄÓÃ»§×¢²á´°ÌåÀà¡£
+ * ´°Ìå°üº¬ÊäÈëÓÃ»§ÕÊºÅ¡¢ÃÜÂëºÍÖØ¸´ÃÜÂëµÄÎÄ±¾¿ò¡¢×¢²áºÍÍË³ö°´Å¥£¬ÒÔ¼°Ò»¸öÌáÊ¾±êÇ©¡£
  * <p>
- * å…¶ä¸­æ³¨å†ŒæŒ‰é’®ä¼šé€šè¿‡UserDataClientç±»å°†è¾“å…¥çš„ç”¨æˆ·ä¿¡æ¯å‘é€ç»™æœåŠ¡å™¨è¿›è¡Œæ³¨å†Œï¼Œæ³¨å†ŒæˆåŠŸåæç¤ºæ ‡ç­¾ä¼šæ˜¾ç¤º"æ³¨å†ŒæˆåŠŸ"ï¼Œå¦åˆ™ä¼šæ˜¾ç¤º"ç”¨æˆ·åå·²å­˜åœ¨"ã€‚
- * é€€å‡ºæŒ‰é’®ç”¨äºå…³é—­çª—å£ï¼Œçª—å£å…³é—­æ—¶ä¹Ÿä¼šè°ƒç”¨çª—å£å…³é—­äº‹ä»¶å¤„ç†ç±»ã€‚
- * å¦å¤–ï¼Œé‡å¤å¯†ç æ–‡æœ¬æ¡†æ·»åŠ äº†ç„¦ç‚¹äº‹ä»¶ç›‘å¬å™¨ï¼Œå½“ç„¦ç‚¹å¤±å»æ—¶ä¼šæ£€æŸ¥ä¸¤æ¬¡è¾“å…¥çš„å¯†ç æ˜¯å¦ä¸€è‡´ï¼Œå¹¶åœ¨æç¤ºæ ‡ç­¾ä¸Šæ˜¾ç¤ºç›¸åº”ä¿¡æ¯ã€‚
+ * ÆäÖĞ×¢²á°´Å¥»áÍ¨¹ıUserDataClientÀà½«ÊäÈëµÄÓÃ»§ĞÅÏ¢·¢ËÍ¸ø·şÎñÆ÷½øĞĞ×¢²á£¬×¢²á³É¹¦ºóÌáÊ¾±êÇ©»áÏÔÊ¾"×¢²á³É¹¦"£¬·ñÔò»áÏÔÊ¾"ÓÃ»§ÃûÒÑ´æÔÚ"¡£
+ * ÍË³ö°´Å¥ÓÃÓÚ¹Ø±Õ´°¿Ú£¬´°¿Ú¹Ø±ÕÊ±Ò²»áµ÷ÓÃ´°¿Ú¹Ø±ÕÊÂ¼ş´¦ÀíÀà¡£
+ * ÁíÍâ£¬ÖØ¸´ÃÜÂëÎÄ±¾¿òÌí¼ÓÁË½¹µãÊÂ¼ş¼àÌıÆ÷£¬µ±½¹µãÊ§È¥Ê±»á¼ì²éÁ½´ÎÊäÈëµÄÃÜÂëÊÇ·ñÒ»ÖÂ£¬²¢ÔÚÌáÊ¾±êÇ©ÉÏÏÔÊ¾ÏàÓ¦ĞÅÏ¢¡£
  *
  * @author cjc
  * @version 1.0
@@ -45,26 +45,23 @@ public class RegistFrame extends JFrame {
 
     private UserDataClient userDataClient;
 
-    /**
-     * Ä¬ï¿½Ï¹ï¿½ï¿½ì·½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ã»ï¿½×¢ï¿½á´°ï¿½ï¿½
-     */
     public RegistFrame() {
-        this.setTitle("ç”¨æˆ·æ³¨å†Œ");
+        this.setTitle("ÓÃ»§×¢²á");
 
         Container container = this.getContentPane();
         container.setLayout(new BorderLayout());
 
         JPanel registPanel = new JPanel();
 
-        JLabel userLabel = new JLabel("ç”¨æˆ·è´¦æˆ·");
-        JLabel passwordLabel = new JLabel("ç”¨æˆ·å¯†ç ï¼š");
-        JLabel repasswordLabel = new JLabel("é‡å¤å¯†ç ï¼š");
+        JLabel userLabel = new JLabel("ÓÃ»§ÕË»§");
+        JLabel passwordLabel = new JLabel("ÓÃ»§ÃÜÂë£º");
+        JLabel repasswordLabel = new JLabel("ÖØ¸´ÃÜÂë£º");
 
         userText = new JTextField(15);
         password = new JPasswordField(15);
         repassword = new JPasswordField(15);
-        JButton regist = new JButton("æ³¨å†Œ");
-        JButton exitButton = new JButton("é€€å‡º");
+        JButton regist = new JButton("×¢²á");
+        JButton exitButton = new JButton("ÍË³ö");
 
         registPanel.add(userLabel);
         registPanel.add(new JScrollPane(userText));
@@ -92,7 +89,7 @@ public class RegistFrame extends JFrame {
         regist.addActionListener(new RegistActionListener());
         repassword.addFocusListener(new MyFocusListener());
         this.addWindowListener(new WindowCloser());
-        this.addWindowFocusListener(new WindowFocusListener() {// ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½
+        this.addWindowFocusListener(new WindowFocusListener() {// ?????????
             public void windowGainedFocus(WindowEvent e) {
             }
             public void windowLostFocus(WindowEvent e) {
@@ -107,7 +104,7 @@ public class RegistFrame extends JFrame {
     }
 
     /**
-     * é€€å‡ºæŒ‰é’®äº‹ä»¶ç›‘å¬
+     * ÍË³ö°´Å¥ÊÂ¼ş¼àÌı
      * @author ascent
      */
     class ExitActionListener implements ActionListener {
@@ -118,23 +115,23 @@ public class RegistFrame extends JFrame {
     }
 
     /**
-     * æ³¨å†ŒæŒ‰é’®äº‹ä»¶ç›‘å¬
+     * ×¢²á°´Å¥ÊÂ¼ş¼àÌı
      * @author ascent
      */
     class RegistActionListener implements ActionListener {
         public void actionPerformed(ActionEvent arg0) {
-            // å°†ç”¨æˆ·ä¿¡æ¯å†™å…¥æ•°æ®åº“
+            // ½«ÓÃ»§ĞÅÏ¢Ğ´ÈëÊı¾İ¿â
             boolean bo = userDataClient.addUser(userText.getText(), new String(password.getPassword()));
             if (bo) {
-                tip.setText("æ³¨å†ŒæˆåŠŸ");
+                tip.setText("×¢²á³É¹¦");
             } else {
-                tip.setText("ç”¨æˆ·åå·²å­˜åœ¨");
+                tip.setText("ÓÃ»§ÃûÒÑ´æÔÚ");
             }
         }
     }
 
     /**
-     * "å…³é—­çª—å£"äº‹ä»¶å¤„ç†å†…éƒ¨ç±»
+     * "¹Ø±Õ´°¿Ú"ÊÂ¼ş´¦ÀíÄÚ²¿Àà
      * @author ascent
      */
     class WindowCloser extends WindowAdapter {
@@ -145,7 +142,7 @@ public class RegistFrame extends JFrame {
     }
 
     /**
-     * ç„¦ç‚¹å¤±å»æ—¶ä¼šæ£€æŸ¥ä¸¤æ¬¡è¾“å…¥çš„å¯†ç æ˜¯å¦ä¸€è‡´
+     * ½¹µãÊ§È¥Ê±»á¼ì²éÁ½´ÎÊäÈëµÄÃÜÂëÊÇ·ñÒ»ÖÂ
      * @author ascent
      */
     class MyFocusListener implements FocusListener {
@@ -156,11 +153,11 @@ public class RegistFrame extends JFrame {
         public void focusLost(FocusEvent e) {
             if (e.getSource().equals(password)) {
                 if (new String(password.getPassword()) == "" || new String(password.getPassword()) == null) {
-                    tip.setText("å¯†ç ä¸ºç©º!");
+                    tip.setText("ÃÜÂëÎª¿Õ!");
                 }
             } else if (e.getSource().equals(repassword)) {
                 if (!new String(password.getPassword()).equals(new String(password.getPassword()))) {
-                    tip.setText("å¯†ç ä¸ä¸€è‡´");
+                    tip.setText("ÃÜÂë²»Ò»ÖÂ");
                 }
             } else {
                 tip.setText("");

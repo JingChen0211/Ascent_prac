@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import util.UserDataClient;
 
 /**
- * ç”¨æˆ·æ³¨å†Œçª—ä½“
+ * ÓÃ»§×¢²á´°Ìå
  * @author ascent
  * @version 1.0
  */
@@ -43,29 +43,29 @@ public class Add extends JFrame {
 	private UserDataClient userDataClient;
 
 	/**
-	 * é»˜è®¤æ„é€ æ–¹æ³•ï¼Œåˆå§‹åŒ–ç”¨æˆ·æ³¨å†Œçª—ä½“
+	 * Ä¬ÈÏ¹¹Ôì·½·¨£¬³õÊ¼»¯ÓÃ»§×¢²á´°Ìå
 	 */
 	public Add() {
-		this.setTitle("æ·»åŠ äº§å“");
+		this.setTitle("Ìí¼Ó²úÆ·");
 
 		Container container = this.getContentPane();
 		container.setLayout(new BorderLayout());
 
 		JPanel registPanel = new JPanel();
 
-		JLabel name = new JLabel("äº§å“åï¼š");
-		JLabel Cas = new JLabel("CASå·ï¼š");
-		JLabel repasswordLabel = new JLabel("å…¬å¼ï¼š");
-		JLabel number = new JLabel("æ•°é‡ï¼š");
-		JLabel type = new JLabel("ç±»åˆ«ï¼š");
+		JLabel name = new JLabel("²úÆ·Ãû£º");
+		JLabel Cas = new JLabel("CASºÅ£º");
+		JLabel repasswordLabel = new JLabel("¹«Ê½£º");
+		JLabel number = new JLabel("ÊıÁ¿£º");
+		JLabel type = new JLabel("Àà±ğ£º");
 
 		userText = new JTextField(15);
 		password = new JTextField(15);
 		repassword = new JTextField(15);
 		Number = new JTextField(15);
 		Type = new JTextField(15);
-		JButton exitButton = new JButton("é€€å‡º");
-		JButton regist = new JButton("æ·»åŠ ");
+		JButton exitButton = new JButton("ÍË³ö");
+		JButton regist = new JButton("Ìí¼Ó");
 
 		registPanel.add(name);
 		registPanel.add(new JScrollPane(userText));
@@ -96,7 +96,7 @@ public class Add extends JFrame {
 		exitButton.addActionListener(new ExitActionListener());
 		regist.addActionListener(new RegistActionListener());
 		this.addWindowListener(new WindowCloser());
-		this.addWindowFocusListener(new WindowFocusListener() {// è®¾ç½®çˆ¶çª—å£
+		this.addWindowFocusListener(new WindowFocusListener() {// ÉèÖÃ¸¸´°¿Ú
 					public void windowGainedFocus(WindowEvent e) {
 					}
 					public void windowLostFocus(WindowEvent e) {
@@ -111,7 +111,7 @@ public class Add extends JFrame {
 	}
 
 	/**
-	 * é€€å‡ºæŒ‰é’®äº‹ä»¶ç›‘å¬
+	 * ÍË³ö°´Å¥ÊÂ¼ş¼àÌı
 	 * @author ascent
 	 */
 	class ExitActionListener implements ActionListener {
@@ -122,26 +122,26 @@ public class Add extends JFrame {
 	}
 
 	/**
-	 * æ³¨å†ŒæŒ‰é’®äº‹ä»¶ç›‘å¬
+	 * ×¢²á°´Å¥ÊÂ¼ş¼àÌı
 	 * @author ascent
 	 */
 	class RegistActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-			// ç”¨æˆ·æ³¨å†Œæ“ä½œ
+			// ÓÃ»§×¢²á²Ù×÷
 			String a="830g";
-			String b="ç»´ç”Ÿç´ ";
+			String b="Î¬ÉúËØ";
 			boolean bo = userDataClient.addPro(userText.getText(), password.getText()
 					,repassword.getText(),Number.getText(),Type.getText(),a,b);
 			if (bo) {
-				tip.setText("æ·»åŠ æˆåŠŸï¼");
+				tip.setText("Ìí¼Ó³É¹¦£¡");
 			} else {
-				tip.setText("ç”¨æˆ·åå·²å­˜åœ¨ï¼");
+				tip.setText("ÓÃ»§ÃûÒÑ´æÔÚ£¡");
 			}
 		}
 	}
 
 	/**
-	 * "å…³é—­çª—å£"äº‹ä»¶å¤„ç†å†…éƒ¨ç±»
+	 * "¹Ø±Õ´°¿Ú"ÊÂ¼ş´¦ÀíÄÚ²¿Àà
 	 * @author ascent
 	 */
 	class WindowCloser extends WindowAdapter {
@@ -150,10 +150,5 @@ public class Add extends JFrame {
 			dispose();
 		}
 	}
-
-	/**
-	 * å¯†ç ä¸ä¸€è‡´è§¦å‘çš„äº‹ä»¶ç›‘å¬å™¨å¤„ç†ç±»
-	 * @author ascent
-	 */
 }
 

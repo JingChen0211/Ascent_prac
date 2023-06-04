@@ -8,21 +8,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * ç”¨æˆ·ç™»é™†çª—ä½“
- * è¿™æ˜¯ä¸€ä¸ªJavaç¨‹åºçš„æºä»£ç ï¼Œä¸»è¦å®ç°äº†ç”¨æˆ·ç™»é™†çª—å£çš„åŠŸèƒ½ã€‚
- * ç¨‹åºä¸­å®šä¹‰äº†ä¸€ä¸ªLoginFrameç±»ï¼Œç»§æ‰¿äº†JFrameç±»ï¼Œå®ç°äº†ç”¨æˆ·ç™»é™†ç•Œé¢çš„UIã€‚
- * åœ¨è¯¥ç±»ä¸­ï¼Œå®šä¹‰äº†ä¸€ä¸ªæ„é€ æ–¹æ³•ï¼Œåˆ›å»ºäº†ç”¨æˆ·ç™»é™†ç•Œé¢çš„å„ä¸ªç»„ä»¶ï¼Œå¦‚ç”¨æˆ·åè¾“å…¥æ¡†ã€å¯†ç è¾“å…¥æ¡†ã€ç™»é™†æŒ‰é’®ã€æ³¨å†ŒæŒ‰é’®ã€é€€å‡ºæŒ‰é’®ç­‰ã€‚
- * åŒæ—¶ï¼Œå®šä¹‰äº†å¤„ç†â€œé€€å‡ºâ€æŒ‰é’®ã€å¤„ç†â€œç™»é™†â€æŒ‰é’®ã€å¤„ç†â€œæ³¨å†Œâ€æŒ‰é’®ã€å¤„ç†â€œå…³é—­çª—å£â€äº‹ä»¶çš„å†…éƒ¨ç±»ï¼Œé€šè¿‡è¿™äº›å†…éƒ¨ç±»å®ç°äº†ç™»é™†ã€é€€å‡ºã€æ³¨å†Œç­‰åŠŸèƒ½ã€‚
+ * ÓÃ»§µÇÂ½´°Ìå
+ * ÕâÊÇÒ»¸öJava³ÌĞòµÄÔ´´úÂë£¬Ö÷ÒªÊµÏÖÁËÓÃ»§µÇÂ½´°¿ÚµÄ¹¦ÄÜ¡£
+ * ³ÌĞòÖĞ¶¨ÒåÁËÒ»¸öLoginFrameÀà£¬¼Ì³ĞÁËJFrameÀà£¬ÊµÏÖÁËÓÃ»§µÇÂ½½çÃæµÄUI¡£
+ * ÔÚ¸ÃÀàÖĞ£¬¶¨ÒåÁËÒ»¸ö¹¹Ôì·½·¨£¬´´½¨ÁËÓÃ»§µÇÂ½½çÃæµÄ¸÷¸ö×é¼ş£¬ÈçÓÃ»§ÃûÊäÈë¿ò¡¢ÃÜÂëÊäÈë¿ò¡¢µÇÂ½°´Å¥¡¢×¢²á°´Å¥¡¢ÍË³ö°´Å¥µÈ¡£
+ * Í¬Ê±£¬¶¨ÒåÁË´¦Àí¡°ÍË³ö¡±°´Å¥¡¢´¦Àí¡°µÇÂ½¡±°´Å¥¡¢´¦Àí¡°×¢²á¡±°´Å¥¡¢´¦Àí¡°¹Ø±Õ´°¿Ú¡±ÊÂ¼şµÄÄÚ²¿Àà£¬Í¨¹ıÕâĞ©ÄÚ²¿ÀàÊµÏÖÁËµÇÂ½¡¢ÍË³ö¡¢×¢²áµÈ¹¦ÄÜ¡£
  * <p>
- * åœ¨å®ç°ç”¨æˆ·ç™»é™†çš„åŠŸèƒ½æ—¶ï¼Œç¨‹åºé€šè¿‡è°ƒç”¨UserDataClientç±»ä¸­çš„getUsers()æ–¹æ³•ï¼Œè·å–æœåŠ¡å™¨ä¸Šä¿å­˜çš„ç”¨æˆ·æ•°æ®ï¼Œ
- * å¹¶è¿›è¡Œæ¯”å¯¹ï¼Œåˆ¤æ–­è¾“å…¥çš„ç”¨æˆ·åå’Œå¯†ç æ˜¯å¦æ­£ç¡®ï¼Œ
- * å¦‚æœæ­£ç¡®åˆ™å…³é—­å½“å‰çª—å£ï¼Œæ‰“å¼€ä¸»çª—å£ï¼›å¦åˆ™åœ¨ç•Œé¢ä¸Šæ˜¾ç¤ºç›¸åº”çš„é”™è¯¯ä¿¡æ¯ã€‚
+ * ÔÚÊµÏÖÓÃ»§µÇÂ½µÄ¹¦ÄÜÊ±£¬³ÌĞòÍ¨¹ıµ÷ÓÃUserDataClientÀàÖĞµÄgetUsers()·½·¨£¬»ñÈ¡·şÎñÆ÷ÉÏ±£´æµÄÓÃ»§Êı¾İ£¬
+ * ²¢½øĞĞ±È¶Ô£¬ÅĞ¶ÏÊäÈëµÄÓÃ»§ÃûºÍÃÜÂëÊÇ·ñÕıÈ·£¬
+ * Èç¹ûÕıÈ·Ôò¹Ø±Õµ±Ç°´°¿Ú£¬´ò¿ªÖ÷´°¿Ú£»·ñÔòÔÚ½çÃæÉÏÏÔÊ¾ÏàÓ¦µÄ´íÎóĞÅÏ¢¡£
  * <p>
- * ç¨‹åºä¸­è¿˜å®šä¹‰äº†ä¸€ä¸ªWindowCloserç±»ï¼Œç”¨äºåœ¨ç”¨æˆ·å…³é—­çª—å£æ—¶ï¼Œå…³é—­ä¸æœåŠ¡å™¨çš„è¿æ¥ã€‚
+ * ³ÌĞòÖĞ»¹¶¨ÒåÁËÒ»¸öWindowCloserÀà£¬ÓÃÓÚÔÚÓÃ»§¹Ø±Õ´°¿ÚÊ±£¬¹Ø±ÕÓë·şÎñÆ÷µÄÁ¬½Ó¡£
  *
  * @author cjc
  * @version 1.0
@@ -32,13 +31,13 @@ public class LoginFrame extends JFrame {
 
     private JPanel contentPane;
     private JTextField userField;
-    private JPasswordField keyField;//å¯†ç ç”¨JPasswordField
+    private JPasswordField keyField;//ÃÜÂëÓÃJPasswordField
 
-    protected UserDataClient userDataClient;//ç«¯å£
+    protected UserDataClient userDataClient;//¶Ë¿Ú
 
     /**
-     * Launch the application.ä¸Ascentsysç±»çš„åŠŸèƒ½ç›¸åŒ
-     * å¯ä»¥è§£å¼€æ³¨é‡Šï¼Œå°è¯•è¿è¡Œ
+     * Launch the application.ÓëAscentsysÀàµÄ¹¦ÄÜÏàÍ¬
+     * ¿ÉÒÔ½â¿ª×¢ÊÍ£¬³¢ÊÔÔËĞĞ
      */
 //    public static void main(String[] args) {
 //        EventQueue.invokeLater(new Runnable() {
@@ -64,24 +63,24 @@ public class LoginFrame extends JFrame {
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        //è´¦å·
+        //ÕËºÅ
         userField = new JTextField();
         userField.setBounds(137, 65, 183, 28);
         contentPane.add(userField);
         userField.setColumns(10);
-        //å¯†ç 
+        //ÃÜÂë
         keyField = new JPasswordField();
         keyField.setColumns(10);
         keyField.setBounds(137, 134, 183, 28);
         contentPane.add(keyField);
 
-        JLabel userLabel = new JLabel("è´¦å·ï¼š");
-        userLabel.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+        JLabel userLabel = new JLabel("ÕËºÅ£º");
+        userLabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
         userLabel.setBounds(61, 67, 54, 21);
         contentPane.add(userLabel);
 
-        JLabel passwordLabel = new JLabel("å¯†ç ï¼š");
-        passwordLabel.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+        JLabel passwordLabel = new JLabel("ÃÜÂë£º");
+        passwordLabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
         passwordLabel.setBounds(61, 141, 54, 21);
         contentPane.add(passwordLabel);
 
@@ -89,15 +88,15 @@ public class LoginFrame extends JFrame {
         tip.setBounds(138, 170, 150, 15);
         contentPane.add(tip);
 
-        JButton loginButton = new JButton("ç™»å½•");
-        //ç™»å½•åŠŸèƒ½çš„äº‹ä»¶ç›‘å¬
+        JButton loginButton = new JButton("µÇÂ¼");
+        //µÇÂ¼¹¦ÄÜµÄÊÂ¼ş¼àÌı
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 boolean flag = false;
                 HashMap<String, User> users = userDataClient.getUsers();
                 if (users != null) {
                     if (users.containsKey(userField.getText())) {
-                        User user = users.get(userField.getText());//get(Object o) è¿”å›ä¸æŒ‡å®š key æ‰€å…³è”çš„ valueã€‚
+                        User user = users.get(userField.getText());//get(Object o) ·µ»ØÓëÖ¸¶¨ key Ëù¹ØÁªµÄ value¡£
                         char[] password = keyField.getPassword();
                         String pwd = new String(password);
                         if (user.getPassword().equals(pwd)) {
@@ -105,33 +104,33 @@ public class LoginFrame extends JFrame {
                         }
                     }
                     if (flag) {
-                        //å¯†ç æ­£ç¡®
-                        //å…³é—­ç”¨æˆ·æ•°æ®å®¢æˆ·ç«¯
+                        //ÃÜÂëÕıÈ·
+                        //¹Ø±ÕÓÃ»§Êı¾İ¿Í»§¶Ë
                         userDataClient.closeSocket();
-                        //å°†ç™»å½•ç•Œé¢è®¾ç½®ä¸ºä¸å¯è§
+                        //½«µÇÂ¼½çÃæÉèÖÃÎª²»¿É¼û
                         setVisible(false);
                         dispose();
-                        //è¿›å…¥ä¸»ç•Œé¢
+                        //½øÈëÖ÷½çÃæ
                         MainFrame mainFrame = new MainFrame();
                         mainFrame.setVisible(true);
                     } else {
-                        tip.setText("è´¦å·ä¸å­˜åœ¨ï¼Œæˆ–å¯†ç é”™è¯¯ã€‚");
+                        tip.setText("ÕËºÅ²»´æÔÚ£¬»òÃÜÂë´íÎó¡£");
                     }
                 } else {
-                    tip.setText("æœåŠ¡å™¨è¿æ¥å¤±è´¥...");
+                    tip.setText("·şÎñÆ÷Á¬½ÓÊ§°Ü...");
                 }
             }
         });
         loginButton.setBounds(29, 195, 93, 34);
         contentPane.add(loginButton);
 
-        JLabel headingLabel = new JLabel("ç™»å½•ç•Œé¢");
-        headingLabel.setFont(new Font("å®‹ä½“", Font.BOLD, 20));
+        JLabel headingLabel = new JLabel("µÇÂ¼½çÃæ");
+        headingLabel.setFont(new Font("ËÎÌå", Font.BOLD, 20));
         headingLabel.setBounds(175, 22, 93, 28);
         contentPane.add(headingLabel);
 
-        JButton registerButton = new JButton("æ³¨å†Œ");
-        //æ³¨å†ŒåŠŸèƒ½
+        JButton registerButton = new JButton("×¢²á");
+        //×¢²á¹¦ÄÜ
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 RegistFrame registFrame = null;
@@ -142,20 +141,20 @@ public class LoginFrame extends JFrame {
         registerButton.setBounds(179, 195, 93, 34);
         contentPane.add(registerButton);
 
-        JButton exitButton = new JButton("é€€å‡º");
-        //é€€å‡ºåŠŸèƒ½
+        JButton exitButton = new JButton("ÍË³ö");
+        //ÍË³ö¹¦ÄÜ
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 dispose();
-                // 1.ä½¿ç”¨dispose()æ–¹æ³•å…³é—­çª—ä½“ä¼šé‡Šæ”¾è¯¥çª—ä½“çš„å ç”¨çš„éƒ¨åˆ†èµ„æºï¼Œä¸è¿‡å‘¢ä¸æ˜¯å…¨éƒ¨çš„ï¼Œåªæ˜¯å±å¹•èµ„æºã€‚
-                // 2.ä½¿ç”¨dispose()æ–¹æ³•å…³é—­çš„çª—ä½“å¯ä»¥ä½¿ç”¨pack æˆ– show æ–¹æ³•æ¢å¤ï¼Œå¹¶ä¸”å¯ä»¥æ¢å¤åˆ°disposeå‰çš„çŠ¶æ€
-                userDataClient.closeSocket();//å…³é—­çº¿ç¨‹ï¼Œéœ€è¦è¡¥å……UserDataClientçš„closeSocket()æ–¹æ³•
+                // 1.Ê¹ÓÃdispose()·½·¨¹Ø±Õ´°Ìå»áÊÍ·Å¸Ã´°ÌåµÄÕ¼ÓÃµÄ²¿·Ö×ÊÔ´£¬²»¹ıÄØ²»ÊÇÈ«²¿µÄ£¬Ö»ÊÇÆÁÄ»×ÊÔ´¡£
+                // 2.Ê¹ÓÃdispose()·½·¨¹Ø±ÕµÄ´°Ìå¿ÉÒÔÊ¹ÓÃpack »ò show ·½·¨»Ö¸´£¬²¢ÇÒ¿ÉÒÔ»Ö¸´µ½disposeÇ°µÄ×´Ì¬
+                userDataClient.closeSocket();//¹Ø±ÕÏß³Ì£¬ĞèÒª²¹³äUserDataClientµÄcloseSocket()·½·¨
             }
         });
         exitButton.setBounds(317, 195, 93, 34);
         contentPane.add(exitButton);
 
-        setResizable(false); //è®¾ç½®çª—å£å¤§å°ä¸èƒ½æ”¹å˜
+        setResizable(false); //ÉèÖÃ´°¿Ú´óĞ¡²»ÄÜ¸Ä±ä
     }
 }

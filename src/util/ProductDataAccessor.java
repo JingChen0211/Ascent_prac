@@ -1,5 +1,6 @@
 package util;
 
+import bean.Product;
 import bean.User;
 
 import java.io.*;
@@ -8,81 +9,163 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 /**
- * äº§å“æ•°æ®è¯»å–çš„å®ç°ç±»
+ * ²úÆ·Êı¾İ¶ÁÈ¡µÄÊµÏÖÀà
  * <p>
- * è¯¥ä»£ç å®ç°äº†ä¸€ä¸ªå•†å“æ•°æ®è¯»å–çš„ç±»ProductDataAccessorï¼Œè¯¥ç±»å¯ä»¥ä»æ–‡ä»¶ä¸­è¯»å–å•†å“æ•°æ®å’Œç”¨æˆ·æ•°æ®ï¼Œå¹¶å°†å…¶ä¿å­˜åœ¨å†…å­˜ä¸­çš„æ•°æ®è¡¨ä¸­ã€‚
- * å…¶ä¸­ï¼Œå•†å“æ•°æ®å’Œç”¨æˆ·æ•°æ®åˆ†åˆ«å­˜å‚¨åœ¨ä¸åŒçš„æ–‡ä»¶ä¸­ï¼Œæ•°æ®çš„åˆ†å‰²ç¬¦ä¸ºé€—å·ï¼Œæ¯ä¸ªè®°å½•éƒ½ä»¥åˆ†éš”ç¬¦"----------"ç»“æŸã€‚
- * é€šè¿‡loadæ–¹æ³•ï¼Œè¯¥ç±»å¯ä»¥è¯»å–æ–‡ä»¶å¹¶å°†æ•°æ®å­˜å‚¨åœ¨å†…å­˜ä¸­çš„HashMapæ•°æ®ç»“æ„ä¸­ï¼Œå…¶ä¸­å•†å“æ•°æ®æŒ‰ç…§ç±»åˆ«è¿›è¡Œåˆ†ç±»å­˜å‚¨ã€‚
- * é€šè¿‡getProductObjectæ–¹æ³•ï¼Œå¯ä»¥ç”Ÿæˆæ–°çš„å•†å“å¯¹è±¡å¹¶è¿”å›ã€‚
- * è¯¥ç±»è¿˜æä¾›äº†ä¿å­˜ç”¨æˆ·æ•°æ®çš„æ–¹æ³•saveå’Œä¸€ä¸ªæ—¥å¿—æ–¹æ³•logã€‚
- * æœ€åï¼ŒgetUsersæ–¹æ³•ç”¨äºè·å–ç”¨æˆ·è¡¨ä¸­çš„æ•°æ®ã€‚
+ * ¸Ã´úÂëÊµÏÖÁËÒ»¸öÉÌÆ·Êı¾İ¶ÁÈ¡µÄÀàProductDataAccessor£¬¸ÃÀà¿ÉÒÔ´ÓÎÄ¼şÖĞ¶ÁÈ¡ÉÌÆ·Êı¾İºÍÓÃ»§Êı¾İ£¬²¢½«Æä±£´æÔÚÄÚ´æÖĞµÄÊı¾İ±íÖĞ¡£
+ * ÆäÖĞ£¬ÉÌÆ·Êı¾İºÍÓÃ»§Êı¾İ·Ö±ğ´æ´¢ÔÚ²»Í¬µÄÎÄ¼şÖĞ£¬Êı¾İµÄ·Ö¸î·ûÎª¶ººÅ£¬Ã¿¸ö¼ÇÂ¼¶¼ÒÔ·Ö¸ô·û"----------"½áÊø¡£
+ * Í¨¹ıload·½·¨£¬¸ÃÀà¿ÉÒÔ¶ÁÈ¡ÎÄ¼ş²¢½«Êı¾İ´æ´¢ÔÚÄÚ´æÖĞµÄHashMapÊı¾İ½á¹¹ÖĞ£¬ÆäÖĞÉÌÆ·Êı¾İ°´ÕÕÀà±ğ½øĞĞ·ÖÀà´æ´¢¡£
+ * Í¨¹ıgetProductObject·½·¨£¬¿ÉÒÔÉú³ÉĞÂµÄÉÌÆ·¶ÔÏó²¢·µ»Ø¡£
+ * ¸ÃÀà»¹Ìá¹©ÁË±£´æÓÃ»§Êı¾İµÄ·½·¨saveºÍÒ»¸öÈÕÖ¾·½·¨log¡£
+ * ×îºó£¬getUsers·½·¨ÓÃÓÚ»ñÈ¡ÓÃ»§±íÖĞµÄÊı¾İ¡£
  *
  * @author cjc
  * @version 1.0
  */
 
-public class ProductDataAccessor {
+/**
+ * ²úÆ·Êı¾İ¶ÁÈ¡µÄÊµÏÖÀà
+ * @author ascent
+ * @version 1.0
+ */
+public class ProductDataAccessor extends DataAccessor {
+
     // ////////////////////////////////////////////////////
     //
-    // ç”¨æˆ·æ–‡ä»¶æ ¼å¼å¦‚ä¸‹
-    // ç”¨æˆ·å¸å·,ç”¨æˆ·å¯†ç ,æƒé™
-    // ----------------------------
+    // ²úÆ·ÎÄ¼ş¸ñÊ½ÈçÏÂ
+    // ²úÆ·Ãû³Æ,»¯Ñ§ÎÄÕªµÇ¼ÇºÅ,½á¹¹Í¼,¹«Ê½,¼Û¸ñ,ÊıÁ¿,Àà±ğ
+    // ----------------------------------------------------
     //
-    protected static final String USER_FILE_NAME = "user.db";
-    private HashMap userTable;
+    // ////////////////////////////////////////////////////
 
-    public HashMap getUserTable() {
-        return this.userTable;
-    }
+    // ////////////////////////////////////////////////////
+    //
+    // ÓÃ»§ÎÄ¼ş¸ñÊ½ÈçÏÂ
+    // ÓÃ»§ÕÊºÅ,ÓÃ»§ÃÜÂë,ÓÃ»§È¨ÏŞ
+    // ----------------------------------------------------
+    //
+    // ////////////////////////////////////////////////////
+    /**
+     * ÉÌÆ·ĞÅÏ¢Êı¾İÎÄ¼şÃû
+     */
+    protected static final String PRODUCT_FILE_NAME = "product.db";
 
     /**
-     * é»˜è®¤æ„é€ æ–¹æ³•
+     * ÓÃ»§ĞÅÏ¢Êı¾İÎÄ¼şÃû
+     */
+    protected static final String USER_FILE_NAME = "user.db";
+
+    /**
+     * Êı¾İ¼ÇÂ¼µÄ·Ö¸î·û
+     */
+    protected static final String RECORD_SEPARATOR = "----------";
+
+    /**
+     * Ä¬ÈÏ¹¹Ôì·½·¨
      */
     public ProductDataAccessor() {
         load();
     }
 
     /**
-     * è¯»å–æ•°æ®çš„æ–¹æ³•
+     * ¶ÁÈ¡Êı¾İµÄ·½·¨
      */
+    @Override
     public void load() {
-        userTable = new HashMap();
-        ArrayList productArrayList = null;
+
+        dataTable = new HashMap<String,ArrayList<Product>>();
+        userTable = new HashMap<String,User>();
+
+        ArrayList<Product> productArrayList = null;
         StringTokenizer st = null;
-        User userObject;
+
+        Product productObject = null;
+        User userObject = null;
         String line = "";
+
+        String productName, cas, structure, formula, price, realstock, category;
         String userName, password, authority;
+
         try {
+            log("¶ÁÈ¡ÎÄ¼ş: " + PRODUCT_FILE_NAME + "...");
+            BufferedReader inputFromFile1 = new BufferedReader(new FileReader(PRODUCT_FILE_NAME));
+
+            while ((line = inputFromFile1.readLine()) != null) {
+
+                st = new StringTokenizer(line, ",");
+
+                productName = st.nextToken().trim();
+                cas = st.nextToken().trim();
+                structure = st.nextToken().trim();
+                formula = st.nextToken().trim();
+                price = st.nextToken().trim();
+                realstock = st.nextToken().trim();
+                category = st.nextToken().trim();
+
+                productObject = getProductObject(productName, cas, structure,formula, price, realstock, category);
+
+                if (dataTable.containsKey(category)) {
+                    productArrayList = dataTable.get(category);
+                } else {
+                    productArrayList = new ArrayList<Product>();
+                    dataTable.put(category, productArrayList);
+                }
+                productArrayList.add(productObject);
+            }
+
+            inputFromFile1.close();
+            log("ÎÄ¼ş¶ÁÈ¡½áÊø!");
+
             line = "";
-            log("è¯»å–æ–‡ä»¶: " + USER_FILE_NAME + "...");
+            log("¶ÁÈ¡ÎÄ¼ş: " + USER_FILE_NAME + "...");
             BufferedReader inputFromFile2 = new BufferedReader(new FileReader(USER_FILE_NAME));
             while ((line = inputFromFile2.readLine()) != null) {
+
                 st = new StringTokenizer(line, ",");
+
                 userName = st.nextToken().trim();
                 password = st.nextToken().trim();
                 authority = st.nextToken().trim();
                 userObject = new User(userName, password, Integer.parseInt(authority));
+
                 if (!userTable.containsKey(userName)) {
                     userTable.put(userName, userObject);
                 }
             }
+
             inputFromFile2.close();
-            log("æ–‡ä»¶è¯»å–ç»“æŸ!");
-            log("å‡†å¤‡å°±ç»ª!\n");
+            log("ÎÄ¼ş¶ÁÈ¡½áÊø!");
+            log("×¼±¸¾ÍĞ÷!\n");
         } catch (FileNotFoundException exc) {
-            log("æ²¡æœ‰æ‰¾åˆ°æ–‡ä»¶ \"" + USER_FILE_NAME + "\".");
+            log("Ã»ÓĞÕÒµ½ÎÄ¼ş: " + PRODUCT_FILE_NAME + " »ò "+USER_FILE_NAME+".");
             log(exc);
         } catch (IOException exc) {
-            log("å‘ç”Ÿå¼‚å¸¸: " + USER_FILE_NAME);
+            log("¶ÁÈ¡ÎÄ¼ş·¢ÉúÒì³£: " + PRODUCT_FILE_NAME+ " »ò "+USER_FILE_NAME+".");
             log(exc);
         }
     }
 
     /**
-     * ä¿å­˜æ•°æ®
+     * ·µ»Ø´øÓĞÕâĞ©²ÎÊıµÄÉÌÆ·¶ÔÏó
+     * @param productName Ò©Æ·Ãû³Æ
+     * @param cas »¯Ñ§ÎÄÕªµÇ¼ÇºÅ
+     * @param structure ½á¹¹Í¼Ãû³Æ
+     * @param formula ¹«Ê½
+     * @param price ¼Û¸ñ
+     * @param realstock ÊıÁ¿
+     * @param category Àà±ğ
+     * @return new Product(productName, cas, structure, formula, price, realstock, category);
      */
+    private Product getProductObject(String productName, String cas,
+                                     String structure, String formula, String price, String realstock, String category) {
+        return new Product(productName, cas, structure, formula, price, realstock, category);
+    }
+
+    /**
+     * ±£´æÊı¾İ
+     */
+    @Override
     public void save(User user) {
-        log("è¯»å–æ–‡ä»¶: " + USER_FILE_NAME + "...");
+        log("¶ÁÈ¡ÎÄ¼ş: " + USER_FILE_NAME + "...");
         try {
             String userinfo = user.getUsername() + "," + user.getPassword() + "," + user.getAuthority();
             RandomAccessFile fos = new RandomAccessFile(USER_FILE_NAME, "rws");
@@ -97,13 +180,15 @@ public class ProductDataAccessor {
     }
 
     /**
-     * æ—¥å¿—æ–¹æ³•.
+     * ÈÕÖ¾·½·¨.
      */
+    @Override
     protected void log(Object msg) {
-        System.out.println("ProductDataAccessorç±»: " + msg);
+        System.out.println("ProductDataAccessorÀà: " + msg);
     }
 
-    public HashMap getUsers() {
+    @Override
+    public HashMap<String,User> getUsers() {
         this.load();
         return this.userTable;
     }

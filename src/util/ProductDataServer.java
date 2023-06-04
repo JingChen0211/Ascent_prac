@@ -4,24 +4,24 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * æ•°æ®æœåŠ¡å™¨ç±»
+ * Êı¾İ·şÎñÆ÷Àà
  * <p>
- * è¿™æ˜¯ä¸€ä¸ª Java ä»£ç æ–‡ä»¶ï¼Œå®šä¹‰äº† ProductDataServer å’Œ ProductDataClient ä¸¤ä¸ªç±»ã€‚å®ƒä»¬è¢«ç”¨æ¥å®ç°ä¸€ä¸ªæ•°æ®æœåŠ¡å™¨å’Œå®¢æˆ·ç«¯ï¼Œç”¨äºæä¾›äº§å“ä¿¡æ¯å’Œç±»åˆ«ã€‚ä»¥ä¸‹æ˜¯æ¯ä¸ªç±»çš„ä¸»è¦æ–¹æ³•ï¼š
+ * ÕâÊÇÒ»¸ö Java ´úÂëÎÄ¼ş£¬¶¨ÒåÁË ProductDataServer ºÍ ProductDataClient Á½¸öÀà¡£ËüÃÇ±»ÓÃÀ´ÊµÏÖÒ»¸öÊı¾İ·şÎñÆ÷ºÍ¿Í»§¶Ë£¬ÓÃÓÚÌá¹©²úÆ·ĞÅÏ¢ºÍÀà±ğ¡£ÒÔÏÂÊÇÃ¿¸öÀàµÄÖ÷Òª·½·¨£º
  * <p>
- * ProductDataServer ç±»ï¼š
+ * ProductDataServer Àà£º
  * <p>
- * ProductDataServer(): é»˜è®¤æ„é€ æ–¹æ³•ï¼Œå¯åŠ¨æœåŠ¡å™¨ç«¯å£ä¸º ProtocolPort.DEFAULT_PORTã€‚
- * ProductDataServer(int thePort): å¸¦ä¸€ä¸ªå‚æ•°æ„é€ æ–¹æ³•ï¼Œå¯åŠ¨æœåŠ¡å™¨ç«¯å£ä¸º thePortã€‚
- * listenForConnections(): ç›‘å¬å®¢æˆ·ç«¯å‘é€è¯·æ±‚è¿æ¥ã€‚
- * log(Object msg): æ—¥å¿—æ–¹æ³•ï¼Œæ‰“å°æ—¥å¿—çš„æ¶ˆæ¯ã€‚
+ * ProductDataServer(): Ä¬ÈÏ¹¹Ôì·½·¨£¬Æô¶¯·şÎñÆ÷¶Ë¿ÚÎª ProtocolPort.DEFAULT_PORT¡£
+ * ProductDataServer(int thePort): ´øÒ»¸ö²ÎÊı¹¹Ôì·½·¨£¬Æô¶¯·şÎñÆ÷¶Ë¿ÚÎª thePort¡£
+ * listenForConnections(): ¼àÌı¿Í»§¶Ë·¢ËÍÇëÇóÁ¬½Ó¡£
+ * log(Object msg): ÈÕÖ¾·½·¨£¬´òÓ¡ÈÕÖ¾µÄÏûÏ¢¡£
  * <p>
- * ProductDataClient ç±»ï¼š
+ * ProductDataClient Àà£º
  * <p>
- * ProductDataClient(): é»˜è®¤æ„é€ æ–¹æ³•ï¼Œè¿æ¥æœåŠ¡å™¨é»˜è®¤ä¸»æœºå’Œç«¯å£ã€‚
- * ProductDataClient(String hostName, int port): æ¥å—ä¸»æœºåå’Œç«¯å£å·çš„æ„é€ æ–¹æ³•ã€‚
- * getCategories(): è¿”å›ç±»åˆ«é›†åˆã€‚
- * getProducts(String category): è¿”å›äº§å“é›†åˆã€‚
- * log(Object msg): æ—¥å¿—æ–¹æ³•ï¼Œæ‰“å°æ—¥å¿—çš„æ¶ˆæ¯ã€‚
+ * ProductDataClient(): Ä¬ÈÏ¹¹Ôì·½·¨£¬Á¬½Ó·şÎñÆ÷Ä¬ÈÏÖ÷»úºÍ¶Ë¿Ú¡£
+ * ProductDataClient(String hostName, int port): ½ÓÊÜÖ÷»úÃûºÍ¶Ë¿ÚºÅµÄ¹¹Ôì·½·¨¡£
+ * getCategories(): ·µ»ØÀà±ğ¼¯ºÏ¡£
+ * getProducts(String category): ·µ»Ø²úÆ·¼¯ºÏ¡£
+ * log(Object msg): ÈÕÖ¾·½·¨£¬´òÓ¡ÈÕÖ¾µÄÏûÏ¢¡£
  *
  * @author cjc
  * @version 1.0
@@ -38,10 +38,10 @@ public class ProductDataServer implements ProtocolPort {
     public ProductDataServer(int thePort) {
         try {
             done = false;
-            log("å¯åŠ¨æœåŠ¡å™¨ " + thePort);
+            log("Æô¶¯·şÎñÆ÷ " + thePort);
             myServerSocket = new ServerSocket(thePort);
             myProductDataAccessor = new ProductDataAccessor();
-            log("\næœåŠ¡å™¨å‡†å¤‡å°±ç»ª!");
+            log("\n·şÎñÆ÷×¼±¸¾ÍĞ÷!");
             listenForConnections();
         } catch (Exception exc) {
             log(exc);
@@ -54,24 +54,24 @@ public class ProductDataServer implements ProtocolPort {
         Handler aHandler = null;
         try {
             while (!done) {
-                log("\nç­‰å¾…è¯·æ±‚...");
+                log("\nµÈ´ıÇëÇó...");
                 clientSocket = myServerSocket.accept();
                 String clientHostName = clientSocket.getInetAddress()
                         .getHostName();
-                log("æ”¶åˆ°è¿æ¥: " + clientHostName);
+                log("ÊÕµ½Á¬½Ó: " + clientHostName);
                 aHandler = new Handler(clientSocket, myProductDataAccessor);
                 aHandler.start();
             }
         } catch (Exception exc) {
-            log("listenForConnections()ä¸­å‘ç”Ÿå¼‚å¸¸:  " + exc);
+            log("listenForConnections()ÖĞ·¢ÉúÒì³£:  " + exc);
         }
     }
 
     protected void log(Object msg) {
-        System.out.println("ProductDataServerç±»: " + msg);
+        System.out.println("ProductDataServerÀà: " + msg);
     }
 
-    // ä¸»æ–¹æ³•ï¼Œ å¯åŠ¨æœåŠ¡å™¨
+    // Ö÷·½·¨£¬ Æô¶¯·şÎñÆ÷
     public static void main(String[] args) {
         ProductDataServer myServer;
         if (args.length == 1) {
