@@ -95,16 +95,16 @@ public class LoginFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 boolean flag = false;
                 HashMap<String, User> users = userDataClient.getUsers();
-                if(users != null){
-                    if(users.containsKey(userField.getText())){
+                if (users != null) {
+                    if (users.containsKey(userField.getText())) {
                         User user = users.get(userField.getText());//get(Object o) 返回与指定 key 所关联的 value。
                         char[] password = keyField.getPassword();
                         String pwd = new String(password);
-                        if(user.getPassword().equals(pwd)){
+                        if (user.getPassword().equals(pwd)) {
                             flag = true;
                         }
                     }
-                    if(flag){
+                    if (flag) {
                         //密码正确
                         //关闭用户数据客户端
                         userDataClient.closeSocket();
@@ -114,10 +114,10 @@ public class LoginFrame extends JFrame {
                         //进入主界面
                         MainFrame mainFrame = new MainFrame();
                         mainFrame.setVisible(true);
-                    }else{
+                    } else {
                         tip.setText("账号不存在，或密码错误。");
                     }
-                }else{
+                } else {
                     tip.setText("服务器连接失败...");
                 }
             }
@@ -135,11 +135,7 @@ public class LoginFrame extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 RegistFrame registFrame = null;
-                try {
-                    registFrame = new RegistFrame();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                registFrame = new RegistFrame();
                 registFrame.setVisible(true);
             }
         });
