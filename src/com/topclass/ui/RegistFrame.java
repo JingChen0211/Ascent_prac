@@ -72,7 +72,7 @@ public class RegistFrame extends JFrame {
         registPanel.add(regist);
         registPanel.add(exitButton);
 
-        setResizable(false);
+        setResizable(true);
         setSize(260, 180);
         setLocation(300, 100);
 

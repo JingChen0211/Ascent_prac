@@ -1,5 +1,7 @@
 package com.topclass.ui;
 
+import com.topclass.ui.adminOper.AdminLogin;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -196,6 +198,7 @@ public class MainFrame extends JFrame {
     class AddProductsListener implements ActionListener {
         public void actionPerformed(ActionEvent arg0) {
             AdminLogin registFrame = new AdminLogin();
+            Container parent = getParent();
             registFrame.setVisible(true);
         }
     }

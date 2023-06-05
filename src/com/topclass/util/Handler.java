@@ -2,6 +2,7 @@ package com.topclass.util;
 
 import com.topclass.bean.Product;
 import com.topclass.bean.User;
+import com.topclass.ui.MainFrame;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -122,6 +123,16 @@ public class Handler extends Thread implements ProtocolPort {
 
     //添加products
     private void opAddProducts() {
+        try {
+            Product product = (Product) this.inputFromClient.readObject();
+            this.myProductDataAccessor.save(product);
+        } catch (IOException e) {
+            log("发生异常:  " + e);
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            log("发生异常:  " + e);
+            e.printStackTrace();
+        }
     }
 
     private void opGetUsers() {

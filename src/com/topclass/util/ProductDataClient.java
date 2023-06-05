@@ -117,6 +117,34 @@ public class ProductDataClient implements ProtocolPort {
     }
 
     /**
+     * 增添新商品
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * @param kk
+     * @param f
+     * @param g
+     * @return
+     */
+    public boolean addPro(String a,String b,String c,String d,String kk,String f,String g) {
+		/*HashMap<String,ArrayList<Product>> map = this.getPros();
+		if (map.containsKey(name)) {
+			return false;
+		} else {*/
+        try {
+            log("发送请求: OP_ADD_PRODUCTS  ");
+            outputToServer.writeInt(ProtocolPort.OP_ADD_PRODUCTS);
+            outputToServer.writeObject(new Product(a,b,c,d,kk,f,g));
+            outputToServer.flush();
+            log("接收数据...");
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    /**
      * 日志方法.
      */
     protected void log(Object msg) {

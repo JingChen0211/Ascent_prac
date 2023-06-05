@@ -164,6 +164,21 @@ public class ProductDataAccessor extends DataAccessor {
         }
     }
 
+    public void save(Product product) {
+        log("读取文件: " + PRODUCT_FILE_NAME + "...");
+        try {
+            String productinfo = product.getProductname() + "," + product.getCas() + "," + product.getStructure() +"," + product.getFormula()+"," + product.getPrice()+"," + product.getRealstock()+"," + product.getCategory();
+            RandomAccessFile fos = new RandomAccessFile(PRODUCT_FILE_NAME, "rws");
+            fos.seek(fos.length());
+            fos.write((productinfo+ "\n" ).getBytes());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 日志方法.
      */

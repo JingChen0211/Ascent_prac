@@ -1,4 +1,4 @@
-package com.topclass.ui;
+package com.topclass.ui.adminOper;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.topclass.bean.User;
+import com.topclass.ui.MainFrame;
 import com.topclass.util.UserDataClient;
 
 /**
@@ -41,7 +42,7 @@ public class AdminLogin extends JFrame {
 	 */
 	public AdminLogin() {
 
-		setTitle("用户登陆");
+		setTitle("管理员登陆");
 
 		Container container = this.getContentPane();
 		container.setLayout(new BorderLayout());
@@ -120,8 +121,14 @@ public class AdminLogin extends JFrame {
 					}
 				}
 				if (bo) {
+					//密码正确
+					//关闭用户数据客户端
 					userDataClient.closeSocket();
-					Add addFrame = new Add();
+					//将登录界面设置为不可见
+					setVisible(false);
+					dispose();
+					//进入主界面
+					AddProduct addFrame = new AddProduct();
 					addFrame.setVisible(true);
 				} else {
 					tip.setText(" 管理员密码错误.");
@@ -138,7 +145,7 @@ public class AdminLogin extends JFrame {
 	class RegistActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			// 打开注册用户的窗口
-			Add addFrame = new Add();
+			AddProduct addFrame = new AddProduct();
 			addFrame.setVisible(true);
 		}
 	}
