@@ -1,25 +1,26 @@
-package bean;
+package com.topclass.bean;
 
 /**
- * å®ä½“ç±»Userï¼Œç”¨æ¥æè¿°ç”¨æˆ·çš„ä¿¡æ¯ç±»
+ * ÊµÌåÀàUser£¬ÓÃÀ´ÃèÊöÓÃ»§µÄĞÅÏ¢Àà
  * <p>
- * Userç±»åŒ…å«ä»¥ä¸‹å­—æ®µï¼š
+ * UserÀà°üº¬ÒÔÏÂ×Ö¶Î£º
  * <p>
- * usernameï¼šç”¨æˆ·å
- * passwordï¼šå¯†ç 
- * authorityï¼šç”¨æˆ·æƒé™
- * æ­¤å¤–ï¼ŒUserç±»è¿˜åŒ…å«ä»¥ä¸‹æ–¹æ³•ï¼š
+ * username£ºÓÃ»§Ãû
+ * password£ºÃÜÂë
+ * authority£ºÓÃ»§È¨ÏŞ
+ * ´ËÍâ£¬UserÀà»¹°üº¬ÒÔÏÂ·½·¨£º
  * <p>
- * é»˜è®¤æ„é€ æ–¹æ³•
- * å¸¦å‚æ•°çš„æ„é€ æ–¹æ³•
- * å¸¦æ‰€æœ‰å‚æ•°çš„æ„é€ æ–¹æ³•
- * è·å–/è®¾ç½®Usernameã€Passwordã€Authorityå­—æ®µçš„æ–¹æ³•
- * toStringæ–¹æ³•ç”¨äºè¿”å›ç”¨æˆ·åå’Œå¯†ç 
+ * Ä¬ÈÏ¹¹Ôì·½·¨
+ * ´ø²ÎÊıµÄ¹¹Ôì·½·¨
+ * ´øËùÓĞ²ÎÊıµÄ¹¹Ôì·½·¨
+ * »ñÈ¡/ÉèÖÃUsername¡¢Password¡¢Authority×Ö¶ÎµÄ·½·¨
+ * toString·½·¨ÓÃÓÚ·µ»ØÓÃ»§ÃûºÍÃÜÂë
  *
  * @author cjc
  * @version 1.0
  */
-public class User {
+public class User implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private String username;
     private String password;
     private int authority;
@@ -29,13 +30,13 @@ public class User {
 
     @Override
     public String toString() {
-        return "ç”¨æˆ·åï¼š" + username +
-                " å¯†ç ï¼š" + password
+        return "ÓÃ»§Ãû£º" + username +
+                " ÃÜÂë£º" + password
                 ;
     }
 
     /**
-     * æœ‰å‚æ„é€ 
+     * ÓĞ²Î¹¹Ôì
      * @param username
      * @param password
      * @param authority
@@ -74,6 +75,7 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
 }
 
 

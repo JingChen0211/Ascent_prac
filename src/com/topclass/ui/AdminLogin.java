@@ -1,4 +1,4 @@
-package ui;
+package com.topclass.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -17,12 +17,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import bean.User;
-import util.UserDataClient;
-import ui.Add;
+import com.topclass.bean.User;
+import com.topclass.util.UserDataClient;
 
 /**
- * ç”¨æˆ·ç™»é™†çª—ä½“
+ * ÓÃ»§µÇÂ½´°Ìå
  * @author ascent
  * @version 1.0
  */
@@ -38,26 +37,26 @@ public class AdminLogin extends JFrame {
 	protected UserDataClient userDataClient;
 
 	/**
-	 * é»˜è®¤çš„æ„é€ æ–¹æ³•ï¼Œåˆå§‹åŒ–ç™»é™†çª—ä½“
+	 * Ä¬ÈÏµÄ¹¹Ôì·½·¨£¬³õÊ¼»¯µÇÂ½´°Ìå
 	 */
 	public AdminLogin() {
 
-		setTitle("ç”¨æˆ·ç™»é™†");
+		setTitle("ÓÃ»§µÇÂ½");
 
 		Container container = this.getContentPane();
 		container.setLayout(new BorderLayout());
 
 		JPanel loginPanel = new JPanel();
 
-		JLabel userLabel = new JLabel("ç®¡ç†å‘˜å¸å·ï¼š");
-		JLabel passwordLabel = new JLabel("ç®¡ç†å‘˜å¯†ç ï¼š");
+		JLabel userLabel = new JLabel("¹ÜÀíÔ±ÕÊºÅ£º");
+		JLabel passwordLabel = new JLabel("¹ÜÀíÔ±ÃÜÂë£º");
 
 		userText = new JTextField(15);
 		password = new JPasswordField(15);
 
-		JButton loginButton = new JButton("ç™»é™†");
-		//JButton regist = new JButton("æ³¨å†Œ");
-		JButton exitButton = new JButton("é€€å‡º");
+		JButton loginButton = new JButton("µÇÂ½");
+		//JButton regist = new JButton("×¢²á");
+		JButton exitButton = new JButton("ÍË³ö");
 
 		loginPanel.add(userLabel);
 		loginPanel.add(new JScrollPane(userText));
@@ -67,7 +66,7 @@ public class AdminLogin extends JFrame {
 		//loginPanel.add(regist);
 		loginPanel.add(exitButton);
 
-		setResizable(false);
+		setResizable(true);
 		setSize(260, 150);
 		setLocation(300, 100);
 
@@ -92,7 +91,7 @@ public class AdminLogin extends JFrame {
 	}
 
 	/**
-	 * å¤„ç†"é€€å‡º"æŒ‰é’®äº‹ä»¶ç›‘å¬çš„å†…éƒ¨ç±»
+	 * ´¦Àí"ÍË³ö"°´Å¥ÊÂ¼ş¼àÌıµÄÄÚ²¿Àà
 	 */
 	class ExitActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
@@ -103,7 +102,7 @@ public class AdminLogin extends JFrame {
 	}
 
 	/**
-	 * å¤„ç†"ç™»é™†"æŒ‰é’®äº‹ä»¶ç›‘å¬çš„å†…éƒ¨ç±»
+	 * ´¦Àí"µÇÂ½"°´Å¥ÊÂ¼ş¼àÌıµÄÄÚ²¿Àà
 	 */
 	class LoginActionListener implements ActionListener {
 
@@ -125,27 +124,27 @@ public class AdminLogin extends JFrame {
 					Add addFrame = new Add();
 					addFrame.setVisible(true);
 				} else {
-					tip.setText(" ç®¡ç†å‘˜å¯†ç é”™è¯¯.");
+					tip.setText(" ¹ÜÀíÔ±ÃÜÂë´íÎó.");
 				}
 			} else {
-				tip.setText("æœåŠ¡å™¨è¿æ¥å¤±è´¥,è¯·ç¨å€™å†è¯•.");
+				tip.setText("·şÎñÆ÷Á¬½ÓÊ§°Ü,ÇëÉÔºòÔÙÊÔ.");
 			}
 		}
 	}
 
 	/**
-	 * å¤„ç†"æ³¨å†Œ"æŒ‰é’®äº‹ä»¶ç›‘å¬çš„å†…éƒ¨ç±».
+	 * ´¦Àí"×¢²á"°´Å¥ÊÂ¼ş¼àÌıµÄÄÚ²¿Àà.
 	 */
 	class RegistActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-			// æ‰“å¼€æ³¨å†Œç”¨æˆ·çš„çª—å£
+			// ´ò¿ª×¢²áÓÃ»§µÄ´°¿Ú
 			Add addFrame = new Add();
 			addFrame.setVisible(true);
 		}
 	}
 
 	/**
-	 * å¤„ç†"å…³é—­çª—å£"äº‹ä»¶ç›‘å¬çš„å†…éƒ¨ç±».
+	 * ´¦Àí"¹Ø±Õ´°¿Ú"ÊÂ¼ş¼àÌıµÄÄÚ²¿Àà.
 	 */
 	class WindowCloser extends WindowAdapter {
 		public void windowClosing(WindowEvent e) {

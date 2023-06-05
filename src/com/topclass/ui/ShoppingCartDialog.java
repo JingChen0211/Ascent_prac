@@ -1,4 +1,4 @@
-package ui;
+package com.topclass.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -23,15 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import ui.ShoppingCartDialog;
-import ui.ShoppingCartDialog.ClearButtonActionListener;
-import ui.ShoppingCartDialog.LoadFormButtonActionListener;
-import ui.ShoppingCartDialog.OkButtonActionListener;
-import ui.ShoppingCartDialog.ViewFormButtonActionListener;
-import ui.ShoppingCartDialog.checkoutButtonActionListener;
-
-import bean.Product;
-import util.ShoppingCart;
+import com.topclass.bean.Product;
+import com.topclass.util.ShoppingCart;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -1,13 +1,14 @@
-package ui;
+package com.topclass.ui;
 
-import bean.User;
-import util.UserDataClient;
+import com.topclass.bean.User;
+import com.topclass.util.UserDataClient;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -87,6 +88,12 @@ public class LoginFrame extends JFrame {
         JLabel tip = new JLabel();
         tip.setBounds(138, 170, 150, 15);
         contentPane.add(tip);
+
+        try {
+            userDataClient = new UserDataClient();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         JButton loginButton = new JButton("登录");
         //登录功能的事件监听

@@ -11,10 +11,10 @@
  * @author dak119
  * @version 2.0
  */
-package util;
+package com.topclass.util;
 
 import java.util.ArrayList;
-import bean.Product;
+import com.topclass.bean.Product;
 
 /**
  * ¹ºÎï³µ

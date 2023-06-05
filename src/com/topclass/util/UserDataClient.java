@@ -1,4 +1,4 @@
-package util;
+package com.topclass.util;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,21 +6,21 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 
-import bean.User;
-import bean.Product;
+import com.topclass.bean.User;
+import com.topclass.bean.Product;
 
 
 /**
- * è¿™ä¸ªç±»è¿æ¥æ•°æ®æœåŠ¡å™¨æ¥è·å¾—æ•°æ®
+ * Õâ¸öÀàÁ¬½ÓÊı¾İ·şÎñÆ÷À´»ñµÃÊı¾İ
  * <p>
- * è¿™æ®µä»£ç å®ç°äº†ä¸€ä¸ªè¿æ¥åˆ°æ•°æ®æœåŠ¡å™¨çš„å®¢æˆ·ç«¯ï¼Œé€šè¿‡è¯¥å®¢æˆ·ç«¯å¯ä»¥è·å¾—ç”¨æˆ·ä¿¡æ¯ï¼Œä»¥åŠè¿›è¡Œç”¨æˆ·æ³¨å†Œæ“ä½œã€‚
+ * Õâ¶Î´úÂëÊµÏÖÁËÒ»¸öÁ¬½Óµ½Êı¾İ·şÎñÆ÷µÄ¿Í»§¶Ë£¬Í¨¹ı¸Ã¿Í»§¶Ë¿ÉÒÔ»ñµÃÓÃ»§ĞÅÏ¢£¬ÒÔ¼°½øĞĞÓÃ»§×¢²á²Ù×÷¡£
  * <p>
- * å®¢æˆ·ç«¯é€šè¿‡Socketè¿æ¥åˆ°æ•°æ®æœåŠ¡å™¨ï¼Œå¹¶å¯ä»¥å‘é€è¯·æ±‚æ¥è·å–ç”¨æˆ·ä¿¡æ¯æˆ–è¿›è¡Œç”¨æˆ·æ³¨å†Œã€‚
- * å…¶ä¸­ï¼Œå®¢æˆ·ç«¯å®šä¹‰äº†ä¸€ä¸ªlogæ–¹æ³•ç”¨äºæ‰“å°æ—¥å¿—ä¿¡æ¯ï¼Œè¾“å‡ºæµoutputToServerç”¨äºå‘æœåŠ¡å™¨å‘é€è¯·æ±‚æ•°æ®ï¼Œè¾“å…¥æµinputFromServerç”¨äºä»æœåŠ¡å™¨è·å–å“åº”æ•°æ®ã€‚
+ * ¿Í»§¶ËÍ¨¹ıSocketÁ¬½Óµ½Êı¾İ·şÎñÆ÷£¬²¢¿ÉÒÔ·¢ËÍÇëÇóÀ´»ñÈ¡ÓÃ»§ĞÅÏ¢»ò½øĞĞÓÃ»§×¢²á¡£
+ * ÆäÖĞ£¬¿Í»§¶Ë¶¨ÒåÁËÒ»¸ölog·½·¨ÓÃÓÚ´òÓ¡ÈÕÖ¾ĞÅÏ¢£¬Êä³öÁ÷outputToServerÓÃÓÚÏò·şÎñÆ÷·¢ËÍÇëÇóÊı¾İ£¬ÊäÈëÁ÷inputFromServerÓÃÓÚ´Ó·şÎñÆ÷»ñÈ¡ÏìÓ¦Êı¾İ¡£
  * <p>
- * è¯¥å®¢æˆ·ç«¯å®ç°äº†ä¸¤ä¸ªæ–¹æ³•ï¼Œåˆ†åˆ«æ˜¯getUserså’ŒaddUserã€‚
- * getUsersæ–¹æ³•å‘é€è¯·æ±‚è·å–ç”¨æˆ·ä¿¡æ¯ï¼Œç„¶åä»è¾“å…¥æµä¸­è¯»å–HashMap<String,User>ç±»å‹çš„æ•°æ®è¿”å›ã€‚
- * addUseræ–¹æ³•å…ˆé€šè¿‡getUsersæ–¹æ³•è·å–å½“å‰æ‰€æœ‰çš„ç”¨æˆ·ä¿¡æ¯ï¼Œå†æ ¹æ®ä¼ å…¥çš„ç”¨æˆ·åå’Œå¯†ç åˆ›å»ºä¸€ä¸ªæ–°çš„ç”¨æˆ·å¯¹è±¡ï¼Œå‘æœåŠ¡å™¨å‘é€æ·»åŠ ç”¨æˆ·çš„è¯·æ±‚å¹¶å°†æ–°ç”¨æˆ·å¯¹è±¡å†™å…¥è¾“å‡ºæµï¼Œæœ€åæ ¹æ®æœåŠ¡å™¨å“åº”è¿”å›æ³¨å†Œç»“æœã€‚
+ * ¸Ã¿Í»§¶ËÊµÏÖÁËÁ½¸ö·½·¨£¬·Ö±ğÊÇgetUsersºÍaddUser¡£
+ * getUsers·½·¨·¢ËÍÇëÇó»ñÈ¡ÓÃ»§ĞÅÏ¢£¬È»ºó´ÓÊäÈëÁ÷ÖĞ¶ÁÈ¡HashMap<String,User>ÀàĞÍµÄÊı¾İ·µ»Ø¡£
+ * addUser·½·¨ÏÈÍ¨¹ıgetUsers·½·¨»ñÈ¡µ±Ç°ËùÓĞµÄÓÃ»§ĞÅÏ¢£¬ÔÙ¸ù¾İ´«ÈëµÄÓÃ»§ÃûºÍÃÜÂë´´½¨Ò»¸öĞÂµÄÓÃ»§¶ÔÏó£¬Ïò·şÎñÆ÷·¢ËÍÌí¼ÓÓÃ»§µÄÇëÇó²¢½«ĞÂÓÃ»§¶ÔÏóĞ´ÈëÊä³öÁ÷£¬×îºó¸ù¾İ·şÎñÆ÷ÏìÓ¦·µ»Ø×¢²á½á¹û¡£
  *
  * @author ascent
  * @version 1.0
@@ -29,45 +29,45 @@ import bean.Product;
 public class UserDataClient implements ProtocolPort {
 
     /**
-     * socketå¼•ç”¨
+     * socketÒıÓÃ
      */
     protected Socket hostSocket;
 
     /**
-     * è¾“å‡ºæµçš„å¼•ç”¨
+     * Êä³öÁ÷µÄÒıÓÃ
      */
     protected ObjectOutputStream outputToServer;
 
     /**
-     * è¾“å…¥æµçš„å¼•ç”¨
+     * ÊäÈëÁ÷µÄÒıÓÃ
      */
     protected ObjectInputStream inputFromServer;
 
     /**
-     * é»˜è®¤æ„é€ æ–¹æ³•
+     * Ä¬ÈÏ¹¹Ôì·½·¨
      */
     public UserDataClient() throws IOException {
         this(ProtocolPort.DEFAULT_HOST, ProtocolPort.DEFAULT_PORT);
     }
 
     /**
-     * æ¥å—ä¸»æœºåå’Œç«¯å£å·çš„æ„é€ æ–¹æ³•
+     * ½ÓÊÜÖ÷»úÃûºÍ¶Ë¿ÚºÅµÄ¹¹Ôì·½·¨
      */
     public UserDataClient(String hostName, int port) throws IOException {
 
-        log("è¿æ¥æ•°æ®æœåŠ¡å™¨..." + hostName + ":" + port);
+        log("Á¬½ÓÊı¾İ·şÎñÆ÷..." + hostName + ":" + port);
         try {
             hostSocket = new Socket(hostName, port);
             outputToServer = new ObjectOutputStream(hostSocket.getOutputStream());
             inputFromServer = new ObjectInputStream(hostSocket.getInputStream());
-            log("è¿æ¥æˆåŠŸ.");
+            log("Á¬½Ó³É¹¦.");
         } catch (Exception e) {
-            log("è¿æ¥å¤±è´¥.");
+            log("Á¬½ÓÊ§°Ü.");
         }
     }
 
     /**
-     * è¿”å›ç”¨æˆ·
+     * ·µ»ØÓÃ»§
      *
      * @return userTable
      */
@@ -76,12 +76,12 @@ public class UserDataClient implements ProtocolPort {
         HashMap<String, User> userTable = null;
 
         try {
-            log("å‘é€è¯·æ±‚: OP_GET_USERS  ");
+            log("·¢ËÍÇëÇó: OP_GET_USERS  ");
 
             outputToServer.writeInt(ProtocolPort.OP_GET_USERS);
             outputToServer.flush();
 
-            log("æ¥æ”¶æ•°æ®...");
+            log("½ÓÊÕÊı¾İ...");
             userTable = (HashMap<String, User>) inputFromServer.readObject();
 
         } catch (ClassNotFoundException e) {
@@ -95,7 +95,7 @@ public class UserDataClient implements ProtocolPort {
     }
 
     /**
-     * å…³é—­å½“å‰SocKet
+     * ¹Ø±Õµ±Ç°SocKet
      */
     public void closeSocket() {
         try {
@@ -106,20 +106,20 @@ public class UserDataClient implements ProtocolPort {
     }
 
     /**
-     * æ—¥å¿—æ–¹æ³•.
+     * ÈÕÖ¾·½·¨.
      *
-     * @param msg æ‰“å°çš„æ—¥å¿—ä¿¡æ¯
+     * @param msg ´òÓ¡µÄÈÕÖ¾ĞÅÏ¢
      */
     protected void log(Object msg) {
-        System.out.println("UserDataClientç±»: " + msg);
+        System.out.println("UserDataClientÀà: " + msg);
     }
 
     /**
-     * æ³¨å†Œç”¨æˆ·
+     * ×¢²áÓÃ»§
      *
-     * @param username ç”¨æˆ·å
-     * @param password å¯†ç 
-     * @return boolean true:æ³¨å†ŒæˆåŠŸï¼Œfalse:æ³¨å†Œå¤±è´¥
+     * @param username ÓÃ»§Ãû
+     * @param password ÃÜÂë
+     * @return boolean true:×¢²á³É¹¦£¬false:×¢²áÊ§°Ü
      */
     public boolean addUser(String username, String password) {
         HashMap<String, User> map = this.getUsers();
@@ -127,11 +127,11 @@ public class UserDataClient implements ProtocolPort {
             return false;
         } else {
             try {
-                log("å‘é€è¯·æ±‚: OP_ADD_USERS  ");
+                log("·¢ËÍÇëÇó: OP_ADD_USERS  ");
                 outputToServer.writeInt(ProtocolPort.OP_ADD_USERS);
                 outputToServer.writeObject(new User(username, password, 0));
                 outputToServer.flush();
-                log("æ¥æ”¶æ•°æ®...");
+                log("½ÓÊÕÊı¾İ...");
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -145,16 +145,15 @@ public class UserDataClient implements ProtocolPort {
 			return false;
 		} else {*/
         try {
-            log("å‘é€è¯·æ±‚: OP_ADD_PRODUCTS  ");
+            log("·¢ËÍÇëÇó: OP_ADD_PRODUCTS  ");
             outputToServer.writeInt(ProtocolPort.OP_ADD_PRODUCTS);
             outputToServer.writeObject(new Product(a,b,c,d,kk,f,g));
             outputToServer.flush();
-            log("æ¥æ”¶æ•°æ®...");
+            log("½ÓÊÕÊı¾İ...");
             return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //}
         return false;
     }
 }

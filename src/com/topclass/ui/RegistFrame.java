@@ -1,4 +1,4 @@
-package ui;
+package com.topclass.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -19,7 +19,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import util.UserDataClient;
+import com.topclass.util.UserDataClient;
 /**
  * 用户注册窗体
  * 这是一个Java语言编写的用户注册窗体类。

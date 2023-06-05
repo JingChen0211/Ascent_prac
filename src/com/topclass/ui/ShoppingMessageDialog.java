@@ -1,6 +1,5 @@
-package ui;
+package com.topclass.ui;
 
-import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -17,8 +16,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import ui.ShoppingMessageDialog.OkButtonActionListener;
 
 /**
  * 确认购买商品提示窗体

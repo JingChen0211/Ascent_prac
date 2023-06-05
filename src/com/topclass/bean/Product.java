@@ -1,25 +1,25 @@
-package bean;
+package com.topclass.bean;
 
 /**
- * å®ä½“ç±»Productï¼Œç”¨æ¥æè¿°å•†å“çš„ä¿¡æ¯ç±»
- * beanä¸­è¿™äº›ä»£ç æ˜¯ç”¨äºä¸€ä¸ªè¯å“åº“å­˜ç®¡ç†ç³»ç»Ÿçš„Javaå®ç°ã€‚å…¶ä¸­åŒ…æ‹¬ä¸¤ä¸ªå®ä½“ç±»ï¼Œä¸€ä¸ªæè¿°å•†å“ä¿¡æ¯çš„ç±»Productå’Œä¸€ä¸ªæè¿°ç”¨æˆ·ä¿¡æ¯çš„ç±»Userã€‚
+ * ÊµÌåÀàProduct£¬ÓÃÀ´ÃèÊöÉÌÆ·µÄĞÅÏ¢Àà
+ * beanÖĞÕâĞ©´úÂëÊÇÓÃÓÚÒ»¸öÒ©Æ·¿â´æ¹ÜÀíÏµÍ³µÄJavaÊµÏÖ¡£ÆäÖĞ°üÀ¨Á½¸öÊµÌåÀà£¬Ò»¸öÃèÊöÉÌÆ·ĞÅÏ¢µÄÀàProductºÍÒ»¸öÃèÊöÓÃ»§ĞÅÏ¢µÄÀàUser¡£
  * <p>
- * Productç±»åŒ…å«ä»¥ä¸‹å­—æ®µï¼š
+ * ProductÀà°üº¬ÒÔÏÂ×Ö¶Î£º
  * <p>
- * productnameï¼šè¯å“åç§°
- * casï¼šåŒ–å­¦æ–‡æ‘˜ç™»è®°å·
- * structureï¼šç»“æ„å›¾åç§°
- * formulaï¼šå…¬å¼
- * priceï¼šä»·æ ¼
- * realstockï¼šæ•°é‡
- * categoryï¼šç±»åˆ«
- * æ­¤å¤–ï¼ŒProductç±»è¿˜åŒ…å«ä»¥ä¸‹æ–¹æ³•ï¼š
+ * productname£ºÒ©Æ·Ãû³Æ
+ * cas£º»¯Ñ§ÎÄÕªµÇ¼ÇºÅ
+ * structure£º½á¹¹Í¼Ãû³Æ
+ * formula£º¹«Ê½
+ * price£º¼Û¸ñ
+ * realstock£ºÊıÁ¿
+ * category£ºÀà±ğ
+ * ´ËÍâ£¬ProductÀà»¹°üº¬ÒÔÏÂ·½·¨£º
  * <p>
- * é»˜è®¤æ„é€ æ–¹æ³•
- * å¸¦å‚æ•°çš„æ„é€ æ–¹æ³•
- * è·å–/è®¾ç½®Casã€Categoryã€Formulaã€Priceã€ProductNameã€Realstockã€Structureå­—æ®µçš„æ–¹æ³•
- * toStringæ–¹æ³•ç”¨äºè¿”å›è¯å“åç§°å’ŒåŒ–å­¦æ–‡æ‘˜ç™»è®°å·
- * å®ç°Comparableæ¥å£çš„compareToæ–¹æ³•ï¼Œç”¨äºæŒ‰ç…§è¯å“åç§°æ’åº
+ * Ä¬ÈÏ¹¹Ôì·½·¨
+ * ´ø²ÎÊıµÄ¹¹Ôì·½·¨
+ * »ñÈ¡/ÉèÖÃCas¡¢Category¡¢Formula¡¢Price¡¢ProductName¡¢Realstock¡¢Structure×Ö¶ÎµÄ·½·¨
+ * toString·½·¨ÓÃÓÚ·µ»ØÒ©Æ·Ãû³ÆºÍ»¯Ñ§ÎÄÕªµÇ¼ÇºÅ
+ * ÊµÏÖComparable½Ó¿ÚµÄcompareTo·½·¨£¬ÓÃÓÚ°´ÕÕÒ©Æ·Ãû³ÆÅÅĞò
  *
  * @author cjc
  * @version 1.0
@@ -27,19 +27,19 @@ package bean;
 @SuppressWarnings("serial")
 public class Product implements java.lang.Comparable, java.io.Serializable {
 
-    private String productname; // è¯å“åç§°
+    private String productname; // Ò©Æ·Ãû³Æ
 
-    private String cas; // åŒ–å­¦æ–‡æ‘˜ç™»è®°å·
+    private String cas; // »¯Ñ§ÎÄÕªµÇ¼ÇºÅ
 
-    private String structure; // ç»“æ„å›¾åç§°
+    private String structure; // ½á¹¹Í¼Ãû³Æ
 
-    private String formula; // å…¬å¼
+    private String formula; // ¹«Ê½
 
-    private String price; // ä»·æ ¼
+    private String price; // ¼Û¸ñ
 
-    private String realstock; // æ•°é‡
+    private String realstock; // ÊıÁ¿
 
-    private String category; // ç±»åˆ«
+    private String category; // Àà±ğ
 
     public Product() {
     }
@@ -56,16 +56,10 @@ public class Product implements java.lang.Comparable, java.io.Serializable {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "productname='" + productname + '\'' +
-                ", cas='" + cas + '\'' +
-                ", structure='" + structure + '\'' +
-                ", formula='" + formula + '\'' +
-                ", price='" + price + '\'' +
-                ", realstock='" + realstock + '\'' +
-                ", category='" + category + '\'' +
-                '}';
+        return this.getProductname() + "    CASºÅ:    " + this.getCas();
     }
+
+
 
     public String getProductname() {
         return productname;
