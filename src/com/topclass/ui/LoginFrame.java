@@ -1,6 +1,7 @@
 package com.topclass.ui;
 
 import com.topclass.bean.User;
+import com.topclass.ui.adminOper.AdminLogin;
 import com.topclass.util.UserDataClient;
 
 import javax.swing.*;
@@ -145,8 +146,23 @@ public class LoginFrame extends JFrame {
                 registFrame.setVisible(true);
             }
         });
-        registerButton.setBounds(179, 195, 93, 34);
+        registerButton.setBounds(224, 195, 93, 34);
         contentPane.add(registerButton);
+
+        JButton adminLoginButton = new JButton("管理");
+        //管理员登陆功能
+        adminLoginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //进入管理员登陆界面
+                AdminLogin adminLogin = new AdminLogin();
+                adminLogin.setVisible(true);
+                //将登录界面设置为不可见
+                setVisible(false);
+                dispose();
+            }
+        });
+        adminLoginButton.setBounds(129, 195, 93, 34);
+        contentPane.add(adminLoginButton);
 
         JButton exitButton = new JButton("退出");
         //退出功能

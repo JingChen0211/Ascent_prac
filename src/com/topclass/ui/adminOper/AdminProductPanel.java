@@ -1,9 +1,12 @@
-package com.topclass.ui;
+package com.topclass.ui.adminOper;
 
 import javax.swing.*;
 import javax.swing.event.*;
 
 import com.topclass.bean.Product;
+import com.topclass.ui.MainFrame;
+import com.topclass.ui.ProductDetailsDialog;
+import com.topclass.ui.ShoppingCartDialog;
 import com.topclass.ui.adminOper.AdminProductMainFrame;
 import com.topclass.util.ProductDataClient;
 
@@ -27,7 +30,7 @@ import java.io.*;
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class ProductPanel extends JPanel {
+public class AdminProductPanel extends JPanel {
 
     protected JLabel selectionLabel;
 
@@ -45,11 +48,9 @@ public class ProductPanel extends JPanel {
 
     protected JButton exitButton;
 
-    protected JButton shoppingButton;
+    protected JButton deleteButton;
 
     protected JPanel bottomPanel;
-
-    protected MainFrame parentFrame;
 
     protected AdminProductMainFrame adminParentFrame;
 
@@ -61,71 +62,8 @@ public class ProductPanel extends JPanel {
      * 构建产品面板的构造方法
      * @param theParentFrame 面板的父窗体
      */
-    public ProductPanel(MainFrame theParentFrame) {
-        try {
-            parentFrame = theParentFrame;
-            myDataClient = new ProductDataClient();
-            selectionLabel = new JLabel("选择类别");
-            categoryComboBox = new JComboBox();
-            categoryComboBox.addItem("-------");
 
-            ArrayList categoryArrayList = myDataClient.getCategories();
-
-            Iterator iterator = categoryArrayList.iterator();
-            String aCategory;
-
-            while (iterator.hasNext()) {
-                aCategory = (String) iterator.next();
-                categoryComboBox.addItem(aCategory);
-            }
-
-            topPanel = new JPanel();
-            productListBox = new JList();
-            productListBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            productScrollPane = new JScrollPane(productListBox);
-
-            detailsButton = new JButton("详细...");
-            clearButton = new JButton("清空");
-            exitButton = new JButton("退出");
-            shoppingButton = new JButton("查看购物车");
-
-            bottomPanel = new JPanel();
-
-            this.setLayout(new BorderLayout());
-
-            topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            topPanel.add(selectionLabel);
-            topPanel.add(categoryComboBox);
-
-            this.add(BorderLayout.NORTH, topPanel);
-            this.add(BorderLayout.CENTER, productScrollPane);
-
-            bottomPanel.setLayout(new FlowLayout());
-            bottomPanel.add(shoppingButton);
-            bottomPanel.add(detailsButton);
-            bottomPanel.add(clearButton);
-            bottomPanel.add(exitButton);
-
-            this.add(BorderLayout.SOUTH, bottomPanel);
-
-            detailsButton.addActionListener(new DetailsActionListener());
-            clearButton.addActionListener(new ClearActionListener());
-            exitButton.addActionListener(new ExitActionListener());
-            shoppingButton.addActionListener(new ShoppingActionListener());
-            categoryComboBox.addItemListener(new GoItemListener());
-            productListBox.addListSelectionListener(new ProductListSelectionListener());
-
-            detailsButton.setEnabled(false);
-            clearButton.setEnabled(false);
-            shoppingButton.setEnabled(false);
-
-        } catch (IOException exc) {
-            JOptionPane.showMessageDialog(this, "网络问题 " + exc, "网络问题", JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
-        }
-    }
-
-    public ProductPanel(AdminProductMainFrame theParentFrame) {
+    public AdminProductPanel(AdminProductMainFrame theParentFrame) {
         try {
             adminParentFrame = theParentFrame;
             myDataClient = new ProductDataClient();
@@ -148,10 +86,10 @@ public class ProductPanel extends JPanel {
             productListBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             productScrollPane = new JScrollPane(productListBox);
 
+            deleteButton = new JButton("删除");
             detailsButton = new JButton("详细...");
             clearButton = new JButton("清空");
             exitButton = new JButton("退出");
-            shoppingButton = new JButton("查看购物车");
 
             bottomPanel = new JPanel();
 
@@ -165,23 +103,20 @@ public class ProductPanel extends JPanel {
             this.add(BorderLayout.CENTER, productScrollPane);
 
             bottomPanel.setLayout(new FlowLayout());
-            bottomPanel.add(shoppingButton);
             bottomPanel.add(detailsButton);
             bottomPanel.add(clearButton);
             bottomPanel.add(exitButton);
 
             this.add(BorderLayout.SOUTH, bottomPanel);
 
-            detailsButton.addActionListener(new DetailsActionListener());
-            clearButton.addActionListener(new ClearActionListener());
-            exitButton.addActionListener(new ExitActionListener());
-            shoppingButton.addActionListener(new ShoppingActionListener());
-            categoryComboBox.addItemListener(new GoItemListener());
-            productListBox.addListSelectionListener(new ProductListSelectionListener());
+            detailsButton.addActionListener(new com.topclass.ui.adminOper.AdminProductPanel.DetailsActionListener());
+            clearButton.addActionListener(new com.topclass.ui.adminOper.AdminProductPanel.ClearActionListener());
+            exitButton.addActionListener(new com.topclass.ui.adminOper.AdminProductPanel.ExitActionListener());
+            categoryComboBox.addItemListener(new com.topclass.ui.adminOper.AdminProductPanel.GoItemListener());
+            productListBox.addListSelectionListener(new com.topclass.ui.adminOper.AdminProductPanel.ProductListSelectionListener());
 
             detailsButton.setEnabled(false);
             clearButton.setEnabled(false);
-            shoppingButton.setEnabled(false);
 
         } catch (IOException exc) {
             JOptionPane.showMessageDialog(this, "网络问题 " + exc, "网络问题", JOptionPane.ERROR_MESSAGE);
@@ -220,42 +155,30 @@ public class ProductPanel extends JPanel {
 
     /**
      * 处理选择详细...按钮时触发的事件监听器
-     * @author ascent
+     * @author cjc
      */
     class DetailsActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             int index = productListBox.getSelectedIndex();
             Product product = (Product) productArrayList.get(index);
-            ProductDetailsDialog myDetailsDialog = new ProductDetailsDialog(parentFrame, product, shoppingButton);
-            myDetailsDialog.setVisible(true);
-        }
-    }
-
-    /**
-     * 处理选择查看购物车按钮时触发的事件监听器
-     * @author ascent
-     */
-    class ShoppingActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            ShoppingCartDialog myShoppingDialog = new ShoppingCartDialog(
-                    parentFrame, shoppingButton);
-            myShoppingDialog.setVisible(true);
+            AdminProductDetailsDialog adminProductDetailsDialog = new AdminProductDetailsDialog(adminParentFrame, product, deleteButton);
+            adminProductDetailsDialog.setVisible(true);
         }
     }
 
     /**
      * 处理选择退出按钮时触发的事件监听器
-     * @author ascent
+     * @author cjc
      */
     class ExitActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            parentFrame.exit();
+            adminParentFrame.exit();
         }
     }
 
     /**
      * 处理选择清空按钮时触发的事件监听器
-     * @author ascent
+     * @author cjc
      */
     class ClearActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
@@ -267,7 +190,7 @@ public class ProductPanel extends JPanel {
 
     /**
      * 处理选中分类下拉列选的选项时触发的事件监听器
-     * @author ascent
+     * @author cjc
      */
     class GoItemListener implements ItemListener {
         public void itemStateChanged(ItemEvent event) {
@@ -279,7 +202,7 @@ public class ProductPanel extends JPanel {
 
     /**
      * 处理选中分类列表中选项时触发的事件监听器
-     * @author ascent
+     * @author cjc
      */
     class ProductListSelectionListener implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent event) {

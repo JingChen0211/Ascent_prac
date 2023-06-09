@@ -1,6 +1,7 @@
 package com.topclass.ui;
 
 import com.topclass.ui.adminOper.AdminLogin;
+import com.topclass.ui.adminOper.AdminProductMainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,10 +47,21 @@ public class MainFrame extends JFrame {
         JMenu fileMenu = new JMenu("文件");
         JMenu openMenu = new JMenu("打开");
 
-        JMenuItem AddProducts = new JMenuItem("添加产品（管理员）");
-        openMenu.add(AddProducts);
+        JMenuItem adminLoginItem = new JMenuItem("登陆管理员");
+        openMenu.add(adminLoginItem);
 
-        AddProducts.addActionListener(new AddProductsListener());
+        AdminLogin admin;
+        adminLoginItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //进入管理员登陆界面
+                AdminLogin adminLogin = new AdminLogin();
+                adminLogin.setVisible(true);
+                //将本界面设置为不可见
+                setVisible(false);
+                dispose();
+            }
+        });
 
 
         JMenuItem localMenuItem = new JMenuItem("本地硬盘...");
@@ -193,13 +205,6 @@ public class MainFrame extends JFrame {
         public void actionPerformed(ActionEvent event) {
             String msg = "根据选择类别选购药品，点击购买后，加入购物车再统一结算";
             JOptionPane.showMessageDialog(MainFrame.this, msg);
-        }
-    }
-    class AddProductsListener implements ActionListener {
-        public void actionPerformed(ActionEvent arg0) {
-            AdminLogin registFrame = new AdminLogin();
-            Container parent = getParent();
-            registFrame.setVisible(true);
         }
     }
 }
