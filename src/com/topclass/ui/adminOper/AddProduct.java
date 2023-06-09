@@ -131,6 +131,8 @@ public class AddProduct extends JFrame {
      */
     class ExitActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
+            AdminMainFrame adminMainFrame = new AdminMainFrame();
+            adminMainFrame.setVisible(true);
             setVisible(false);
             dispose();
         }
@@ -158,7 +160,7 @@ public class AddProduct extends JFrame {
 			 * 		realstockText = new JTextField(15);
 			 * 		categoryext = new JTextField(15);
 			 */
-            boolean bo = productDataClient.addPro(productNameText.getText(), casText.getText()
+            boolean bo = productDataClient.addProduct(productNameText.getText(), casText.getText()
                     , structureText.getText(), formulaText.getText(), priceText.getText(), realstockText.getText(), categoryText.getText());
             if (bo) {
                 tip.setText("Ìí¼Ó³É¹¦£¡");

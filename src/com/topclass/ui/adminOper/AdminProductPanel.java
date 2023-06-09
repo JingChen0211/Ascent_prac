@@ -172,7 +172,10 @@ public class AdminProductPanel extends JPanel {
      */
     class ExitActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            adminParentFrame.exit();
+            AdminMainFrame adminMainFrame = new AdminMainFrame();
+            adminMainFrame.setVisible(true);
+            adminParentFrame.setVisible(false);
+            setVisible(false);
         }
     }
 

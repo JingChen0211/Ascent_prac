@@ -96,6 +96,9 @@ public class Handler extends Thread implements ProtocolPort {
                     case ProtocolPort.OP_ADD_PRODUCTS:
                         opAddProducts();
                         break;
+                    case ProtocolPort.OP_DELETE_PRODUCT:
+                        opDeleteProducts();
+                        break;
                     default:
                         System.out.println("´íÎó´úÂë");
                 }
@@ -103,6 +106,11 @@ public class Handler extends Thread implements ProtocolPort {
         } catch (Exception exc) {
             log(exc);
         }
+    }
+
+    private void opDeleteProducts() throws IOException, ClassNotFoundException {
+        String productName = (String) this.inputFromClient.readObject();
+        this.myProductDataAccessor.deleteProduct(productName);
     }
 
     /**

@@ -3,6 +3,8 @@ package com.topclass.util;
 import com.topclass.bean.Product;
 import com.topclass.bean.User;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -95,14 +97,7 @@ public abstract class DataAccessor {
      * 增加新的产品
      * @param theProduct 被添加到购物车的商品
      */
-    public void addProduct(Product theProduct) {
-        String category = theProduct.getCategory();
-        log("添加新的产品:  " + theProduct);
-        ArrayList<Product> productList = dataTable.get(category);
-        productList.add(theProduct);
-        recentProductList.add(theProduct);
-        log("完成添加新的产品!\n");
-    }
+    public abstract void addProduct(Product theProduct) ;
 
     /**
      * 从文件中读取数据
@@ -120,4 +115,6 @@ public abstract class DataAccessor {
     protected void log(Object msg) {
         System.out.println("数据存取类　Data Accessor:  " + msg);
     }
+
+    public abstract void deleteProduct(String productName) throws IOException;
 }

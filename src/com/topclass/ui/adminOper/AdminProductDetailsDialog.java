@@ -2,11 +2,12 @@ package com.topclass.ui.adminOper;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.*;
 
 import com.topclass.bean.Product;
-import com.topclass.util.ShoppingCart;
+import com.topclass.util.ProductDataClient;
 
 /**
  * 这个类显示产品详细信息对话框
@@ -15,6 +16,7 @@ import com.topclass.util.ShoppingCart;
  */
 @SuppressWarnings("serial")
 public class AdminProductDetailsDialog extends JDialog {
+    JPanel infoPanel = new JPanel();
 
     protected Product myProduct;
 
@@ -65,7 +67,6 @@ public class AdminProductDetailsDialog extends JDialog {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
-        JPanel infoPanel = new JPanel();
         infoPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
 
         infoPanel.setLayout(new GridBagLayout());
@@ -137,12 +138,12 @@ public class AdminProductDetailsDialog extends JDialog {
         JPanel bottomPanel = new JPanel();
         JButton okButton = new JButton("OK");
         bottomPanel.add(okButton);
-        JButton purchaseButton = new JButton("购买");
-        bottomPanel.add(purchaseButton);
+        JButton deleteButton = new JButton("删除");
+        bottomPanel.add(deleteButton);
         container.add(BorderLayout.SOUTH, bottomPanel);
 
         okButton.addActionListener(new OkButtonActionListener());
-        purchaseButton.addActionListener(new PurchaseButtonActionListener());
+        deleteButton.addActionListener(new DeleteButtonActionListener());
 
         this.pack();
 
@@ -160,14 +161,28 @@ public class AdminProductDetailsDialog extends JDialog {
     }
 
     /**
-     * 处理"购买"按钮的内部类
+     * 处理"删除"按钮的内部类
      */
-    class PurchaseButtonActionListener implements ActionListener {
-        ShoppingCart shoppingCar = new ShoppingCart();
+    class DeleteButtonActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            shoppingCar.addProduct(myProduct);
-            deleteButton.setEnabled(true);
-            setVisible(false);
+            int n = JOptionPane.showConfirmDialog(null, "确认删除吗?", "确认对话框", JOptionPane.YES_NO_OPTION);
+            if (n == JOptionPane.YES_OPTION) {
+                ProductDataClient productDataClient = null;
+                try {
+                    productDataClient = new ProductDataClient();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                boolean bo = productDataClient.deleteProduct(myProduct.getProductname());
+                if(bo){
+                    //成功删除，刷新主界面的数据页面
+                }
+                JOptionPane.showMessageDialog(new JFrame(),"已删除");
+                setVisible(false);
+            } else if (n == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(new JFrame(),"已取消");
+            }
+
         }
     }
 }

@@ -6,6 +6,7 @@ import com.topclass.bean.User;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -57,8 +58,8 @@ public class ProductDataAccessor extends DataAccessor {
     @Override
     public void load() {
 
-        dataTable = new HashMap<String,ArrayList<Product>>();
-        userTable = new HashMap<String,User>();
+        dataTable = new HashMap<String, ArrayList<Product>>();
+        userTable = new HashMap<String, User>();
 
         ArrayList<Product> productArrayList = null;
         StringTokenizer st = null;
@@ -86,7 +87,7 @@ public class ProductDataAccessor extends DataAccessor {
                 realstock = st.nextToken().trim();
                 category = st.nextToken().trim();
 
-                productObject = getProductObject(productName, cas, structure,formula, price, realstock, category);
+                productObject = getProductObject(productName, cas, structure, formula, price, realstock, category);
 
                 if (dataTable.containsKey(category)) {
                     productArrayList = dataTable.get(category);
@@ -121,23 +122,24 @@ public class ProductDataAccessor extends DataAccessor {
             log("文件读取结束!");
             log("准备就绪!\n");
         } catch (FileNotFoundException exc) {
-            log("没有找到文件: " + PRODUCT_FILE_NAME + " 或 "+USER_FILE_NAME+".");
+            log("没有找到文件: " + PRODUCT_FILE_NAME + " 或 " + USER_FILE_NAME + ".");
             log(exc);
         } catch (IOException exc) {
-            log("读取文件发生异常: " + PRODUCT_FILE_NAME+ " 或 "+USER_FILE_NAME+".");
+            log("读取文件发生异常: " + PRODUCT_FILE_NAME + " 或 " + USER_FILE_NAME + ".");
             log(exc);
         }
     }
 
     /**
      * 返回带有这些参数的商品对象
+     *
      * @param productName 药品名称
-     * @param cas 化学文摘登记号
-     * @param structure 结构图名称
-     * @param formula 公式
-     * @param price 价格
-     * @param realstock 数量
-     * @param category 类别
+     * @param cas         化学文摘登记号
+     * @param structure   结构图名称
+     * @param formula     公式
+     * @param price       价格
+     * @param realstock   数量
+     * @param category    类别
      * @return new Product(productName, cas, structure, formula, price, realstock, category);
      */
     private Product getProductObject(String productName, String cas,
@@ -167,10 +169,10 @@ public class ProductDataAccessor extends DataAccessor {
     public void save(Product product) {
         log("读取文件: " + PRODUCT_FILE_NAME + "...");
         try {
-            String productinfo = product.getProductname() + "," + product.getCas() + "," + product.getStructure() +"," + product.getFormula()+"," + product.getPrice()+"," + product.getRealstock()+"," + product.getCategory();
+            String productinfo = product.getProductname() + "," + product.getCas() + "," + product.getStructure() + "," + product.getFormula() + "," + product.getPrice() + "," + product.getRealstock() + "," + product.getCategory();
             RandomAccessFile fos = new RandomAccessFile(PRODUCT_FILE_NAME, "rws");
             fos.seek(fos.length());
-            fos.write((productinfo+ "\n" ).getBytes());
+            fos.write((productinfo + "\n").getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -188,8 +190,57 @@ public class ProductDataAccessor extends DataAccessor {
     }
 
     @Override
-    public HashMap<String,User> getUsers() {
+    public HashMap<String, User> getUsers() {
         this.load();
         return this.userTable;
+    }
+
+    public void addProduct(Product theProduct) {
+        String category = theProduct.getCategory();
+        log("添加新的产品:  " + theProduct);
+        ArrayList<Product> productList = dataTable.get(category);
+        productList.add(theProduct);
+        recentProductList.add(theProduct);
+        log("完成添加新的产品!\n");
+    }
+
+    @Override
+    public void deleteProduct(String productName) throws IOException {
+        String[] productinf0 = new String[8];
+        String[] productinf1 = new String[8];
+
+        File file = new File(PRODUCT_FILE_NAME);
+        FileInputStream intput = new FileInputStream(file);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(intput));
+        String tempString;//定义一个字符串，每一次读出该行字符串内容
+        List<String> list = new ArrayList<>();//定义一个list字符串集合用来储存每一行的字符串信息
+        while ((tempString = reader.readLine()) != null) {
+            list.add(tempString);
+        }
+
+        //要删除的内容 productName
+        for (String delProduct : list) {
+            productinf1 = delProduct.split(",");
+            //找到即将删除的书籍在集合中的位置，将该部分内容从集合中删除，然后清空整个文件
+            if (productName.equals(productinf1[0])) {
+                list.remove(delProduct);//在集合中删除该行
+                FileWriter fd = new FileWriter(file, false);//append传入false表示写入内容时将会覆盖文件中之前存在的内容
+                fd.write("");//执行删除操作，写入空内容覆盖之前的内容
+                fd.close();
+                break;
+            }
+        }
+        //重新遍历一遍更改后的集合，将内容重新写入文件内
+        for (String user : list) {
+            productinf1 = user.split(",");
+            FileWriter fw = new FileWriter(file, true);//append传入true表示写入内容时将不会覆盖文件中之前存在的内容，将新的内容写在之前内容的后面
+            fw.write(productinf1[0] + "," + productinf1[1] +
+                    "," + productinf1[2] + "," + productinf1[3] +
+                    "," + productinf1[4] + "," + productinf1[5] +
+                    "," + productinf1[6]);//执行重新写入内容的操作，将修改过的集合通过数组读下标后，再重新存写入文件中
+            fw.write(System.getProperty("line.separator"));//在段落后添加一个换行符
+            fw.close();
+            log("删除成功！");
+        }
     }
 }

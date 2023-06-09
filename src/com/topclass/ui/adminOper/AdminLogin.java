@@ -128,8 +128,8 @@ public class AdminLogin extends JFrame {
 					setVisible(false);
 					dispose();
 					//进入主界面
-					AddProduct addFrame = new AddProduct();
-					addFrame.setVisible(true);
+					AdminMainFrame adminMainFrame = new AdminMainFrame();
+					adminMainFrame.setVisible(true);
 				} else {
 					tip.setText(" 管理员密码错误.");
 				}

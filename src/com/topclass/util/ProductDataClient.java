@@ -127,7 +127,7 @@ public class ProductDataClient implements ProtocolPort {
      * @param g
      * @return
      */
-    public boolean addPro(String a,String b,String c,String d,String kk,String f,String g) {
+    public boolean addProduct(String a,String b,String c,String d,String kk,String f,String g) {
 		/*HashMap<String,ArrayList<Product>> map = this.getPros();
 		if (map.containsKey(name)) {
 			return false;
@@ -136,6 +136,20 @@ public class ProductDataClient implements ProtocolPort {
             log("发送请求: OP_ADD_PRODUCTS  ");
             outputToServer.writeInt(ProtocolPort.OP_ADD_PRODUCTS);
             outputToServer.writeObject(new Product(a,b,c,d,kk,f,g));
+            outputToServer.flush();
+            log("接收数据...");
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteProduct(String productName){
+        try {
+            log("发送请求: OP_DELETE_PRODUCT  ");
+            outputToServer.writeInt(ProtocolPort.OP_DELETE_PRODUCT);
+            outputToServer.writeObject(productName);
             outputToServer.flush();
             log("接收数据...");
             return true;
