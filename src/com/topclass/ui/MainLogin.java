@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.topclass.bean.User;
-import com.topclass.ui.adminOper.AddProduct;
+import com.topclass.ui.adminOper.AddProductFrame;
 import com.topclass.util.UserDataClient;
 
 /**
@@ -122,7 +122,7 @@ public class MainLogin extends JFrame {
 				}
 				if (bo) {
 					userDataClient.closeSocket();
-					AddProduct addFrame = new AddProduct();
+					AddProductFrame addFrame = new AddProductFrame();
 					addFrame.setVisible(true);
 				} else {
 					tip.setText(" 管理员密码错误.");
@@ -139,7 +139,7 @@ public class MainLogin extends JFrame {
 	class RegistActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			// 打开注册用户的窗口
-			AddProduct addFrame = new AddProduct();
+			AddProductFrame addFrame = new AddProductFrame();
 			addFrame.setVisible(true);
 		}
 	}

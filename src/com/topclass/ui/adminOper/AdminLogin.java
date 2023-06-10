@@ -18,7 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.topclass.bean.User;
-import com.topclass.ui.MainFrame;
 import com.topclass.util.UserDataClient;
 
 /**
@@ -67,8 +66,8 @@ public class AdminLogin extends JFrame {
 		//loginPanel.add(regist);
 		loginPanel.add(exitButton);
 
-		setResizable(true);
-		setSize(260, 150);
+		setResizable(false);
+		setSize(300, 150);
 		setLocation(300, 100);
 
 		JPanel tipPanel = new JPanel();
@@ -145,7 +144,7 @@ public class AdminLogin extends JFrame {
 	class RegistActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			// 打开注册用户的窗口
-			AddProduct addFrame = new AddProduct();
+			AddProductFrame addFrame = new AddProductFrame();
 			addFrame.setVisible(true);
 		}
 	}

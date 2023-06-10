@@ -53,7 +53,7 @@ public class RegistFrame extends JFrame {
 
         JPanel registPanel = new JPanel();
 
-        JLabel userLabel = new JLabel("用户账户");
+        JLabel userLabel = new JLabel("用户账户：");
         JLabel passwordLabel = new JLabel("用户密码：");
         JLabel repasswordLabel = new JLabel("重复密码：");
 
@@ -72,8 +72,8 @@ public class RegistFrame extends JFrame {
         registPanel.add(regist);
         registPanel.add(exitButton);
 
-        setResizable(true);
-        setSize(260, 180);
+        setResizable(false);
+        setSize(275, 180);
         setLocation(300, 100);
 
         JPanel tipPanel = new JPanel();

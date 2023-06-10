@@ -1,18 +1,12 @@
 package com.topclass.ui.adminOper;
 
-import com.topclass.bean.User;
 import com.topclass.ui.LoginFrame;
-import com.topclass.ui.MainFrame;
-import com.topclass.ui.RegistFrame;
-import com.topclass.util.UserDataClient;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.HashMap;
 
 public class AdminMainFrame extends JFrame {
 
@@ -52,7 +46,7 @@ public class AdminMainFrame extends JFrame {
         //添加商品的事件监听
         addProductButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                AddProduct addProduct = new AddProduct();
+                AddProductFrame addProduct = new AddProductFrame();
                 addProduct.setVisible(true);
                 setVisible(false);
                 dispose();

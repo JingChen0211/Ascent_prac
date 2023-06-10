@@ -17,7 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.topclass.util.ProductDataClient;
-import com.topclass.util.ProductDataServer;
 import com.topclass.util.UserDataClient;
 
 /**
@@ -27,7 +26,7 @@ import com.topclass.util.UserDataClient;
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class AddProduct extends JFrame {
+public class AddProductFrame extends JFrame {
     private JTextField productNameText;
 
     private JTextField casText;
@@ -49,7 +48,7 @@ public class AddProduct extends JFrame {
     /**
      * 默认构造方法，初始化用户注册窗体
      */
-    public AddProduct() {
+    public AddProductFrame() {
         this.setTitle("添加产品");
 
         Container container = this.getContentPane();
@@ -93,8 +92,8 @@ public class AddProduct extends JFrame {
         addPanel.add(addProduct);
         addPanel.add(exitButton);
 
-        setResizable(true);
-        setSize(400, 380);
+        setResizable(false);
+        setSize(240, 380);
         setLocation(300, 100);
 
         JPanel tipPanel = new JPanel();

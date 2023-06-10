@@ -146,7 +146,7 @@ public class LoginFrame extends JFrame {
                 registFrame.setVisible(true);
             }
         });
-        registerButton.setBounds(224, 195, 93, 34);
+        registerButton.setBounds(222, 195, 93, 34);
         contentPane.add(registerButton);
 
         JButton adminLoginButton = new JButton("¹ÜÀí");
@@ -161,7 +161,7 @@ public class LoginFrame extends JFrame {
                 dispose();
             }
         });
-        adminLoginButton.setBounds(129, 195, 93, 34);
+        adminLoginButton.setBounds(126, 195, 93, 34);
         contentPane.add(adminLoginButton);
 
         JButton exitButton = new JButton("ÍË³ö");
