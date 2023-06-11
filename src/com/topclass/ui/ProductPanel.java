@@ -12,6 +12,7 @@ import java.awt.event.*;
 import java.util.*;
 
 import java.io.*;
+import com.topclass.Chat.Chat;
 /**
  * 这个类构建产品面板
  * 这是一个Java Swing GUI程序，用于展示商品信息的面板。
@@ -47,6 +48,7 @@ public class ProductPanel extends JPanel {
 
     protected JButton shoppingButton;
 
+    protected JButton chatButton;
     protected JPanel bottomPanel;
 
     protected MainFrame parentFrame;
@@ -89,6 +91,7 @@ public class ProductPanel extends JPanel {
             exitButton = new JButton("退出");
             shoppingButton = new JButton("查看购物车");
 
+            chatButton= new JButton("客服聊天");
             bottomPanel = new JPanel();
 
             this.setLayout(new BorderLayout());
@@ -105,7 +108,7 @@ public class ProductPanel extends JPanel {
             bottomPanel.add(detailsButton);
             bottomPanel.add(clearButton);
             bottomPanel.add(exitButton);
-
+            bottomPanel.add(chatButton);
             this.add(BorderLayout.SOUTH, bottomPanel);
 
             detailsButton.addActionListener(new DetailsActionListener());
@@ -115,6 +118,7 @@ public class ProductPanel extends JPanel {
             categoryComboBox.addItemListener(new GoItemListener());
             productListBox.addListSelectionListener(new ProductListSelectionListener());
 
+            chatButton.addActionListener(new ChatActionListener());
             detailsButton.setEnabled(false);
             clearButton.setEnabled(false);
             shoppingButton.setEnabled(false);
@@ -125,69 +129,7 @@ public class ProductPanel extends JPanel {
         }
     }
 
-    public ProductPanel(AdminProductMainFrame theParentFrame) {
-        try {
-            adminParentFrame = theParentFrame;
-            myDataClient = new ProductDataClient();
-            selectionLabel = new JLabel("选择类别");
-            categoryComboBox = new JComboBox();
-            categoryComboBox.addItem("-------");
 
-            ArrayList categoryArrayList = myDataClient.getCategories();
-
-            Iterator iterator = categoryArrayList.iterator();
-            String aCategory;
-
-            while (iterator.hasNext()) {
-                aCategory = (String) iterator.next();
-                categoryComboBox.addItem(aCategory);
-            }
-
-            topPanel = new JPanel();
-            productListBox = new JList();
-            productListBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            productScrollPane = new JScrollPane(productListBox);
-
-            detailsButton = new JButton("详细...");
-            clearButton = new JButton("清空");
-            exitButton = new JButton("退出");
-            shoppingButton = new JButton("查看购物车");
-
-            bottomPanel = new JPanel();
-
-            this.setLayout(new BorderLayout());
-
-            topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            topPanel.add(selectionLabel);
-            topPanel.add(categoryComboBox);
-
-            this.add(BorderLayout.NORTH, topPanel);
-            this.add(BorderLayout.CENTER, productScrollPane);
-
-            bottomPanel.setLayout(new FlowLayout());
-            bottomPanel.add(shoppingButton);
-            bottomPanel.add(detailsButton);
-            bottomPanel.add(clearButton);
-            bottomPanel.add(exitButton);
-
-            this.add(BorderLayout.SOUTH, bottomPanel);
-
-            detailsButton.addActionListener(new DetailsActionListener());
-            clearButton.addActionListener(new ClearActionListener());
-            exitButton.addActionListener(new ExitActionListener());
-            shoppingButton.addActionListener(new ShoppingActionListener());
-            categoryComboBox.addItemListener(new GoItemListener());
-            productListBox.addListSelectionListener(new ProductListSelectionListener());
-
-            detailsButton.setEnabled(false);
-            clearButton.setEnabled(false);
-            shoppingButton.setEnabled(false);
-
-        } catch (IOException exc) {
-            JOptionPane.showMessageDialog(this, "网络问题 " + exc, "网络问题", JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
-        }
-    }
 
     /**
      * 设置下拉列选中的分类选项
@@ -288,6 +230,11 @@ public class ProductPanel extends JPanel {
             } else {
                 detailsButton.setEnabled(true);
             }
+        }
+    }
+    class ChatActionListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            Chat chat =new Chat();
         }
     }
 }
