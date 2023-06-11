@@ -20,7 +20,7 @@ import com.topclass.util.ProductDataClient;
 import com.topclass.util.UserDataClient;
 
 /**
- * ÓÃ»§×¢²á´°Ìå
+ * ç”¨æˆ·æ³¨å†Œçª—ä½“
  *
  * @author ascent
  * @version 1.0
@@ -46,23 +46,23 @@ public class AddProductFrame extends JFrame {
     private UserDataClient userDataClient;
 
     /**
-     * Ä¬ÈÏ¹¹Ôì·½·¨£¬³õÊ¼»¯ÓÃ»§×¢²á´°Ìå
+     * é»˜è®¤æ„é€ æ–¹æ³•ï¼Œåˆå§‹åŒ–ç”¨æˆ·æ³¨å†Œçª—ä½“
      */
     public AddProductFrame() {
-        this.setTitle("Ìí¼Ó²úÆ·");
+        this.setTitle("æ·»åŠ äº§å“");
 
         Container container = this.getContentPane();
         container.setLayout(new BorderLayout());
 
         JPanel addPanel = new JPanel();
 
-        JLabel nameLabel = new JLabel("²úÆ·Ãû£º");
-        JLabel CasLabel = new JLabel("CASºÅ£º");
-        JLabel structureLabel = new JLabel("½á¹¹Í¼£º");
-        JLabel formulaLabel = new JLabel("¹«Ê½£º");
-        JLabel priceLabel = new JLabel("¼Û¸ñ£º");
-        JLabel realstockLabel = new JLabel("ÊıÁ¿£º");
-        JLabel categoryLabel = new JLabel("Àà±ğ£º");
+        JLabel nameLabel = new JLabel("äº§å“åï¼š");
+        JLabel CasLabel = new JLabel("CASå·ï¼š");
+        JLabel structureLabel = new JLabel("ç»“æ„å›¾ï¼š");
+        JLabel formulaLabel = new JLabel("å…¬å¼ï¼š");
+        JLabel priceLabel = new JLabel("ä»·æ ¼ï¼š");
+        JLabel realstockLabel = new JLabel("æ•°é‡ï¼š");
+        JLabel categoryLabel = new JLabel("ç±»åˆ«ï¼š");
 
         productNameText = new JTextField(15);
         casText = new JTextField(15);
@@ -72,8 +72,8 @@ public class AddProductFrame extends JFrame {
         realstockText = new JTextField(15);
         categoryText = new JTextField(15);
 
-        JButton exitButton = new JButton("ÍË³ö");
-        JButton addProduct = new JButton("Ìí¼Ó");
+        JButton exitButton = new JButton("é€€å‡º");
+        JButton addProduct = new JButton("æ·»åŠ ");
 
         addPanel.add(nameLabel);
         addPanel.add(new JScrollPane(productNameText));
@@ -108,7 +108,7 @@ public class AddProductFrame extends JFrame {
         exitButton.addActionListener(new ExitActionListener());
         addProduct.addActionListener(new AddActionListener());
         this.addWindowListener(new WindowCloser());
-        this.addWindowFocusListener(new WindowFocusListener() {// ÉèÖÃ¸¸´°¿Ú
+        this.addWindowFocusListener(new WindowFocusListener() {// è®¾ç½®çˆ¶çª—å£
             public void windowGainedFocus(WindowEvent e) {
             }
 
@@ -124,7 +124,7 @@ public class AddProductFrame extends JFrame {
     }
 
     /**
-     * ÍË³ö°´Å¥ÊÂ¼ş¼àÌı
+     * é€€å‡ºæŒ‰é’®äº‹ä»¶ç›‘å¬
      *
      * @author ascent
      */
@@ -138,7 +138,7 @@ public class AddProductFrame extends JFrame {
     }
 
     /**
-     * Ìí¼Ó°´Å¥ÊÂ¼ş¼àÌı
+     * æ·»åŠ æŒ‰é’®äº‹ä»¶ç›‘å¬
      *
      * @author ascent
      */
@@ -162,15 +162,17 @@ public class AddProductFrame extends JFrame {
             boolean bo = productDataClient.addProduct(productNameText.getText(), casText.getText()
                     , structureText.getText(), formulaText.getText(), priceText.getText(), realstockText.getText(), categoryText.getText());
             if (bo) {
-                tip.setText("Ìí¼Ó³É¹¦£¡");
+                AdminRefresh refresh =new AdminRefresh();
+                refresh.setVisible(true);
+                setVisible(false);
             } else {
-                tip.setText("¸ÃÉÌÆ·ÒÑ´æÔÚ£¡");
+                tip.setText("è¯¥å•†å“å·²å­˜åœ¨ï¼");
             }
         }
     }
 
     /**
-     * "¹Ø±Õ´°¿Ú"ÊÂ¼ş´¦ÀíÄÚ²¿Àà
+     * "å…³é—­çª—å£"äº‹ä»¶å¤„ç†å†…éƒ¨ç±»
      *
      * @author ascent
      */
