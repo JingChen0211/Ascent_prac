@@ -105,11 +105,7 @@ public class ShoppingMessageDialog extends JDialog {
 	 * @author dak119
 	 */
     public void checkout() {
-        // 生成订单
-        // 计算支付金额
-        // 选择支付方式
-        // 执行支付操作
-        // 显示支付结果
+
         // 待完善
         System.out.println("结算完成！");
     }

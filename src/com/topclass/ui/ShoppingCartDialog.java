@@ -1,14 +1,6 @@
 package com.topclass.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -51,7 +43,7 @@ import java.io.IOException;
  *增加确认清空功能
  *增加重置负值，默认为1
  *<p>
- *checkoutButtonActionListener"内部类处理结算表单功能，待完善
+ *checkoutButtonActionListener"内部类处理结算表单功能，加入了我的购买界面，显示用户在结算后所购买的商品，后续会加上价格，完善支付功能
  *<p>
  *ViewFormButtonActionListener内部类实现表单文件显示功能，读取保存的表单数据，并显示
  *<p>
@@ -64,113 +56,161 @@ import java.io.IOException;
 @SuppressWarnings("serial")
 public class ShoppingCartDialog extends JDialog {
 
-	protected ShoppingCart shoppingCart;
+    protected ShoppingCart shoppingCart;
 
-	protected Frame parentFrame;
+    protected Frame parentFrame;
 
-	private JButton shoppingButton;
+    private  JButton shoppingButton;
 
-	private HashMap<String,JTextField> textMap;
+    private  HashMap<String,JTextField> textMap;
 
-	private JLabel tipLabel;
+    private JLabel tipLabel;
 
-	/**
-	 * 带两个参数的构造方法
-	 * @param theParentFrame 父窗体
-	 * @param shoppingButton 查看购物车按钮
-	 */
-	public ShoppingCartDialog(Frame theParentFrame, JButton shoppingButton) {
-		super(theParentFrame, "购物车", true);
-		textMap = new HashMap<String,JTextField>();
-		parentFrame = theParentFrame;
-		this.shoppingButton = shoppingButton;
+    /**
+     * 带两个参数的构造方法
+     * @param theParentFrame 父窗体
+     * @param shoppingButton 查看购物车按钮
+     */
+    public ShoppingCartDialog(Frame theParentFrame, JButton shoppingButton) {
+        super(theParentFrame, "购物车", true);
+        textMap = new HashMap<String,JTextField>();
+        parentFrame = theParentFrame;
+        this.shoppingButton = shoppingButton;
 
-		lookShoppingCar();
-	}
+        lookShoppingCar();
+    }
 
-	
-	/**
-	 * 构建显示购物车里商品信息的界面
-	 * 添加结算按钮
-	 */
-	public void lookShoppingCar() {
-		Container container = this.getContentPane();
-		container.setLayout(new BorderLayout());
 
-		JPanel infoPanel = new JPanel();
-		tipLabel = new JLabel("");
-		infoPanel.add(tipLabel);
-		infoPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
-		infoPanel.setLayout(new GridBagLayout());
+    /**
+     * 新建类，用于构建：”我的购买“界面构建
+     *添加相关按钮
+     */
+     class MyPurchaseDialog extends JDialog {
+        public MyPurchaseDialog(Frame parentFrame) {
+            super(parentFrame, "我的购买", true);
 
-		GridBagConstraints c = new GridBagConstraints();
+            // 创建并配置"我的购买"界面的内容
+            JPanel purchasePanel = new JPanel();
+            purchasePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+            purchasePanel.setLayout(new GridLayout(10, 10));
 
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 3;
-		c.weightx = 0.0;
-		c.weighty = 0.0;
-		c.fill = GridBagConstraints.BOTH;
-		c.anchor = GridBagConstraints.WEST;
-		c.insets = new Insets(10, 0, 2, 10);
+            // 读取保存的表单数据
+            String formData = readFormData();
 
-		shoppingCart = new ShoppingCart();
-		ArrayList<Product> shoppingList = shoppingCart.getShoppingList();
+            // 加载保存的表单数据并更新界面
+            loadFormData();
+            // 显示表单数据
+            JOptionPane.showMessageDialog(ShoppingCartDialog.this, formData, "购买信息", JOptionPane.INFORMATION_MESSAGE);
 
-		JLabel pruductLabel;
-		Product product = null;
-		for (int i = 0; i < shoppingList.size(); i++) {
-			c.gridy = c.gridy + 2;
-			String str = "";
-			product = shoppingList.get(i);
-			str = str + "产品名：" + product.getProductname() + "    ";
-			str = str + "CAS号：" + product.getCas() + "    ";
-			str = str + "公式：" + product.getFormula() + "    ";
-			str = str + "类别：" + product.getCategory();
-			pruductLabel = new JLabel(str);
-			JPanel panel = new JPanel(new FlowLayout());
-			JLabel l = new JLabel("数量：");
-			JTextField jtf = new JTextField(7);
-			jtf.setText("1");
-			panel.add(pruductLabel);
-			panel.add(l);
-			panel.add(jtf);
-			textMap.put(product.getProductname(), jtf);
-			pruductLabel.setForeground(Color.black);
-			infoPanel.add(panel, c);
-		}
+            // 将已购买的商品信息存储在一个列表中
+            ArrayList<String> purchasedProducts = new ArrayList<>();
+            purchasedProducts.add("购买的商品：");
+            purchasedProducts.add("对应金额：");
+            purchasedProducts.add("图片：");
+            purchasedProducts.add("功能待完善");
+            // 创建标签显示已购买的商品信息
+            for (String product : purchasedProducts) {
+                JLabel productLabel = new JLabel(product);
+                purchasePanel.add(productLabel);
+            }
 
-		container.add(BorderLayout.NORTH, infoPanel);
+            getContentPane().add(purchasePanel);
 
-		JPanel bottomPanel = new JPanel();
-		JButton okButton = new JButton("提交表单");
-		bottomPanel.add(okButton);
-		JButton clearButton = new JButton("清空");
-		bottomPanel.add(clearButton);
-		JButton checkoutButton = new JButton("结算"); // 添加结算按钮
+            setResizable(false);
+            setSize(400, 300); // 设置对话框的大小
+            // pack();//动态调整界面大小
+
+            setLocationRelativeTo(parentFrame);
+        }
+    }
+
+    /**
+     * 构建显示购物车里商品信息的界面
+     * 添加结算按钮
+     */
+    public void lookShoppingCar() {
+        Container container = this.getContentPane();
+        container.setLayout(new BorderLayout());
+
+        JPanel infoPanel = new JPanel();
+        tipLabel = new JLabel("");
+        infoPanel.add(tipLabel);
+        infoPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
+        infoPanel.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 3;
+        c.weightx = 0.0;
+        c.weighty = 0.0;
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(10, 0, 2, 10);
+
+        shoppingCart = new ShoppingCart();
+        ArrayList<Product> shoppingList = shoppingCart.getShoppingList();
+
+        JLabel pruductLabel;
+        Product product = null;
+        for (int i = 0; i < shoppingList.size(); i++) {
+            c.gridy = c.gridy + 2;
+            String str = "";
+            product = shoppingList.get(i);
+            str = str + "产品名：" + product.getProductname() + "    ";
+            str = str + "CAS号：" + product.getCas() + "    ";
+            str = str + "公式：" + product.getFormula() + "    ";
+            str = str + "类别：" + product.getCategory();
+            pruductLabel = new JLabel(str);
+            JPanel panel = new JPanel(new FlowLayout());
+            JLabel l = new JLabel("数量：");
+            JTextField jtf = new JTextField(7);
+            jtf.setText("1");
+            panel.add(pruductLabel);
+            panel.add(l);
+            panel.add(jtf);
+            textMap.put(product.getProductname(), jtf);
+            pruductLabel.setForeground(Color.black);
+            infoPanel.add(panel, c);
+        }
+
+        container.add(BorderLayout.NORTH, infoPanel);
+
+        JPanel bottomPanel = new JPanel();
+        JButton okButton = new JButton("提交表单");
+        bottomPanel.add(okButton);
+        JButton clearButton = new JButton("清空");
+        bottomPanel.add(clearButton);
+        JButton checkoutButton = new JButton("结算"); // 添加结算按钮
         bottomPanel.add(checkoutButton);
         JButton ViewFormButton = new JButton("查看表单"); // 添加查看表单按钮
         bottomPanel.add(ViewFormButton);
-        JButton loadFormButton = new JButton("读取表单"); // 添加读取表单按钮
+        JButton loadFormButton = new JButton("更新读取表单"); // 添加更新读取表单按钮
         bottomPanel.add(loadFormButton);
-        
-		container.add(BorderLayout.SOUTH, bottomPanel);
+        JButton myPurchaseButton = new JButton("我的购买");// 添加我的购买按钮
+        bottomPanel.add(myPurchaseButton);
 
-		okButton.addActionListener(new OkButtonActionListener());
-		clearButton.addActionListener(new ClearButtonActionListener());
-		checkoutButton.addActionListener(new checkoutButtonActionListener()); // 添加结算按钮的事件监听器
-		ViewFormButton.addActionListener(new ViewFormButtonActionListener()); // 添加查看表单的事件监听器
-		loadFormButton.addActionListener(new LoadFormButtonActionListener()); // 添加读取表单的事件监听器
-		
-		
-		setResizable(false);
-		this.pack();
-		Point parentLocation = parentFrame.getLocation();
-		this.setLocation(parentLocation.x + 50, parentLocation.y + 50);
-	}
-	
 
-	class OkButtonActionListener implements ActionListener {
+        container.add(BorderLayout.SOUTH, bottomPanel);
+
+        okButton.addActionListener(new OkButtonActionListener());
+        clearButton.addActionListener(new ClearButtonActionListener());
+        checkoutButton.addActionListener(new checkoutButtonActionListener()); // 添加结算按钮的事件监听器
+        ViewFormButton.addActionListener(new ViewFormButtonActionListener()); // 添加查看表单的事件监听器
+        loadFormButton.addActionListener(new LoadFormButtonActionListener()); // 添加更新读取表单的事件监听器
+        myPurchaseButton.addActionListener(new MyPurchaseButtonActionListener());// 添加我的购买的事件监听器
+
+        setResizable(false);
+        this.pack();//动态调整界面大小
+        Point parentLocation = parentFrame.getLocation();
+        this.setLocation(parentLocation.x + 50, parentLocation.y + 50);
+    }
+
+    /**
+     * 购物车内部功能，提交表单
+     */
+    class OkButtonActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             // 创建StringBuilder用于保存表单数据
             StringBuilder formText = new StringBuilder();
@@ -210,34 +250,59 @@ public class ShoppingCartDialog extends JDialog {
             setVisible(false);
             // 启用查看购物车按钮
             shoppingButton.setEnabled(true);
+
+
         }
     }
-
+    /**
+     * 购物车内部功能，清空表单
+     */
     class ClearButtonActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-        	 int choice = JOptionPane.showConfirmDialog(ShoppingCartDialog.this,
-                     "确定要清空购物车吗？", "确认清空", JOptionPane.YES_NO_OPTION);
-        	 if (choice == JOptionPane.YES_OPTION) {
-                 for (Map.Entry<String, JTextField> entry : textMap.entrySet()) {
-                     String productName = entry.getKey();
-                     JTextField textField = entry.getValue();
-                     if (textField != null) {
-                         // 检查默认值是否为正整数，如果不是，则重置为"1"
-                         if (!textField.getText().matches("\\d+")) {
-                             textField.setText("1");
-                         } else {
-                             textField.setText("");
-                         }
-                     }
-                 }
-        	 }
+            int choice = JOptionPane.showConfirmDialog(ShoppingCartDialog.this,
+                    "确定要清空购物车吗？", "确认清空", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                for (Map.Entry<String, JTextField> entry : textMap.entrySet()) {
+                    String productName = entry.getKey();
+                    JTextField textField = entry.getValue();
+                    if (textField != null) {
+                        // 检查默认值是否为正整数，如果不是，则重置为"1"
+                        if (!textField.getText().matches("\\d+")) {
+                            textField.setText("1");
+                        } else {
+                            textField.setText("");
+                        }
+                    }
+                }
+            }
         }
     }
 
-    class checkoutButtonActionListener implements ActionListener {
+    /**
+     * 购物车内部功能，结算功能
+     */
+    class checkoutButtonActionListener implements ActionListener
+    {
         public void actionPerformed(ActionEvent event) {
-            JOptionPane.showMessageDialog(ShoppingCartDialog.this, "结算成功", "提示", JOptionPane.INFORMATION_MESSAGE);
-       
+            int confirm = JOptionPane.showConfirmDialog(null, "确认购买这些商品吗？", "确认购买", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION)
+            {
+                JOptionPane.showMessageDialog(null, "购买成功！", "购买成功", JOptionPane.INFORMATION_MESSAGE);
+                shoppingButton.setEnabled(false);
+
+                // 在事件调度线程中创建并显示"我的购买"界面
+                MyPurchaseDialog purchaseDialog = new MyPurchaseDialog(parentFrame);
+                purchaseDialog.setVisible(true);
+                dispose();
+            }
+        }
+    }
+
+
+    class MyPurchaseButtonActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            MyPurchaseDialog purchaseDialog = new MyPurchaseDialog(parentFrame);
+            purchaseDialog.setVisible(true);
         }
     }
 
@@ -245,7 +310,6 @@ public class ShoppingCartDialog extends JDialog {
         public void actionPerformed(ActionEvent event) {
             // 读取保存的表单数据
             String formData = readFormData();
-
             // 显示表单数据
             JOptionPane.showMessageDialog(ShoppingCartDialog.this, formData, "表单数据", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -262,7 +326,7 @@ public class ShoppingCartDialog extends JDialog {
 
     /**
      * 读取保存的表单数据
-     * 
+     *
      * @return 保存的表单数据
      */
     private String readFormData() {
@@ -285,20 +349,22 @@ public class ShoppingCartDialog extends JDialog {
     private void loadFormData() {
         String formData = readFormData();
         if (!formData.isEmpty()) {
-            // 解析表单数据
             String[] lines = formData.split("\n");
             for (String line : lines) {
                 String[] parts = line.split(":");
                 if (parts.length == 2) {
                     String productName = parts[0].trim();
                     String quantityText = parts[1].trim();
-                    // 更新数量输入框的值
+
+                    // 获取对应的数量输入框
                     JTextField textField = textMap.get(productName);
                     if (textField != null) {
                         textField.setText(quantityText);
+                        textField.repaint(); // 重绘数量输入框
                     }
                 }
             }
         }
     }
+
 }
