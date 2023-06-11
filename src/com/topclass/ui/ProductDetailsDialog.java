@@ -1,173 +1,196 @@
-package com.topclass.ui;
+package com.topclass.ui.adminOper;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.*;
 
 import com.topclass.bean.Product;
-import com.topclass.util.ShoppingCart;
-
+import com.topclass.ui.MainFrame;
+import com.topclass.ui.LoginFrame;
+import com.topclass.util.ProductDataClient;
+import com.topclass.ui.adminOper.AdminRefresh;
+import com.topclass.ui.adminOper.AdminProductMainFrame;
 /**
- * Õâ¸öÀàÏÔÊ¾²úÆ·ÏêÏ¸ĞÅÏ¢¶Ô»°¿ò
+ * è¿™ä¸ªç±»æ˜¾ç¤ºäº§å“è¯¦ç»†ä¿¡æ¯å¯¹è¯æ¡†
  * @author ascent
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class ProductDetailsDialog extends JDialog {
+public class AdminProductDetailsDialog extends JDialog {
+    JPanel infoPanel = new JPanel();
 
-	protected Product myProduct;
+    protected Product myProduct;
 
-	protected Frame parentFrame;
+    protected Frame parentFrame;
 
-	protected JButton shoppingButton;
+    protected JButton deleteButton;
 
-	/**
-	 * ´øÈı¸ö²ÎÊıµÄ¹¹Ôì·½·¨
-	 * @param theParentFrame ¸¸´°Ìå
-	 * @param theProduct µ±Ç°²é¿´µÄÉÌÆ·¶ÔÏó
-	 * @param shoppingButton ¹ºÂò°´Å¥
-	 */
-	public ProductDetailsDialog(Frame theParentFrame, Product theProduct,
-			JButton shoppingButton) {
-		this(theParentFrame, "Ò©Æ·ÏêÏ¸ĞÅÏ¢ " + theProduct.getProductname(),
-				theProduct, shoppingButton);
-	}
+    /**
+     * å¸¦ä¸‰ä¸ªå‚æ•°çš„æ„é€ æ–¹æ³•
+     * @param theParentFrame çˆ¶çª—ä½“
+     * @param theProduct å½“å‰æŸ¥çœ‹çš„å•†å“å¯¹è±¡
+     * @param deleteButton åˆ é™¤æŒ‰é’®
+     */
+    public AdminProductDetailsDialog(Frame theParentFrame, Product theProduct,
+                                JButton deleteButton) {
+        this(theParentFrame, "è¯å“è¯¦ç»†ä¿¡æ¯ " + theProduct.getProductname(),
+                theProduct, deleteButton);
+    }
 
-	/**
-	 * ´øËÄ¸ö²ÎÊıµÄ¹¹Ôì·½·¨
-	 * @param theParentFrame ¸¸´°Ìå
-	 * @param theTitle ´°Ìå±êÌâ
-	 * @param theProduct µ±Ç°²é¿´µÄÉÌÆ·¶ÔÏó
-	 * @param shoppingButton ¹ºÂò°´Å¥
-	 */
-	public ProductDetailsDialog(Frame theParentFrame, String theTitle,
-			Product theProduct, JButton shoppingButton) {
+    /**
+     * å¸¦å››ä¸ªå‚æ•°çš„æ„é€ æ–¹æ³•
+     * @param theParentFrame çˆ¶çª—ä½“
+     * @param theTitle çª—ä½“æ ‡é¢˜
+     * @param theProduct å½“å‰æŸ¥çœ‹çš„å•†å“å¯¹è±¡
+     * @param deleteButton åˆ é™¤æŒ‰é’®
+     */
+    public AdminProductDetailsDialog(Frame theParentFrame, String theTitle,
+                                Product theProduct, JButton deleteButton) {
 
-		super(theParentFrame, theTitle, true);
+        super(theParentFrame, theTitle, true);
 
-		myProduct = theProduct;
-		parentFrame = theParentFrame;
-		this.shoppingButton = shoppingButton;
+        myProduct = theProduct;
+        parentFrame = theParentFrame;
+        this.deleteButton = deleteButton;
 
-		buildGui();
-	}
+        buildGui();
+    }
 
-	/**
-	 * ÓÃÀ´¹¹½¨ÏÔÊ¾ÉÌÆ·ĞÅÏ¢´°Ìå
-	 */
-	private void buildGui() {
+    /**
+     * ç”¨æ¥æ„å»ºæ˜¾ç¤ºå•†å“ä¿¡æ¯çª—ä½“
+     */
+    private void buildGui() {
 
-		Container container = this.getContentPane();
+        Container container = this.getContentPane();
 
-		container.setLayout(new BorderLayout());
+        container.setLayout(new BorderLayout());
 
-		JPanel topPanel = new JPanel();
-		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
-		JPanel infoPanel = new JPanel();
-		infoPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
+        infoPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
 
-		infoPanel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+        infoPanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
 
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 3;
-		c.weightx = 0.0;
-		c.weighty = 0.0;
-		c.fill = GridBagConstraints.BOTH;
-		c.anchor = GridBagConstraints.WEST;
-		c.insets = new Insets(10, 0, 2, 10);
-		JLabel artistLabel = new JLabel("²úÆ·Ãû:  " + myProduct.getProductname());
-		artistLabel.setForeground(Color.black);
-		infoPanel.add(artistLabel, c);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 3;
+        c.weightx = 0.0;
+        c.weighty = 0.0;
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(10, 0, 2, 10);
+        JLabel artistLabel = new JLabel("äº§å“å:  " + myProduct.getProductname());
+        artistLabel.setForeground(Color.black);
+        infoPanel.add(artistLabel, c);
 
-		c.gridy = GridBagConstraints.RELATIVE;
-		c.insets = new Insets(2, 0, 10, 10);
-		JLabel titleLabel = new JLabel("CASºÅ:  " + myProduct.getCas());
-		titleLabel.setForeground(Color.black);
-		infoPanel.add(titleLabel, c);
+        c.gridy = GridBagConstraints.RELATIVE;
+        c.insets = new Insets(2, 0, 10, 10);
+        JLabel titleLabel = new JLabel("CASå·:  " + myProduct.getCas());
+        titleLabel.setForeground(Color.black);
+        infoPanel.add(titleLabel, c);
 
-		JLabel categoryLabel = new JLabel("¹«Ê½:  " + myProduct.getFormula());
-		c.insets = new Insets(2, 0, 2, 0);
-		categoryLabel.setForeground(Color.black);
-		infoPanel.add(categoryLabel, c);
+        JLabel categoryLabel = new JLabel("å…¬å¼:  " + myProduct.getFormula());
+        c.insets = new Insets(2, 0, 2, 0);
+        categoryLabel.setForeground(Color.black);
+        infoPanel.add(categoryLabel, c);
 
-		JLabel durationLabel = new JLabel("ÊıÁ¿:  " + myProduct.getRealstock());
-		durationLabel.setForeground(Color.black);
-		infoPanel.add(durationLabel, c);
+        JLabel durationLabel = new JLabel("æ•°é‡:  " + myProduct.getRealstock());
+        durationLabel.setForeground(Color.black);
+        infoPanel.add(durationLabel, c);
 
-		JLabel priceLabel = new JLabel("Àà±ğ£º " + myProduct.getCategory());
-		c.insets = new Insets(10, 0, 2, 0);
-		priceLabel.setForeground(Color.black);
-		infoPanel.add(priceLabel, c);
+        JLabel priceLabel = new JLabel("ç±»åˆ«ï¼š " + myProduct.getCategory());
+        c.insets = new Insets(10, 0, 2, 0);
+        priceLabel.setForeground(Color.black);
+        infoPanel.add(priceLabel, c);
 
-		c.gridx = 3;
-		c.gridy = 1;
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.gridheight = 5;
-		c.fill = GridBagConstraints.NONE;
-		c.weightx = 1.0;
-		c.weighty = 1.0;
-		c.insets = new Insets(5, 5, 20, 0);
-		String imageName = myProduct.getStructure();
-		ImageIcon recordingIcon = null;
-		JLabel recordingLabel = null;
+        c.gridx = 3;
+        c.gridy = 1;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.gridheight = 5;
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.insets = new Insets(5, 5, 20, 0);
+        String imageName = myProduct.getStructure();
+        ImageIcon recordingIcon = null;
+        JLabel recordingLabel = null;
 
-		// ¶ÁÈ¡Í¼Æ¬
-		try {
-			if (imageName.trim().length() == 0) {
-				recordingLabel = new JLabel("  Í¼Æ¬²»´æÔÚ  ");
-			} else {
-				recordingIcon = new ImageIcon(getClass().getResource("/images/" + imageName));
-				recordingLabel = new JLabel(recordingIcon);
-			}
-		} catch (Exception exc) {
-			recordingLabel = new JLabel("  Í¼Æ¬²»´æÔÚ  ");
-		}
+        // è¯»å–å›¾ç‰‡
+        try {
+            if (imageName.trim().length() == 0) {
+                recordingLabel = new JLabel("  å›¾ç‰‡ä¸å­˜åœ¨  ");
+            } else {
+                recordingIcon = new ImageIcon(getClass().getResource("/images/" + imageName));
+                recordingLabel = new JLabel(recordingIcon);
+            }
+        } catch (Exception exc) {
+            recordingLabel = new JLabel("  å›¾ç‰‡ä¸å­˜åœ¨  ");
+        }
 
-		recordingLabel.setBorder(BorderFactory.createRaisedBevelBorder());
-		recordingLabel.setToolTipText(myProduct.getProductname());
+        recordingLabel.setBorder(BorderFactory.createRaisedBevelBorder());
+        recordingLabel.setToolTipText(myProduct.getProductname());
 
-		infoPanel.add(recordingLabel, c);
+        infoPanel.add(recordingLabel, c);
 
-		container.add(BorderLayout.NORTH, infoPanel);
+        container.add(BorderLayout.NORTH, infoPanel);
 
-		JPanel bottomPanel = new JPanel();
-		JButton okButton = new JButton("OK");
-		bottomPanel.add(okButton);
-		JButton purchaseButton = new JButton("¹ºÂò");
-		bottomPanel.add(purchaseButton);
-		container.add(BorderLayout.SOUTH, bottomPanel);
+        JPanel bottomPanel = new JPanel();
+        JButton okButton = new JButton("OK");
+        bottomPanel.add(okButton);
+        JButton deleteButton = new JButton("åˆ é™¤");
+        bottomPanel.add(deleteButton);
+        container.add(BorderLayout.SOUTH, bottomPanel);
 
-		okButton.addActionListener(new OkButtonActionListener());
-		purchaseButton.addActionListener(new PurchaseButtonActionListener());
+        okButton.addActionListener(new OkButtonActionListener());
+        deleteButton.addActionListener(new DeleteButtonActionListener());
 
-		this.pack();
+        this.pack();
 
-		Point parentLocation = parentFrame.getLocation();
-		this.setLocation(parentLocation.x + 50, parentLocation.y + 50);
-	}
+        Point parentLocation = parentFrame.getLocation();
+        this.setLocation(parentLocation.x + 50, parentLocation.y + 50);
+    }
 
-	/**
-	 * ´¦Àí"OK"°´Å¥µÄÄÚ²¿Àà
-	 */
-	class OkButtonActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			setVisible(false);
-		}
-	}
+    /**
+     * å¤„ç†"OK"æŒ‰é’®çš„å†…éƒ¨ç±»
+     */
+    class OkButtonActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            setVisible(false);
+        }
+    }
 
-	/**
-	 * ´¦Àí"¹ºÂò"°´Å¥µÄÄÚ²¿Àà
-	 */
-	class PurchaseButtonActionListener implements ActionListener {
-		ShoppingCart shoppingCar = new ShoppingCart();
-		public void actionPerformed(ActionEvent event) {
-			shoppingCar.addProduct(myProduct);
-			shoppingButton.setEnabled(true);
-			setVisible(false);
-		}
-	}
+    /**
+     * å¤„ç†"åˆ é™¤"æŒ‰é’®çš„å†…éƒ¨ç±»
+     */
+    class DeleteButtonActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            int n = JOptionPane.showConfirmDialog(null, "ç¡®è®¤åˆ é™¤å—?", "ç¡®è®¤å¯¹è¯æ¡†", JOptionPane.YES_NO_OPTION);
+            if (n == JOptionPane.YES_OPTION) {
+                ProductDataClient productDataClient = null;
+                try {
+                    productDataClient = new ProductDataClient();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                boolean bo = productDataClient.deleteProduct(myProduct.getProductname());
+                if(bo){
+    
+                }
+               // JOptionPane.showMessageDialog(new JFrame(),"å·²åˆ é™¤");
+                AdminRefresh refresh=new AdminRefresh();
+                setVisible(false);
+                refresh.setVisible(true);
+                toFront();
+                parentFrame.setVisible(false);
+               
+            } else if (n == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(new JFrame(),"å·²å–æ¶ˆ");
+            }
+
+        }
+    }
 }
