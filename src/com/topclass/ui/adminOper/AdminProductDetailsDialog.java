@@ -7,10 +7,13 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import com.topclass.bean.Product;
+import com.topclass.ui.MainFrame;
+import com.topclass.ui.LoginFrame;
 import com.topclass.util.ProductDataClient;
-
+import com.topclass.ui.adminOper.AdminRefresh;
+import com.topclass.ui.adminOper.AdminProductMainFrame;
 /**
- * Õâ¸öÀàÏÔÊ¾²úÆ·ÏêÏ¸ĞÅÏ¢¶Ô»°¿ò
+ * è¿™ä¸ªç±»æ˜¾ç¤ºäº§å“è¯¦ç»†ä¿¡æ¯å¯¹è¯æ¡†
  * @author ascent
  * @version 1.0
  */
@@ -25,23 +28,23 @@ public class AdminProductDetailsDialog extends JDialog {
     protected JButton deleteButton;
 
     /**
-     * ´øÈı¸ö²ÎÊıµÄ¹¹Ôì·½·¨
-     * @param theParentFrame ¸¸´°Ìå
-     * @param theProduct µ±Ç°²é¿´µÄÉÌÆ·¶ÔÏó
-     * @param deleteButton É¾³ı°´Å¥
+     * å¸¦ä¸‰ä¸ªå‚æ•°çš„æ„é€ æ–¹æ³•
+     * @param theParentFrame çˆ¶çª—ä½“
+     * @param theProduct å½“å‰æŸ¥çœ‹çš„å•†å“å¯¹è±¡
+     * @param deleteButton åˆ é™¤æŒ‰é’®
      */
     public AdminProductDetailsDialog(Frame theParentFrame, Product theProduct,
                                 JButton deleteButton) {
-        this(theParentFrame, "Ò©Æ·ÏêÏ¸ĞÅÏ¢ " + theProduct.getProductname(),
+        this(theParentFrame, "è¯å“è¯¦ç»†ä¿¡æ¯ " + theProduct.getProductname(),
                 theProduct, deleteButton);
     }
 
     /**
-     * ´øËÄ¸ö²ÎÊıµÄ¹¹Ôì·½·¨
-     * @param theParentFrame ¸¸´°Ìå
-     * @param theTitle ´°Ìå±êÌâ
-     * @param theProduct µ±Ç°²é¿´µÄÉÌÆ·¶ÔÏó
-     * @param deleteButton É¾³ı°´Å¥
+     * å¸¦å››ä¸ªå‚æ•°çš„æ„é€ æ–¹æ³•
+     * @param theParentFrame çˆ¶çª—ä½“
+     * @param theTitle çª—ä½“æ ‡é¢˜
+     * @param theProduct å½“å‰æŸ¥çœ‹çš„å•†å“å¯¹è±¡
+     * @param deleteButton åˆ é™¤æŒ‰é’®
      */
     public AdminProductDetailsDialog(Frame theParentFrame, String theTitle,
                                 Product theProduct, JButton deleteButton) {
@@ -56,7 +59,7 @@ public class AdminProductDetailsDialog extends JDialog {
     }
 
     /**
-     * ÓÃÀ´¹¹½¨ÏÔÊ¾ÉÌÆ·ĞÅÏ¢´°Ìå
+     * ç”¨æ¥æ„å»ºæ˜¾ç¤ºå•†å“ä¿¡æ¯çª—ä½“
      */
     private void buildGui() {
 
@@ -80,26 +83,26 @@ public class AdminProductDetailsDialog extends JDialog {
         c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.WEST;
         c.insets = new Insets(10, 0, 2, 10);
-        JLabel artistLabel = new JLabel("²úÆ·Ãû:  " + myProduct.getProductname());
+        JLabel artistLabel = new JLabel("äº§å“å:  " + myProduct.getProductname());
         artistLabel.setForeground(Color.black);
         infoPanel.add(artistLabel, c);
 
         c.gridy = GridBagConstraints.RELATIVE;
         c.insets = new Insets(2, 0, 10, 10);
-        JLabel titleLabel = new JLabel("CASºÅ:  " + myProduct.getCas());
+        JLabel titleLabel = new JLabel("CASå·:  " + myProduct.getCas());
         titleLabel.setForeground(Color.black);
         infoPanel.add(titleLabel, c);
 
-        JLabel categoryLabel = new JLabel("¹«Ê½:  " + myProduct.getFormula());
+        JLabel categoryLabel = new JLabel("å…¬å¼:  " + myProduct.getFormula());
         c.insets = new Insets(2, 0, 2, 0);
         categoryLabel.setForeground(Color.black);
         infoPanel.add(categoryLabel, c);
 
-        JLabel durationLabel = new JLabel("ÊıÁ¿:  " + myProduct.getRealstock());
+        JLabel durationLabel = new JLabel("æ•°é‡:  " + myProduct.getRealstock());
         durationLabel.setForeground(Color.black);
         infoPanel.add(durationLabel, c);
 
-        JLabel priceLabel = new JLabel("Àà±ğ£º " + myProduct.getCategory());
+        JLabel priceLabel = new JLabel("ç±»åˆ«ï¼š " + myProduct.getCategory());
         c.insets = new Insets(10, 0, 2, 0);
         priceLabel.setForeground(Color.black);
         infoPanel.add(priceLabel, c);
@@ -116,16 +119,16 @@ public class AdminProductDetailsDialog extends JDialog {
         ImageIcon recordingIcon = null;
         JLabel recordingLabel = null;
 
-        // ¶ÁÈ¡Í¼Æ¬
+        // è¯»å–å›¾ç‰‡
         try {
             if (imageName.trim().length() == 0) {
-                recordingLabel = new JLabel("  Í¼Æ¬²»´æÔÚ  ");
+                recordingLabel = new JLabel("  å›¾ç‰‡ä¸å­˜åœ¨  ");
             } else {
                 recordingIcon = new ImageIcon(getClass().getResource("/images/" + imageName));
                 recordingLabel = new JLabel(recordingIcon);
             }
         } catch (Exception exc) {
-            recordingLabel = new JLabel("  Í¼Æ¬²»´æÔÚ  ");
+            recordingLabel = new JLabel("  å›¾ç‰‡ä¸å­˜åœ¨  ");
         }
 
         recordingLabel.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -138,7 +141,7 @@ public class AdminProductDetailsDialog extends JDialog {
         JPanel bottomPanel = new JPanel();
         JButton okButton = new JButton("OK");
         bottomPanel.add(okButton);
-        JButton deleteButton = new JButton("É¾³ı");
+        JButton deleteButton = new JButton("åˆ é™¤");
         bottomPanel.add(deleteButton);
         container.add(BorderLayout.SOUTH, bottomPanel);
 
@@ -152,7 +155,7 @@ public class AdminProductDetailsDialog extends JDialog {
     }
 
     /**
-     * ´¦Àí"OK"°´Å¥µÄÄÚ²¿Àà
+     * å¤„ç†"OK"æŒ‰é’®çš„å†…éƒ¨ç±»
      */
     class OkButtonActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
@@ -161,11 +164,11 @@ public class AdminProductDetailsDialog extends JDialog {
     }
 
     /**
-     * ´¦Àí"É¾³ı"°´Å¥µÄÄÚ²¿Àà
+     * å¤„ç†"åˆ é™¤"æŒ‰é’®çš„å†…éƒ¨ç±»
      */
     class DeleteButtonActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            int n = JOptionPane.showConfirmDialog(null, "È·ÈÏÉ¾³ıÂğ?", "È·ÈÏ¶Ô»°¿ò", JOptionPane.YES_NO_OPTION);
+            int n = JOptionPane.showConfirmDialog(null, "ç¡®è®¤åˆ é™¤å—?", "ç¡®è®¤å¯¹è¯æ¡†", JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 ProductDataClient productDataClient = null;
                 try {
@@ -175,12 +178,17 @@ public class AdminProductDetailsDialog extends JDialog {
                 }
                 boolean bo = productDataClient.deleteProduct(myProduct.getProductname());
                 if(bo){
-                    //³É¹¦É¾³ı£¬Ë¢ĞÂÖ÷½çÃæµÄÊı¾İÒ³Ãæ
+    
                 }
-                JOptionPane.showMessageDialog(new JFrame(),"ÒÑÉ¾³ı");
+               // JOptionPane.showMessageDialog(new JFrame(),"å·²åˆ é™¤");
+                AdminRefresh refresh=new AdminRefresh();
                 setVisible(false);
+                refresh.setVisible(true);
+                toFront();
+                parentFrame.setVisible(false);
+               
             } else if (n == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(new JFrame(),"ÒÑÈ¡Ïû");
+                JOptionPane.showMessageDialog(new JFrame(),"å·²å–æ¶ˆ");
             }
 
         }
