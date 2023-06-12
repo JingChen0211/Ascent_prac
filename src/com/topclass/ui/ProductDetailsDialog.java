@@ -1,196 +1,173 @@
-package com.topclass.ui.adminOper;
+package com.topclass.ui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.*;
 
 import com.topclass.bean.Product;
-import com.topclass.ui.MainFrame;
-import com.topclass.ui.LoginFrame;
-import com.topclass.util.ProductDataClient;
-import com.topclass.ui.adminOper.AdminRefresh;
-import com.topclass.ui.adminOper.AdminProductMainFrame;
+import com.topclass.util.ShoppingCart;
+
 /**
  * 这个类显示产品详细信息对话框
  * @author ascent
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class AdminProductDetailsDialog extends JDialog {
-    JPanel infoPanel = new JPanel();
+public class ProductDetailsDialog extends JDialog {
 
-    protected Product myProduct;
+	protected Product myProduct;
 
-    protected Frame parentFrame;
+	protected Frame parentFrame;
 
-    protected JButton deleteButton;
+	protected JButton shoppingButton;
 
-    /**
-     * 带三个参数的构造方法
-     * @param theParentFrame 父窗体
-     * @param theProduct 当前查看的商品对象
-     * @param deleteButton 删除按钮
-     */
-    public AdminProductDetailsDialog(Frame theParentFrame, Product theProduct,
-                                JButton deleteButton) {
-        this(theParentFrame, "药品详细信息 " + theProduct.getProductname(),
-                theProduct, deleteButton);
-    }
+	/**
+	 * 带三个参数的构造方法
+	 * @param theParentFrame 父窗体
+	 * @param theProduct 当前查看的商品对象
+	 * @param shoppingButton 购买按钮
+	 */
+	public ProductDetailsDialog(Frame theParentFrame, Product theProduct,
+			JButton shoppingButton) {
+		this(theParentFrame, "药品详细信息 " + theProduct.getProductname(),
+				theProduct, shoppingButton);
+	}
 
-    /**
-     * 带四个参数的构造方法
-     * @param theParentFrame 父窗体
-     * @param theTitle 窗体标题
-     * @param theProduct 当前查看的商品对象
-     * @param deleteButton 删除按钮
-     */
-    public AdminProductDetailsDialog(Frame theParentFrame, String theTitle,
-                                Product theProduct, JButton deleteButton) {
+	/**
+	 * 带四个参数的构造方法
+	 * @param theParentFrame 父窗体
+	 * @param theTitle 窗体标题
+	 * @param theProduct 当前查看的商品对象
+	 * @param shoppingButton 购买按钮
+	 */
+	public ProductDetailsDialog(Frame theParentFrame, String theTitle,
+			Product theProduct, JButton shoppingButton) {
 
-        super(theParentFrame, theTitle, true);
+		super(theParentFrame, theTitle, true);
 
-        myProduct = theProduct;
-        parentFrame = theParentFrame;
-        this.deleteButton = deleteButton;
+		myProduct = theProduct;
+		parentFrame = theParentFrame;
+		this.shoppingButton = shoppingButton;
 
-        buildGui();
-    }
+		buildGui();
+	}
 
-    /**
-     * 用来构建显示商品信息窗体
-     */
-    private void buildGui() {
+	/**
+	 * 用来构建显示商品信息窗体
+	 */
+	private void buildGui() {
 
-        Container container = this.getContentPane();
+		Container container = this.getContentPane();
 
-        container.setLayout(new BorderLayout());
+		container.setLayout(new BorderLayout());
 
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
-        infoPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
+		JPanel infoPanel = new JPanel();
+		infoPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
 
-        infoPanel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+		infoPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 
-        c.gridx = 0;
-        c.gridy = 1;
-        c.gridwidth = 3;
-        c.weightx = 0.0;
-        c.weighty = 0.0;
-        c.fill = GridBagConstraints.BOTH;
-        c.anchor = GridBagConstraints.WEST;
-        c.insets = new Insets(10, 0, 2, 10);
-        JLabel artistLabel = new JLabel("产品名:  " + myProduct.getProductname());
-        artistLabel.setForeground(Color.black);
-        infoPanel.add(artistLabel, c);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 3;
+		c.weightx = 0.0;
+		c.weighty = 0.0;
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(10, 0, 2, 10);
+		JLabel artistLabel = new JLabel("产品名:  " + myProduct.getProductname());
+		artistLabel.setForeground(Color.black);
+		infoPanel.add(artistLabel, c);
 
-        c.gridy = GridBagConstraints.RELATIVE;
-        c.insets = new Insets(2, 0, 10, 10);
-        JLabel titleLabel = new JLabel("CAS号:  " + myProduct.getCas());
-        titleLabel.setForeground(Color.black);
-        infoPanel.add(titleLabel, c);
+		c.gridy = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(2, 0, 10, 10);
+		JLabel titleLabel = new JLabel("CAS号:  " + myProduct.getCas());
+		titleLabel.setForeground(Color.black);
+		infoPanel.add(titleLabel, c);
 
-        JLabel categoryLabel = new JLabel("公式:  " + myProduct.getFormula());
-        c.insets = new Insets(2, 0, 2, 0);
-        categoryLabel.setForeground(Color.black);
-        infoPanel.add(categoryLabel, c);
+		JLabel categoryLabel = new JLabel("公式:  " + myProduct.getFormula());
+		c.insets = new Insets(2, 0, 2, 0);
+		categoryLabel.setForeground(Color.black);
+		infoPanel.add(categoryLabel, c);
 
-        JLabel durationLabel = new JLabel("数量:  " + myProduct.getRealstock());
-        durationLabel.setForeground(Color.black);
-        infoPanel.add(durationLabel, c);
+		JLabel durationLabel = new JLabel("数量:  " + myProduct.getRealstock());
+		durationLabel.setForeground(Color.black);
+		infoPanel.add(durationLabel, c);
 
-        JLabel priceLabel = new JLabel("类别： " + myProduct.getCategory());
-        c.insets = new Insets(10, 0, 2, 0);
-        priceLabel.setForeground(Color.black);
-        infoPanel.add(priceLabel, c);
+		JLabel priceLabel = new JLabel("类别： " + myProduct.getCategory());
+		c.insets = new Insets(10, 0, 2, 0);
+		priceLabel.setForeground(Color.black);
+		infoPanel.add(priceLabel, c);
 
-        c.gridx = 3;
-        c.gridy = 1;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.gridheight = 5;
-        c.fill = GridBagConstraints.NONE;
-        c.weightx = 1.0;
-        c.weighty = 1.0;
-        c.insets = new Insets(5, 5, 20, 0);
-        String imageName = myProduct.getStructure();
-        ImageIcon recordingIcon = null;
-        JLabel recordingLabel = null;
+		c.gridx = 3;
+		c.gridy = 1;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridheight = 5;
+		c.fill = GridBagConstraints.NONE;
+		c.weightx = 1.0;
+		c.weighty = 1.0;
+		c.insets = new Insets(5, 5, 20, 0);
+		String imageName = myProduct.getStructure();
+		ImageIcon recordingIcon = null;
+		JLabel recordingLabel = null;
 
-        // 读取图片
-        try {
-            if (imageName.trim().length() == 0) {
-                recordingLabel = new JLabel("  图片不存在  ");
-            } else {
-                recordingIcon = new ImageIcon(getClass().getResource("/images/" + imageName));
-                recordingLabel = new JLabel(recordingIcon);
-            }
-        } catch (Exception exc) {
-            recordingLabel = new JLabel("  图片不存在  ");
-        }
+		// 读取图片
+		try {
+			if (imageName.trim().length() == 0) {
+				recordingLabel = new JLabel("  图片不存在  ");
+			} else {
+				recordingIcon = new ImageIcon(getClass().getResource("/images/" + imageName));
+				recordingLabel = new JLabel(recordingIcon);
+			}
+		} catch (Exception exc) {
+			recordingLabel = new JLabel("  图片不存在  ");
+		}
 
-        recordingLabel.setBorder(BorderFactory.createRaisedBevelBorder());
-        recordingLabel.setToolTipText(myProduct.getProductname());
+		recordingLabel.setBorder(BorderFactory.createRaisedBevelBorder());
+		recordingLabel.setToolTipText(myProduct.getProductname());
 
-        infoPanel.add(recordingLabel, c);
+		infoPanel.add(recordingLabel, c);
 
-        container.add(BorderLayout.NORTH, infoPanel);
+		container.add(BorderLayout.NORTH, infoPanel);
 
-        JPanel bottomPanel = new JPanel();
-        JButton okButton = new JButton("OK");
-        bottomPanel.add(okButton);
-        JButton deleteButton = new JButton("删除");
-        bottomPanel.add(deleteButton);
-        container.add(BorderLayout.SOUTH, bottomPanel);
+		JPanel bottomPanel = new JPanel();
+		JButton okButton = new JButton("OK");
+		bottomPanel.add(okButton);
+		JButton purchaseButton = new JButton("购买");
+		bottomPanel.add(purchaseButton);
+		container.add(BorderLayout.SOUTH, bottomPanel);
 
-        okButton.addActionListener(new OkButtonActionListener());
-        deleteButton.addActionListener(new DeleteButtonActionListener());
+		okButton.addActionListener(new OkButtonActionListener());
+		purchaseButton.addActionListener(new PurchaseButtonActionListener());
 
-        this.pack();
+		this.pack();
 
-        Point parentLocation = parentFrame.getLocation();
-        this.setLocation(parentLocation.x + 50, parentLocation.y + 50);
-    }
+		Point parentLocation = parentFrame.getLocation();
+		this.setLocation(parentLocation.x + 50, parentLocation.y + 50);
+	}
 
-    /**
-     * 处理"OK"按钮的内部类
-     */
-    class OkButtonActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            setVisible(false);
-        }
-    }
+	/**
+	 * 处理"OK"按钮的内部类
+	 */
+	class OkButtonActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			setVisible(false);
+		}
+	}
 
-    /**
-     * 处理"删除"按钮的内部类
-     */
-    class DeleteButtonActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            int n = JOptionPane.showConfirmDialog(null, "确认删除吗?", "确认对话框", JOptionPane.YES_NO_OPTION);
-            if (n == JOptionPane.YES_OPTION) {
-                ProductDataClient productDataClient = null;
-                try {
-                    productDataClient = new ProductDataClient();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                boolean bo = productDataClient.deleteProduct(myProduct.getProductname());
-                if(bo){
-    
-                }
-               // JOptionPane.showMessageDialog(new JFrame(),"已删除");
-                AdminRefresh refresh=new AdminRefresh();
-                setVisible(false);
-                refresh.setVisible(true);
-                toFront();
-                parentFrame.setVisible(false);
-               
-            } else if (n == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(new JFrame(),"已取消");
-            }
-
-        }
-    }
+	/**
+	 * 处理"购买"按钮的内部类
+	 */
+	class PurchaseButtonActionListener implements ActionListener {
+		ShoppingCart shoppingCar = new ShoppingCart();
+		public void actionPerformed(ActionEvent event) {
+			shoppingCar.addProduct(myProduct);
+			shoppingButton.setEnabled(true);
+			setVisible(false);
+		}
+	}
 }
