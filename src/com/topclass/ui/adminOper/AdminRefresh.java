@@ -21,7 +21,7 @@ import com.topclass.bean.User;
 import com.topclass.util.UserDataClient;
 
 /**
- * ç”¨æˆ·ç™»é™†çª—ä½“
+ * ÓÃ»§µÇÂ½´°Ìå
  * @author ascent
  * @version 1.0
  */
@@ -37,7 +37,7 @@ public class AdminRefresh extends JFrame {
 	protected UserDataClient userDataClient;
 
 	/**
-	 * é»˜è®¤çš„æ„é€ æ–¹æ³•ï¼Œåˆå§‹åŒ–ç™»é™†çª—ä½“
+	 * Ä¬ÈÏµÄ¹¹Ôì·½·¨£¬³õÊ¼»¯µÇÂ½´°Ìå
 	 */
 public void Rrefresh()
 {
@@ -46,7 +46,7 @@ public void Rrefresh()
 }
 	public AdminRefresh() {
 
-		setTitle("æ“ä½œæˆåŠŸ");
+		setTitle("²Ù×÷³É¹¦");
 
 		Container container = this.getContentPane();
 		container.setLayout(new BorderLayout());
@@ -55,7 +55,7 @@ public void Rrefresh()
 
 	
 
-		JButton loginButton = new JButton("ç¡®å®š");
+		JButton loginButton = new JButton("È·¶¨");
 	
 		loginPanel.add(loginButton);
 
@@ -82,7 +82,7 @@ public void Rrefresh()
 	}
 
 	/**
-	 * å¤„ç†"é€€å‡º"æŒ‰é’®äº‹ä»¶ç›‘å¬çš„å†…éƒ¨ç±»
+	 * ´¦Àí"ÍË³ö"°´Å¥ÊÂ¼ş¼àÌıµÄÄÚ²¿Àà
 	 */
 	class ExitActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
@@ -93,7 +93,7 @@ public void Rrefresh()
 	}
 
 	/**
-	 * å¤„ç†"ç™»é™†"æŒ‰é’®äº‹ä»¶ç›‘å¬çš„å†…éƒ¨ç±»
+	 * ´¦Àí"µÇÂ½"°´Å¥ÊÂ¼ş¼àÌıµÄÄÚ²¿Àà
 	 */
 	class LoginActionListener implements ActionListener {
 
@@ -102,37 +102,37 @@ public void Rrefresh()
 			HashMap userTable = userDataClient.getUsers();
 			if (userTable != null) {
 				if (bo) {
-					//å¯†ç æ­£ç¡®
-					//å…³é—­ç”¨æˆ·æ•°æ®å®¢æˆ·ç«¯
+					//ÃÜÂëÕıÈ·
+					//¹Ø±ÕÓÃ»§Êı¾İ¿Í»§¶Ë
 					userDataClient.closeSocket();
-					//å°†ç™»å½•ç•Œé¢è®¾ç½®ä¸ºä¸å¯è§
+					//½«µÇÂ¼½çÃæÉèÖÃÎª²»¿É¼û
 					setVisible(false);
 					dispose();
-					//è¿›å…¥ä¸»ç•Œé¢
+					//½øÈëÖ÷½çÃæ
 					AdminProductMainFrame adminMainFrame = new AdminProductMainFrame();
 					adminMainFrame.setVisible(true);
 				} else {
-					tip.setText(" ç®¡ç†å‘˜å¯†ç é”™è¯¯.");
+					tip.setText(" ¹ÜÀíÔ±ÃÜÂë´íÎó.");
 				}
 			} else {
-				tip.setText("æœåŠ¡å™¨è¿æ¥å¤±è´¥,è¯·ç¨å€™å†è¯•.");
+				tip.setText("·şÎñÆ÷Á¬½ÓÊ§°Ü,ÇëÉÔºòÔÙÊÔ.");
 			}
 		}
 	}
 
 	/**
-	 * å¤„ç†"æ³¨å†Œ"æŒ‰é’®äº‹ä»¶ç›‘å¬çš„å†…éƒ¨ç±».
+	 * ´¦Àí"×¢²á"°´Å¥ÊÂ¼ş¼àÌıµÄÄÚ²¿Àà.
 	 */
 	class RegistActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-			// æ‰“å¼€æ³¨å†Œç”¨æˆ·çš„çª—å£
+			// ´ò¿ª×¢²áÓÃ»§µÄ´°¿Ú
 			AddProductFrame addFrame = new AddProductFrame();
 			addFrame.setVisible(true);
 		}
 	}
 
 	/**
-	 * å¤„ç†"å…³é—­çª—å£"äº‹ä»¶ç›‘å¬çš„å†…éƒ¨ç±».
+	 * ´¦Àí"¹Ø±Õ´°¿Ú"ÊÂ¼ş¼àÌıµÄÄÚ²¿Àà.
 	 */
 	class WindowCloser extends WindowAdapter {
 		public void windowClosing(WindowEvent e) {
